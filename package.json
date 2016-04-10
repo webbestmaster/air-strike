@@ -1,0 +1,12 @@
+{
+  "name": "air strike",
+  "version": "0.0.1",
+  "description": "air strike - html5 game",
+  "license": "MIT",
+  "repository": {
+    "type": "git"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}
