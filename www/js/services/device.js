@@ -389,19 +389,18 @@ var win = window,
 				width = docElem.clientWidth,
 				height = docElem.clientHeight,
 				orientation = width > height ? '-' : '|',
-				data = {
-					width: width,
-					height: height,
-					orientation: orientation,
-					spaceSize: width * height
-				};
+				spaceSize = width * height;
 
 			attr.width = width;
 			attr.height = height;
 			attr.orientation = orientation;
-			attr.viewPortSize = width * height;
+			attr.viewPortSize = spaceSize;
 
-			device.mediator.publish('deviceEvent:resize', data);
+			device.mediator.publish('deviceEvent:resize', {
+				width: width,
+				height: height,
+				orientation: orientation
+			});
 
 		},
 
