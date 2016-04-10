@@ -1,5 +1,5 @@
 {
-  "name": "air strike",
+  "name": "air-strike",
   "version": "0.0.1",
   "description": "air strike - html5 game",
   "license": "MIT",
@@ -7,6 +7,10 @@
     "type": "git"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-minify-html": "^1.0.4",
+    "gulp-minify-css": "^1.2.1",
+    "gulp-es6-import": "^0.0.3",
+    "gulp-rimraf": "^0.2.0"
   }
 }
