@@ -15,7 +15,3 @@ function main() {
 
 var win = window.addEventListener('load', main, false);
 
-
-
-
-
