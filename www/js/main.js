@@ -1,3 +1,6 @@
+// init require Asset
+import requireAsset from 'services/require-asset';
+
 // init mediator
 import mediator from 'services/mediator';
 
@@ -8,10 +11,21 @@ import PIXI from 'lib/pixi';
 import log from 'services/log'; // remove
 import device from 'services/device'; // remove
 
+// core
+import renderer from 'core/renderer';
+
+requireAsset.set('mediator', mediator);
+requireAsset.set('PIXI', PIXI);
+requireAsset.set('device', device);
+requireAsset.set('log', log);
+requireAsset.set('renderer', log);
+
 function main() {
+
 	device.initialize();
+	renderer.initialize();
 
 }
 
-var win = window.addEventListener('load', main, false);
+window.addEventListener('load', main, false);
 
