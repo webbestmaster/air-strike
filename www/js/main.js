@@ -18,7 +18,7 @@ requireAsset.set('mediator', mediator);
 requireAsset.set('PIXI', PIXI);
 requireAsset.set('device', device);
 requireAsset.set('log', log);
-requireAsset.set('renderer', log);
+requireAsset.set('renderer', renderer);
 
 function main() {
 
