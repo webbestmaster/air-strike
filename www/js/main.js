@@ -1,29 +1,40 @@
-// init require Asset
+// init service - requireAsset
 import requireAsset from 'services/require-asset';
 
-// init mediator
+// init service - mediator
 import mediator from 'services/mediator';
 
 // init libs
 import PIXI from 'lib/pixi';
+requireAsset.set('PIXI', PIXI);
+import Deferred from 'lib/deferred';
+requireAsset.set('Deferred', Deferred);
 
 // init services
 import log from 'services/log'; // remove
-import device from 'services/device'; // remove
+import device from 'services/device';
 
 // core
 import renderer from 'core/renderer';
+import BaseView from 'core/base-view';
+import textureMaster from 'core/texture-master';
 
-requireAsset.set('mediator', mediator);
-requireAsset.set('PIXI', PIXI);
-requireAsset.set('device', device);
-requireAsset.set('log', log);
-requireAsset.set('renderer', renderer);
+// views
+import TitleView from 'view/title/title';
 
 function main() {
 
 	device.initialize();
-	renderer.initialize();
+
+	requireAsset
+		.get('textureMaster')
+		.initTextures()
+		.done(function () {
+			renderer.initialize();
+			var titleView = new TitleView();
+			renderer.append(titleView);
+			titleView.show();
+		});
 
 }
 

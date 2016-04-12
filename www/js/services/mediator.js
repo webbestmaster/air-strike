@@ -84,4 +84,6 @@ mediator = {
 	}
 };
 
+requireAsset.set('mediator', mediator);
+
 export default mediator;

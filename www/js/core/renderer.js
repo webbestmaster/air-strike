@@ -1,5 +1,3 @@
-import requireAsset from './../services/require-asset';
-
 var renderer = {
 
 	renderer: null,
@@ -72,6 +70,12 @@ var renderer = {
 
 	},
 
+	append: function (view) {
+
+		this.stage.addChild(view.stage);
+
+	},
+
 	//////
 	//  only for mediator
 	//////
@@ -80,5 +84,7 @@ var renderer = {
 	unsubscribe: function () {}
 
 };
+
+requireAsset.set('renderer', renderer);
 
 export default renderer;

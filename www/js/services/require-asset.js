@@ -12,4 +12,6 @@ var requireAsset = {
 
 };
 
+window.requireAsset = requireAsset;
+
 export default requireAsset;

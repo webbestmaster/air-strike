@@ -92,17 +92,16 @@ var win = window,
 
 		bindEventListeners: function () {
 
-			var device = this,
-				events = device.events,
+			var events = device.events,
 				body = doc.body;
 
-			win.addEventListener('resize', device.onResize.bind(device), false);
+			win.addEventListener('resize', this.onResize.bind(this), false);
 
-			body.addEventListener(events.down, device.onDown.bind(device), false);
+			body.addEventListener(events.down, this.onDown.bind(this), false);
 
-			body.addEventListener(events.move, device.onMove.bind(device), false);
+			body.addEventListener(events.move, this.onMove.bind(this), false);
 
-			body.addEventListener(events.up, device.onUp.bind(device), false);
+			body.addEventListener(events.up, this.onUp.bind(this), false);
 
 			/*
 			 device.on('change:_actionIsActive', function (self, actionIsActive) {
@@ -405,5 +404,7 @@ var win = window,
 		}
 
 	};
+
+requireAsset.set('device', device);
 
 export default device;
