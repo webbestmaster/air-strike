@@ -402,20 +402,6 @@ var win = window,
 				orientation: orientation
 			});
 
-		},
-
-		checkScreen: function () {
-
-			var screenWidth = screen.width,
-				viewPortWidth = docElem.clientWidth,
-				pixelRatio = win.devicePixelRatio || 1;
-
-			if (Math.abs(screenWidth - viewPortWidth * pixelRatio) < 10) {
-				return;
-			}
-
-			win.location.reload();
-
 		}
 
 	};
