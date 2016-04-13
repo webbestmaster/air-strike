@@ -19,12 +19,11 @@ var renderer = {
 
 		var renderer = this,
 			PIXI = requireAsset.get('PIXI'),
-			ticker = new PIXI.ticker.Ticker();
+			ticker = PIXI.ticker.shared;
 
 		ticker.add(renderer.draw, renderer);
 
 		ticker.start();
-
 	},
 
 	draw: function () {
