@@ -17,6 +17,7 @@ import device from 'services/device';
 // core
 import renderer from 'core/renderer';
 import textureMaster from 'core/texture-master';
+import DisplayObject from 'core/display-object';
 import BaseView from 'core/base-view';
 import Button from 'core/button';
 

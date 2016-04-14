@@ -4,9 +4,10 @@ var BaseView = window.requireAsset.get('BaseView'),
 var buttonMap = [
 
     {
-        id: 'button_1',
         text: 'text',
-        style: ''
+        style: {
+
+        }
     }
 
 ];
@@ -30,19 +31,37 @@ TitleView.prototype = Object.create(BaseView.prototype);
 TitleView.prototype.addButtons = function () {
 
     var view = this,
-        Button = window.requireAsset.get('Button');
+        Button = window.requireAsset.get('Button'),
+        deviceData = window.requireAsset.get('device').attr;
 
     view.buttons = [];
 
-    var button = new Button(view);
+    buttonMap.forEach(function (buttonData) {
 
-    button.createTextNode('I am the text on the button', {
-        font : '50px quake  ',
-        fill : '#FFF',
-        align: 'center',
-        wordWrap : true,
-        wordWrapWidth : button.sprite.width * 0.8
+        var button = new Button(view),
+            delta;
+
+        button.createTextNode('I am the text on the button', {
+            font : '50px quake',
+            fill : '#FFF',
+            align: 'center',
+            wordWrap : true,
+            wordWrapWidth : button.sprite.width * 0.8
+        });
+
+        delta = button.getDelta({
+            x: 0,
+            y: 0,
+            width: deviceData.width,
+            height: deviceData.height
+        }, button.getBounds(), 5, 5);
+
+        button.setPosition(delta.x, delta.y);
+
+        view.buttons.push(button);
+
     });
+
 
 /*
     view.buttons.push(

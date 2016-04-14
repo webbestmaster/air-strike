@@ -2,6 +2,8 @@ function BaseView() {
 
 }
 
+BaseView.prototype = Object.create(window.requireAsset.get('DisplayObject').prototype);
+
 BaseView.prototype.initialize = function (data) {
 
 	var view = this,
@@ -98,24 +100,6 @@ BaseView.prototype.show = function () {
  *
  * */
 
-BaseView.prototype.getDelta = function (sprite_1, sprite_2, point_1, point_2) {
-
-};
-
-BaseView.prototype.showPIXIDebug = function (sprite) {
-
-	sprite.updateTransform();
-
-	var bounds = sprite.getBounds(),
-		PIXI = window.requireAsset.get('PIXI'),
-		graphic = new PIXI.Graphics();
-
-	graphic.beginFill(0xFF0000, 0.5);
-	graphic.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
-	graphic.endFill();
-	sprite.addChild(graphic);
-
-};
 
 window.requireAsset.set('BaseView', BaseView);
 

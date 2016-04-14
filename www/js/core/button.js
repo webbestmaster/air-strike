@@ -9,7 +9,7 @@ function Button(view) {
 	button.sprite = sprite;
 
 	button.setAnchor(0.5, 0.5);
-	button.setPosition(200, 100);
+	// button.setPosition(200, 100);
 	// button.setSize(-1, 100);
 
 	// button.createTextNode();
@@ -33,6 +33,8 @@ function Button(view) {
  // remove if useless
  };
  */
+
+Button.prototype = Object.create(window.requireAsset.get('DisplayObject').prototype);
 
 Button.prototype.setText = function (text) {
 	this.textNode.text = text;
