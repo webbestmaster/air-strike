@@ -54,9 +54,23 @@ TitleView.prototype.addButtons = function () {
             y: 0,
             width: deviceData.width,
             height: deviceData.height
-        }, button.getBounds(), 5, 5);
+        }, button.getBounds(), 4, 6);
 
         button.setPosition(delta.x, delta.y);
+
+        TweenLite
+            .to(
+                button.sprite,
+                2,
+                {
+                    x: deviceData.width / 2,
+                    y: deviceData.height / 2,
+                    onComplete: function () {
+                        console.log('onComplete');
+                    },
+                    ease: Back.easeOut
+                }
+            );
 
         view.buttons.push(button);
 

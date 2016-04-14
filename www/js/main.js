@@ -9,6 +9,8 @@ import PIXI from 'lib/pixi';
 window.requireAsset.set('PIXI', PIXI);
 import Deferred from 'lib/deferred';
 window.requireAsset.set('Deferred', Deferred);
+import EasePack from 'lib/EasePack.min';
+import TweenLite from 'lib/TweenLite.min';
 
 // init services
 import log from 'services/log'; // remove
