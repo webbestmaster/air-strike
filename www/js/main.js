@@ -16,8 +16,9 @@ import device from 'services/device';
 
 // core
 import renderer from 'core/renderer';
-import BaseView from 'core/base-view';
 import textureMaster from 'core/texture-master';
+import BaseView from 'core/base-view';
+import Button from 'core/button';
 
 // views
 import TitleView from 'view/title/title';
@@ -36,7 +37,7 @@ function main() {
 
 			setTimeout(function () {
 
-				mediator.publish('hideView');
+				// mediator.publish('hideView');
 
 			}, 4000);
 

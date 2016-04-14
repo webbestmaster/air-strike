@@ -90,6 +90,20 @@ BaseView.prototype.show = function () {
 
 };
 
+/*
+* 
+* 1 2 3
+* 4 5 6
+* 7 8 9
+* 
+* */
+
+BaseView.prototype.getDelta = function (sprite_1, sprite_2, point_1, point_2) {
+
+
+
+};
+
 window.requireAsset.set('BaseView', BaseView);
 
 export default BaseView;

@@ -17,6 +17,7 @@ var textureMaster = {
         // loader.baseUrl = master.baseUrl;
 
         loader.add('src/bg-title.json');
+        loader.add('src/button.png');
 
         loader
             .on('progress', function () {
