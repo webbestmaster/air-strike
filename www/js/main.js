@@ -33,6 +33,13 @@ function main() {
 		.done(function () {
 			renderer.initialize();
 			mediator.publish('show:TitleView');
+
+			setTimeout(function () {
+
+				mediator.publish('hideView');
+
+			}, 4000);
+
 		});
 
 }

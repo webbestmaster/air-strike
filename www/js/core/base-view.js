@@ -10,11 +10,42 @@ BaseView.prototype.initialize = function (data) {
 
     view.stage = new PIXI.Container();
 
-    mediator.installTo(view);
+    mediator.publish('hideView');
+
+    view.bindMainEventListeners();
 
     if (data.hasOwnProperty('bg')) {
         view.setBg(data);
     }
+
+
+};
+
+BaseView.prototype.bindMainEventListeners = function () {
+
+    var view = this,
+        mediator = window.requireAsset.get('mediator');
+
+    mediator.installTo(view);
+
+    view.subscribe('hideView', view.mainHide);
+
+};
+
+BaseView.prototype.mainHide = function () {
+
+    var view = this,
+        stage = view.stage,
+        renderer = window.requireAsset.get('renderer');
+
+    if (view.bgSprite) {
+        stage.removeChild(view.bgSprite);
+        view.bgSprite = null;
+    }
+
+    renderer.remove(view);
+
+    view.unsubscribe();
 
 };
 

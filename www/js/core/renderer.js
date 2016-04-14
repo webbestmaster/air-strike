@@ -42,10 +42,7 @@ var renderer = {
 
 			pixiRenderer = PIXI.autoDetectRenderer(
 				deviceData.width,
-				deviceData.height,
-				{
-					backgroundColor: 0x000000
-				}
+				deviceData.height
 			);
 
 		renderer.stage = new PIXI.Container();
@@ -72,6 +69,12 @@ var renderer = {
 	append: function (view) {
 
 		this.stage.addChild(view.stage);
+
+	},
+
+	remove: function (view) {
+
+		this.stage.removeChild(view.stage);
 
 	},
 
