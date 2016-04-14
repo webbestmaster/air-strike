@@ -9,8 +9,8 @@ var textureMaster = {
 
         var
             // master = this,
-            PIXI = requireAsset.get('PIXI'),
-            Deferred = requireAsset.get('Deferred'),
+            PIXI = window.requireAsset.get('PIXI'),
+            Deferred = window.requireAsset.get('Deferred'),
             defer = new Deferred(),
             loader = PIXI.loader;
 
@@ -20,7 +20,7 @@ var textureMaster = {
 
         loader
             .on('progress', function () {
-                requireAsset.get('log')('on loading texture progress'); // remove
+                window.requireAsset.get('log')('on loading texture progress'); // remove
             })
             .load(function (loader, resources) {
                 defer.resolve();
@@ -32,7 +32,7 @@ var textureMaster = {
 
 };
 
-requireAsset.set('textureMaster', textureMaster);
+window.requireAsset.set('textureMaster', textureMaster);
 
 return textureMaster;
 

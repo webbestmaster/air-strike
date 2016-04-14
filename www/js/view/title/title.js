@@ -1,4 +1,5 @@
-var BaseView = window.requireAsset.get('BaseView');
+var BaseView = window.requireAsset.get('BaseView'),
+    mediator = window.requireAsset.get('mediator');
 
 function TitleView() {
 
@@ -12,6 +13,15 @@ function TitleView() {
 
 TitleView.prototype = new BaseView();
 
-requireAsset.set('TitleView', TitleView);
+window.requireAsset.set('TitleView', TitleView);
+
+mediator.subscribe('show:TitleView', function () {
+
+    var TitleView = window.requireAsset.get('TitleView'),
+        titleView = new TitleView();
+    
+    titleView.show();
+
+});
 
 export default TitleView;

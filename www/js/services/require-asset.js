@@ -1,4 +1,4 @@
-var requireAsset = {
+window.requireAsset = {
 
 	attr: {},
 
@@ -11,7 +11,3 @@ var requireAsset = {
 	}
 
 };
-
-window.requireAsset = requireAsset;
-
-export default requireAsset;

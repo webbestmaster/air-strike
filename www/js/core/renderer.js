@@ -18,7 +18,7 @@ var renderer = {
 	start: function () {
 
 		var renderer = this,
-			PIXI = requireAsset.get('PIXI'),
+			PIXI = window.requireAsset.get('PIXI'),
 			ticker = PIXI.ticker.shared;
 
 		ticker.add(renderer.draw, renderer);
@@ -36,9 +36,9 @@ var renderer = {
 
 		var renderer = this,
 
-			PIXI = requireAsset.get('PIXI'),
+			PIXI = window.requireAsset.get('PIXI'),
 
-			deviceData = requireAsset.get('device').attr,
+			deviceData = window.requireAsset.get('device').attr,
 
 			pixiRenderer = PIXI.autoDetectRenderer(
 				deviceData.width,
@@ -59,7 +59,7 @@ var renderer = {
 	bindEventListeners: function () {
 
 		var renderer = this,
-			mediator = requireAsset.get('mediator');
+			mediator = window.requireAsset.get('mediator');
 
 		mediator.installTo(renderer);
 
@@ -84,6 +84,6 @@ var renderer = {
 
 };
 
-requireAsset.set('renderer', renderer);
+window.requireAsset.set('renderer', renderer);
 
 export default renderer;

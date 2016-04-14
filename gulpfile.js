@@ -11,7 +11,7 @@ gulp.task('default', function () {
 	return gulp.start('copy-assets', 'html', 'css', 'js');
 });
 
-gulp.task('watch', ['html', 'css', 'js', 'copy-assets'], function () {
+gulp.task('watch', ['html', 'css', 'js-watch', 'copy-assets'], function () {
 	gulp.watch('./www/*.html', ['html']);
 	gulp.watch('./www/css/**/*', ['css']);
 	gulp.watch('./www/js/**/*', ['js-watch']);

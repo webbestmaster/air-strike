@@ -405,6 +405,6 @@ var win = window,
 
 	};
 
-requireAsset.set('device', device);
+window.requireAsset.set('device', device);
 
 export default device;

@@ -1,4 +1,4 @@
-// init service - requireAsset
+// init service - window.requireAsset
 import requireAsset from 'services/require-asset';
 
 // init service - mediator
@@ -6,9 +6,9 @@ import mediator from 'services/mediator';
 
 // init libs
 import PIXI from 'lib/pixi';
-requireAsset.set('PIXI', PIXI);
+window.requireAsset.set('PIXI', PIXI);
 import Deferred from 'lib/deferred';
-requireAsset.set('Deferred', Deferred);
+window.requireAsset.set('Deferred', Deferred);
 
 // init services
 import log from 'services/log'; // remove
@@ -26,14 +26,13 @@ function main() {
 
 	device.initialize();
 
-	requireAsset
+	window
+		.requireAsset
 		.get('textureMaster')
 		.initTextures()
 		.done(function () {
 			renderer.initialize();
-			var titleView = new TitleView();
-			renderer.append(titleView);
-			titleView.show();
+			mediator.publish('show:TitleView');
 		});
 
 }

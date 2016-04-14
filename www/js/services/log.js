@@ -43,6 +43,6 @@ window.onerror = function (errorMsg, url, lineNumber) {
 
 };
 
-requireAsset.set('log', log);
+window.requireAsset.set('log', log);
 
 export default log;

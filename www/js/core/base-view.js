@@ -5,8 +5,8 @@ function BaseView() {
 BaseView.prototype.initialize = function (data) {
 
     var view = this,
-        PIXI = requireAsset.get('PIXI'),
-        mediator = requireAsset.get('mediator');
+        PIXI = window.requireAsset.get('PIXI'),
+        mediator = window.requireAsset.get('mediator');
 
     view.stage = new PIXI.Container();
 
@@ -39,7 +39,7 @@ BaseView.prototype.setBg = function (data) {
 
     var view = this,
         bgSprite = new PIXI.Sprite.fromFrame(data.bg),
-        device = requireAsset.get('device');
+        device = window.requireAsset.get('device');
 
     view.bgSprite = bgSprite;
 
@@ -53,10 +53,12 @@ BaseView.prototype.setBg = function (data) {
 
 BaseView.prototype.show = function () {
 
-    this.stage.visible = true;
+    var renderer = window.requireAsset.get('renderer');
+    // this.stage.visible = true;
+    renderer.append(this);
 
 };
 
-requireAsset.set('BaseView', BaseView);
+window.requireAsset.set('BaseView', BaseView);
 
 export default BaseView;
