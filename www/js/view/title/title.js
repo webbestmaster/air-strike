@@ -9,6 +9,8 @@ function TitleView() {
         bg: 'bg-title'
     });
 
+    view.show();
+
 }
 
 TitleView.prototype = new BaseView();
@@ -16,12 +18,7 @@ TitleView.prototype = new BaseView();
 window.requireAsset.set('TitleView', TitleView);
 
 mediator.subscribe('show:TitleView', function () {
-
-    var TitleView = window.requireAsset.get('TitleView'),
-        titleView = new TitleView();
-    
-    titleView.show();
-
+    new TitleView();
 });
 
 export default TitleView;
