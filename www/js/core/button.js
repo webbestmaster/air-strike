@@ -1,4 +1,4 @@
-function Button(view, optipns) {
+function Button(view) {
 
 	var button = this,
 		PIXI = window.requireAsset.get('PIXI'),
@@ -9,21 +9,80 @@ function Button(view, optipns) {
 	button.sprite = sprite;
 
 	button.setAnchor(0.5, 0.5);
-	button.setPosition(100, 100);
+	button.setPosition(200, 100);
+	button.setSize(200, 100);
+
+	button.createTextNode();
+	// button.setText('I am The Text');
+	button.setTextStyles({
+		font : '50px monospace',
+		fill : '#FFF'
+	});
 
 	view.stage.addChild(sprite);
 
 	button.parentView = view;
 
-	button.createTextNode();
+	view.showPIXIDebug(button.textNode);
+	view.showPIXIDebug(button.sprite);
 
 }
 
-Button.prototype.createTextNode = function (text, options) {
+/*
+ Button.prototype.defaultOptions = {
+ // remove if useless
+ };
+ */
+
+Button.prototype.setText = function (text) {
+	this.textNode.text = text;
+};
+
+Button.prototype.setTextStyles = function (styles) {
+
+	var key,
+		textStyle = this.textNode.style;
+
+	for (key in styles) {
+		if (styles.hasOwnProperty(key)) {
+			textStyle[key] = styles[key];
+		}
+	}
+
+/*
+	this.textNode.style = {
+		font : 'bold italic 36px Arial',
+		fill : '#F7EDCA',
+		stroke : '#4a1850',
+		strokeThickness : 5,
+		dropShadow : true,
+		dropShadowColor : '#000000',
+		dropShadowAngle : Math.PI / 6,
+		dropShadowDistance : 6,
+		wordWrap : true,
+		wordWrapWidth : 440
+	};
+*/
+
+};
+
+Button.prototype.setSize = function (width, height) {
+
+	this.sprite.width = width;
+	this.sprite.height = height;
+
+};
+
+Button.prototype.createTextNode = function () {
 
 	var button = this,
 		PIXI = window.requireAsset.get('PIXI'),
-		textNode = new PIXI.Text('Basic text in pixi');
+		textNode = new PIXI.Text('TEXT');
+
+	textNode.anchor.x = 0.5;
+	textNode.anchor.y = 0.5;
+
+	button.textNode = textNode;
 
 	button.sprite.addChild(textNode);
 
