@@ -37,8 +37,9 @@ TitleView.prototype.addButtons = function () {
     var button = new Button(view);
 
     button.createTextNode('I am the text on the button', {
-        font : '50px monospace',
+        font : '50px quake  ',
         fill : '#FFF',
+        align: 'center',
         wordWrap : true,
         wordWrapWidth : button.sprite.width * 0.8
     });

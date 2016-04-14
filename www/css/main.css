@@ -1,7 +1,13 @@
+@font-face {
+	font-family: 'quake';
+	src: url('../font/quake.otf');
+}
+
 body, html {
 	width: 100%;
 	height: 100%;
 	margin: 0;
+	font-family: 'quake', monospace;
 }
 
 canvas {

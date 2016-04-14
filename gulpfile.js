@@ -56,7 +56,7 @@ gulp.task('uglify-js', ['collect-js'], function () {
 
 // copy data
 gulp.task('copy-assets', function () {
-	['src'].forEach(function (dir) {
+	['src', 'font'].forEach(function (dir) {
 		return gulp.src('./www/' + dir + '/**/*')
 			.pipe(gulp.dest('./dist/www/' + dir));
 	});
