@@ -10,21 +10,21 @@ function Button(view) {
 
 	button.setAnchor(0.5, 0.5);
 	button.setPosition(200, 100);
-	button.setSize(200, 100);
+	// button.setSize(-1, 100);
 
-	button.createTextNode();
-	// button.setText('I am The Text');
-	button.setTextStyles({
-		font : '50px monospace',
-		fill : '#FFF'
-	});
+	// button.createTextNode();
+	// // button.setText('I am The Text');
+	// button.setTextStyles({
+	// 	font : '50px monospace',
+	// 	fill : '#FFF'
+	// });
 
 	view.stage.addChild(sprite);
 
 	button.parentView = view;
 
-	view.showPIXIDebug(button.textNode);
-	view.showPIXIDebug(button.sprite);
+	// view.showPIXIDebug(button.textNode);
+	// view.showPIXIDebug(button.sprite);
 
 }
 
@@ -40,14 +40,11 @@ Button.prototype.setText = function (text) {
 
 Button.prototype.setTextStyles = function (styles) {
 
-	var key,
-		textStyle = this.textNode.style;
+	var textStyle = this.textNode.style;
 
-	for (key in styles) {
-		if (styles.hasOwnProperty(key)) {
-			textStyle[key] = styles[key];
-		}
-	}
+	Object.keys(styles).forEach(function (key) {
+		textStyle[key] = styles[key];
+	});
 
 /*
 	this.textNode.style = {
@@ -68,23 +65,47 @@ Button.prototype.setTextStyles = function (styles) {
 
 Button.prototype.setSize = function (width, height) {
 
-	this.sprite.width = width;
-	this.sprite.height = height;
+	var sprite = this.sprite,
+		q;
+
+	if (width === -1) {
+		q = sprite.height / height;
+		sprite.height = height;
+		sprite.width = Math.round(sprite.width / q);
+		return this;
+	}
+
+	if (height === -1) {
+		q = sprite.width / width;
+		sprite.width = width;
+		sprite.height = Math.round(sprite.height / q);
+		return this;
+	}
+
+	sprite.width = width;
+	sprite.height = height;
+
+	return this;
 
 };
 
-Button.prototype.createTextNode = function () {
+Button.prototype.createTextNode = function (text, styles) {
 
 	var button = this,
 		PIXI = window.requireAsset.get('PIXI'),
-		textNode = new PIXI.Text('TEXT');
+		textNode = new PIXI.Text(text || 'TEXT');
 
-	textNode.anchor.x = 0.5;
-	textNode.anchor.y = 0.5;
+	textNode.anchor.set(0.5, 0.5);
 
 	button.textNode = textNode;
 
+	if (styles) {
+		button.setTextStyles(styles);
+	}
+
 	button.sprite.addChild(textNode);
+
+	return button;
 
 };
 
@@ -109,6 +130,10 @@ Button.prototype.off = function () {
 Button.prototype.destroy = function () {
 
 	var button = this;
+
+	if (button.textNode) {
+		button.sprite.removeChild(button.textNode);
+	}
 
 	button.parentView.stage.removeChild(button.sprite);
 

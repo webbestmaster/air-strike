@@ -25,7 +25,7 @@ function TitleView() {
 
 }
 
-TitleView.prototype = new BaseView();
+TitleView.prototype = Object.create(BaseView.prototype);
 
 TitleView.prototype.addButtons = function () {
 
@@ -34,9 +34,20 @@ TitleView.prototype.addButtons = function () {
 
     view.buttons = [];
 
+    var button = new Button(view);
+
+    button.createTextNode('I am the text on the button', {
+        font : '50px monospace',
+        fill : '#FFF',
+        wordWrap : true,
+        wordWrapWidth : button.sprite.width * 0.8
+    });
+
+/*
     view.buttons.push(
-        new Button(view, {})
+
     )
+*/
 
 };
 
