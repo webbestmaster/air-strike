@@ -9,6 +9,7 @@ import PIXI from 'lib/pixi';
 window.requireAsset.set('PIXI', PIXI);
 import Deferred from 'lib/deferred';
 window.requireAsset.set('Deferred', Deferred);
+import fontLoader from 'lib/font-loader';
 import EasePack from 'lib/EasePack.min';
 import TweenLite from 'lib/TweenLite.min';
 
@@ -22,6 +23,7 @@ import textureMaster from 'core/texture-master';
 import DisplayObject from 'core/display-object';
 import BaseView from 'core/base-view';
 import Button from 'core/button';
+import loader from 'core/loader';
 
 // views
 import TitleView from 'view/title/title';
@@ -30,20 +32,11 @@ function main() {
 
 	device.initialize();
 
-	window
-		.requireAsset
-		.get('textureMaster')
-		.initTextures()
+	loader
+		.load()
 		.done(function () {
 			renderer.initialize();
 			mediator.publish('show:TitleView');
-
-			setTimeout(function () {
-
-				// mediator.publish('hideView');
-
-			}, 4000);
-
 		});
 
 }

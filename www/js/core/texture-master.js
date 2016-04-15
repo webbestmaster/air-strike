@@ -35,5 +35,4 @@ var textureMaster = {
 
 window.requireAsset.set('textureMaster', textureMaster);
 
-return textureMaster;
-
+export default textureMaster;

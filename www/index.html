@@ -25,32 +25,5 @@
 	<script src="js/main.js" type="text/javascript"></script>
 
 </head>
-<body>
-
-<script type="text/javascript">
-
-	(function () {
-
-		'use strict';
-		/*global window */
-		/*global */
-
-		var image = new Image();
-
-		image.style.position = 'absolute';
-
-		document.body.appendChild(image);
-
-		image.onerror = image.onload = function () {
-			this.onerror = this.onload = null;
-			document.body.removeChild(this);
-		};
-
-		image.src = 'font/quake.otf';
-
-	}());
-
-</script>
-
-</body>
+<body></body>
 </html>
