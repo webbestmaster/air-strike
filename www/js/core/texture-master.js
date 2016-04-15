@@ -1,7 +1,8 @@
-define([/*'PIXI', */'log', 'Deferred'],
-	function (/*PIXI,*/
-			  log, // remove
-			  Deferred) {
+define(['log', 'Deferred'],
+	function (
+			log, // remove
+			Deferred
+	) {
 		return {
 
 			// TODO: get resolution from device

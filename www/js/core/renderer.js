@@ -1,5 +1,5 @@
-define([/*'PIXI',*/ 'device', 'mediator'],
-	function (/*PIXI,*/ device, mediator) {
+define(['device', 'mediator'],
+	function (device, mediator) {
 
 		return {
 

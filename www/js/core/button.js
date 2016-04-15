@@ -1,5 +1,5 @@
-define([/*'PIXI', */'DisplayObject'],
-	function (/*PIXI, */DisplayObject) {
+define(['DisplayObject'],
+	function (DisplayObject) {
 
 		function Button(view) {
 
@@ -24,9 +24,6 @@ define([/*'PIXI', */'DisplayObject'],
 			view.stage.addChild(sprite);
 
 			button.parentView = view;
-
-			// view.showPIXIDebug(button.textNode);
-			// view.showPIXIDebug(button.sprite);
 
 		}
 
