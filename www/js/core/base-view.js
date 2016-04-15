@@ -1,13 +1,11 @@
 define(
 	[
 		'DisplayObject',
-		// 'PIXI',
 		'mediator',
 		'renderer',
 		'device'
 	],
 	function (DisplayObject,
-			  // PIXI,
 			  mediator,
 			  renderer,
 			  device) {

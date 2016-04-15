@@ -1,0 +1,11 @@
+https://github.com/johnpapa/lite-server
+
+npm install lite-server --save-dev
+
+# Inside package.json...
+  "scripts": {
+    "lite-server": "lite-server"
+  },
+
+npm run lite-server
+
