@@ -1,92 +1,94 @@
-var renderer = {
+define([/*'PIXI',*/ 'device', 'mediator'],
+	function (/*PIXI,*/ device, mediator) {
 
-	renderer: null,
-	stage: null,
+		return {
 
-	initialize: function () {
+			renderer: null,
+			stage: null,
 
-		var renderer = this;
+			initialize: function () {
 
-		renderer.createRenderer();
+				var renderer = this;
 
-		renderer.bindEventListeners();
+				renderer.createRenderer();
 
-		renderer.start();
+				renderer.bindEventListeners();
 
-	},
+				renderer.start();
 
-	start: function () {
+			},
 
-		var renderer = this,
-			PIXI = window.requireAsset.get('PIXI'),
-			ticker = PIXI.ticker.shared;
+			start: function () {
 
-		ticker.add(renderer.draw, renderer);
+				var renderer = this,
+					ticker = PIXI.ticker.shared;
 
-		ticker.start();
-	},
+				ticker.add(renderer.draw, renderer);
 
-	draw: function () {
+				ticker.start();
+			},
 
-		this.renderer.render(this.stage);
+			draw: function () {
 
-	},
+				this.renderer.render(this.stage);
 
-	createRenderer: function () {
+			},
 
-		var renderer = this,
+			createRenderer: function () {
 
-			PIXI = window.requireAsset.get('PIXI'),
+				var renderer = this,
 
-			deviceData = window.requireAsset.get('device').attr,
+					deviceData = device.attr,
 
-			pixiRenderer = PIXI.autoDetectRenderer(
-				deviceData.width,
-				deviceData.height
-			);
+					pixiRenderer = PIXI.autoDetectRenderer(
+						deviceData.width,
+						deviceData.height
+					);
 
-		renderer.stage = new PIXI.Container();
+				renderer.stage = new PIXI.Container();
 
-		window.document.body.appendChild(pixiRenderer.view);
+				window.document.body.appendChild(pixiRenderer.view);
 
-		return renderer.renderer = pixiRenderer;
+				return renderer.renderer = pixiRenderer;
 
-	},
+			},
 
-	bindEventListeners: function () {
+			bindEventListeners: function () {
 
-		var renderer = this,
-			mediator = window.requireAsset.get('mediator');
+				var renderer = this;
+				// mediator = window.requireAsset.get('mediator');
 
-		mediator.installTo(renderer);
+				mediator.installTo(renderer);
 
-		renderer.subscribe('deviceEvent:resize', function (data) {
-			this.renderer.resize(data.width, data.height);
-		});
+				renderer.subscribe('deviceEvent:resize', function (data) {
+					this.renderer.resize(data.width, data.height);
+				});
 
-	},
+			},
 
-	append: function (view) {
+			append: function (view) {
 
-		this.stage.addChild(view.stage);
+				this.stage.addChild(view.stage);
 
-	},
+			},
 
-	remove: function (view) {
+			remove: function (view) {
 
-		this.stage.removeChild(view.stage);
+				this.stage.removeChild(view.stage);
 
-	},
+			},
 
-	//////
-	//  only for mediator
-	//////
-	publish: function () {},
-	subscribe: function () {},
-	unsubscribe: function () {}
+			//////
+			//  only for mediator
+			//////
+			publish: function () {
+			},
+			subscribe: function () {
+			},
+			unsubscribe: function () {
+			}
 
-};
+		};
 
-window.requireAsset.set('renderer', renderer);
-
-export default renderer;
+	}
+);

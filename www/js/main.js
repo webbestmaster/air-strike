@@ -1,45 +1,56 @@
-// init service - window.requireAsset
-import requireAsset from 'services/require-asset';
+requirejs.config({
 
-// init service - mediator
-import mediator from 'services/mediator';
+	baseUrl: './js/',
 
-// init libs
-import PIXI from 'lib/pixi';
-window.requireAsset.set('PIXI', PIXI);
-import Deferred from 'lib/deferred';
-window.requireAsset.set('Deferred', Deferred);
-import fontLoader from 'lib/font-loader';
-import EasePack from 'lib/EasePack.min';
-import TweenLite from 'lib/TweenLite.min';
+	paths: {
+		// init service
+		log: 'services/log',
+		mediator: 'services/mediator',
+		// init libs
+		Deferred: 'lib/deferred',
+		fontLoader: 'lib/font-loader',
+		// pixi: 'lib/pixi',
+		EasePack: 'lib/EasePack',
+		TweenLite: 'lib/TweenLite',
+		// init service
+		device: 'services/device',
+		// core
+		renderer: 'core/renderer',
+		textureMaster: 'core/texture-master',
+		DisplayObject: 'core/display-object',
+		BaseView: 'core/base-view',
+		Button: 'core/button',
+		loader: 'core/loader',
+		// views
+		TitleView: 'view/title/view'
+	}
 
-// init services
-import log from 'services/log'; // remove
-import device from 'services/device';
+});
 
-// core
-import renderer from 'core/renderer';
-import textureMaster from 'core/texture-master';
-import DisplayObject from 'core/display-object';
-import BaseView from 'core/base-view';
-import Button from 'core/button';
-import loader from 'core/loader';
+define(
+	[
+		'lib/load',
+		'mediator',
+		'device',
+		'loader',
+		'renderer'
+	],
+	function (load,
+			  mediator,
+			  device,
+			  loader,
+			  renderer) {
 
-// views
-import TitleView from 'view/title/title';
 
-function main() {
+		device.initialize();
 
-	device.initialize();
+		loader
+			.load()
+			.done(function () {
+				renderer.initialize();
+				mediator.publish('show:TitleView');
+			});
 
-	loader
-		.load()
-		.done(function () {
-			renderer.initialize();
-			mediator.publish('show:TitleView');
-		});
-
-}
-
-window.addEventListener('load', main, false);
+	}
+);
 

@@ -1,10 +1,10 @@
 'use strict';
 
 var gulp = require('gulp'),
-// clean = require('gulp-rimraf'),
+	// clean = require('gulp-rimraf'),
 	minifyHTML = require('gulp-minify-html'),
 	minifyCss = require('gulp-minify-css'),
-	rjs = require('gulp-requirejs'),
+	es6Import = require('gulp-es6-import'),
 	uglify = require('gulp-uglify');
 
 gulp.task('default', function () {
@@ -43,38 +43,9 @@ gulp.task('js-watch', function () {
 });
 
 gulp.task('collect-js', function () {
-
-	return gulp
-		.src('')
-		.pipe(rjs({
-			name: 'main',
-			baseUrl: './www/js/',
-			out: 'main.js',
-			paths: {
-				// init service
-				log: 'services/log',
-				mediator: 'services/mediator',
-				// init libs
-				Deferred: 'lib/deferred',
-				fontLoader: 'lib/font-loader',
-				// pixi: 'lib/pixi',
-				EasePack: 'lib/EasePack',
-				TweenLite: 'lib/TweenLite',
-				// init service
-				device: 'services/device',
-				// core
-				renderer: 'core/renderer',
-				textureMaster: 'core/texture-master',
-				DisplayObject: 'core/display-object',
-				BaseView: 'core/base-view',
-				Button: 'core/button',
-				loader: 'core/loader',
-				// views
-				TitleView: 'view/title/view'
-			}
-		}))
+	return gulp.src('./www/js/main.js')
+		.pipe(es6Import())
 		.pipe(gulp.dest('./dist/www/js/'));
-
 });
 
 gulp.task('uglify-js', ['collect-js'], function () {
