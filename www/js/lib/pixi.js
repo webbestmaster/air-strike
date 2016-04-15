@@ -29039,4 +29039,3 @@
 	}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[115])(115)
 });
-//# sourceMappingURL=pixi.js.map
