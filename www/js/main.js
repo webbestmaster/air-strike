@@ -9,7 +9,7 @@ requirejs.config({
 		// init libs
 		Deferred: 'lib/deferred',
 		fontLoader: 'lib/font-loader',
-		// pixi: 'lib/pixi',
+		PIXI: 'lib/pixi',
 		EasePack: 'lib/EasePack',
 		TweenLite: 'lib/TweenLite',
 		// init service

@@ -2,7 +2,8 @@ define(
 	[
 		'TitleView',
 		'EasePack',
-		'TweenLite'
+		'TweenLite',
+		'PIXI'
 	],
 	function () {}
 );
