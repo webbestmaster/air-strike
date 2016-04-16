@@ -22,7 +22,8 @@ requirejs.config({
 		Button: 'core/button',
 		loader: 'core/loader',
 		// views
-		TitleView: 'view/title/view'
+		TitleView: 'view/title/view',
+		SettingView: 'view/setting/view'
 	}
 
 });

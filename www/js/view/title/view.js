@@ -19,7 +19,7 @@ define(
 				bg: 'bg-title'
 			});
 
-			view.show();
+			view.mainShow();
 
 			view.addButtons();
 
@@ -31,8 +31,6 @@ define(
 
 			var view = this,
 				deviceData = device.attr;
-
-			view.buttons = [];
 
 			buttonMap.forEach(function (buttonData) {
 
@@ -71,7 +69,8 @@ define(
 					);
 
 				button.on('click', function () {
-					button.destroy();
+					mediator.publish('show:SettingView');
+					// button.destroy();
 				});
 
 				// setTimeout(function () {

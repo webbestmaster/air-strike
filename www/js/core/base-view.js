@@ -3,12 +3,14 @@ define(
 		'DisplayObject',
 		'mediator',
 		'renderer',
-		'device'
+		'device',
+		'TweenLite'
 	],
 	function (DisplayObject,
 			  mediator,
 			  renderer,
-			  device) {
+			  device,
+			  TweenLite) {
 
 		function BaseView() {
 
@@ -22,6 +24,8 @@ define(
 
 			view.stage = new PIXI.Container();
 
+			view.buttons = [];
+
 			mediator.publish('hideView');
 
 			view.bindMainEventListeners();
@@ -29,7 +33,6 @@ define(
 			if (data.hasOwnProperty('bg')) {
 				view.setBg(data);
 			}
-
 
 		};
 
@@ -43,19 +46,75 @@ define(
 
 		};
 
+		BaseView.prototype.mainShow = function () {
+
+			renderer.append(this);
+
+			this.mainShowAnimation();
+
+		};
+
 		BaseView.prototype.mainHide = function () {
 
-			var view = this,
-				stage = view.stage;
+			this.unsubscribe();
+			this.mainHideAnimation();
+
+		};
+
+		BaseView.prototype.mainHideAnimation = function () {
+
+			var view = this;
+
+			TweenLite
+				.to(
+					view.stage,
+					2,
+					{
+						alpha: 0,
+						onComplete: function () {
+							view.mainRemove();
+						}
+						// ease: Back.easeOut
+					}
+				);
+
+		};
+
+		BaseView.prototype.mainShowAnimation = function () {
+
+			this.stage.alpha = 0;
+
+			TweenLite
+				.to(
+					this.stage,
+					2,
+					{
+						alpha: 1
+						// onComplete: function () {
+							// view.mainRemove();
+						// },
+						// ease: l
+					}
+				);
+
+		};
+
+		BaseView.prototype.mainRemove = function () {
+
+			var view = this;
 
 			if (view.bgSprite) {
-				stage.removeChild(view.bgSprite);
+				view.stage.removeChild(view.bgSprite);
 				view.bgSprite = null;
 			}
 
+			view.buttons.forEach(function (button) {
+				button.destroy();
+			});
+
 			renderer.remove(view);
 
-			view.unsubscribe();
+			console.log('view is hidden');
 
 		};
 
@@ -88,13 +147,6 @@ define(
 			view.updateBgPosition(device.attr);
 
 			view.subscribe('deviceEvent:resize', view.updateBgPosition);
-
-		};
-
-		BaseView.prototype.show = function () {
-
-			// this.stage.visible = true;
-			renderer.append(this);
 
 		};
 

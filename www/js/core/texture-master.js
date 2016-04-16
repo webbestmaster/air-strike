@@ -17,8 +17,16 @@ define(['log', 'Deferred'],
 					loader = PIXI.loader;
 
 				// loader.baseUrl = master.baseUrl;
-				loader.add('src/bg-title.json');
-				loader.add('src/button.png');
+
+				loader.add([
+					'src/bg-title.json',
+					'src/bg-setting.json',
+					'src/button.png'
+				]);
+
+				// loader.add();
+				// loader.add('src/bg-setting.json');
+				// loader.add('src/button.png');
 
 				loader
 					.on('progress', function () {

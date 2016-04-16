@@ -7,7 +7,7 @@
     "type": "git"
   },
   "scripts": {
-    "lite-server": "lite-server"
+    "server": "lite-server"
   },
   "devDependencies": {
     "gulp": "^3.9.0",
