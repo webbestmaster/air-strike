@@ -70,6 +70,14 @@ define(
 						}
 					);
 
+				button.on('click', function () {
+					button.destroy();
+				});
+
+				// setTimeout(function () {
+				// 	button.destroy();
+				// }, 3000);
+				
 				view.buttons.push(button);
 
 			});

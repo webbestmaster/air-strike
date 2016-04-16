@@ -1,14 +1,14 @@
-define(['DisplayObject'],
-	function (DisplayObject) {
+define(['DisplayObject', 'device'],
+	function (DisplayObject, device) {
 
 		function Button(view) {
 
 			var button = this,
 				sprite = new PIXI.Sprite.fromImage('src/button.png');
 
-			sprite.interactive = true;
-
 			button.sprite = sprite;
+
+			button.enable();
 
 			button.setAnchor(0.5, 0.5);
 			// button.setPosition(200, 100);
@@ -34,6 +34,8 @@ define(['DisplayObject'],
 		 */
 
 		Button.prototype = Object.create(DisplayObject.prototype);
+
+		Button.prototype.eventMap = device.events;
 
 		Button.prototype.setText = function (text) {
 			this.textNode.text = text;
@@ -120,24 +122,53 @@ define(['DisplayObject'],
 		};
 
 		Button.prototype.on = function (type, fn) {
-			// see http://pixijs.github.io/examples/index.html?s=demos&f=interactivity.js&title=Interactivity
+			this.sprite.on(this.eventMap[type], fn);
 		};
 
-		Button.prototype.off = function () {
-			// see https://github.com/pixijs/pixi.js/issues/381
+		Button.prototype.off = function (typeArg, fn) {
+
+			var button = this,
+				sprite = button.sprite,
+				eventMap = this.eventMap,
+				type = eventMap[typeArg];
+
+			if (typeArg && fn) {
+				return sprite.off(type, fn);
+			}
+
+			if (typeArg) {
+				return sprite.listeners(type).forEach(function (listener) {
+					button.off(typeArg, listener);
+				});
+			}
+
+			Object.keys(eventMap).forEach(function (key) {
+				button.off(key);
+			});
+
+		};
+
+		Button.prototype.enable = function () {
+			this.sprite.interactive = true;
+		};
+
+		Button.prototype.disable = function () {
+			this.sprite.interactive = false;
 		};
 
 		Button.prototype.destroy = function () {
 
 			var button = this;
 
+			button.disable();
+
+			button.off();
+
 			if (button.textNode) {
 				button.sprite.removeChild(button.textNode);
 			}
 
 			button.parentView.stage.removeChild(button.sprite);
-
-			button.off();
 
 		};
 

@@ -12,18 +12,22 @@ define(
 			device = {
 
 				eventTypes: {
+					click: ['click', 'tap'],
 					down: ['mousedown', 'touchstart'],
 					move: ['mousemove', 'touchmove'],
 					up: ['mouseup', 'touchend']
 				},
 
 				events: {
+					click: '',
 					down: '',
 					move: '',
 					up: ''
 				},
 
 				mapEventType: {
+					click: 'click',
+					tap: 'click',
 					mousedown: 'down',
 					touchstart: 'down',
 					mousemove: 'move',
@@ -41,7 +45,7 @@ define(
 					orientation: '|',
 					spaceSize: 0,
 
-					_isTouch: false,
+					isTouch: false,
 					_logMoving: new EndlessArray(10), // use endless array
 					_logDown: new EndlessArray(10), // use endless array
 					_pinchStartEvents: [], // normal array
@@ -83,7 +87,7 @@ define(
 						key;
 
 					// set is touch
-					device.attr._isTouch = isTouch;
+					device.attr.isTouch = isTouch;
 
 					// set events names - touch or mouse
 					for (key in types) {
@@ -125,7 +129,7 @@ define(
 							length: 0,
 							type: ''
 						},
-						events = device.attr._isTouch ? e.touches : [e],
+						events = device.attr.isTouch ? e.touches : [e],
 						i, len = events.length;
 
 					evt.length = len;
@@ -333,7 +337,7 @@ define(
 						events = device.getEvents(e),
 						eventsArr = events.events,
 						eventsArrLength = eventsArr.length,
-						isTouch = attr._isTouch,
+						isTouch = attr.isTouch,
 						pinchIsActive = attr._pinchIsActive;
 
 					// try to detect double click
