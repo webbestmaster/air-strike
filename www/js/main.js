@@ -12,6 +12,7 @@ requirejs.config({
 		PIXI: 'lib/pixi',
 		EasePack: 'lib/EasePack',
 		TweenLite: 'lib/TweenLite',
+		FPSMeter: 'lib/fpsmeter',
 		// init service
 		device: 'services/device',
 		// core

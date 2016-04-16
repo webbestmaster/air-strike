@@ -6,6 +6,8 @@ define(['device', 'mediator'],
 			renderer: null,
 			stage: null,
 
+			fpsMeter: new FPSMeter(), // remove
+
 			initialize: function () {
 
 				var renderer = this;
@@ -31,6 +33,8 @@ define(['device', 'mediator'],
 			draw: function () {
 
 				this.renderer.render(this.stage);
+
+				this.fpsMeter.tick(); // remove
 
 			},
 

@@ -4,7 +4,8 @@ define(
 		'SettingView',
 		'EasePack',
 		'TweenLite',
-		'PIXI'
+		'PIXI',
+		'FPSMeter'
 	],
 	function () {}
 );
