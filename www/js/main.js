@@ -22,6 +22,7 @@ requirejs.config({
 		BaseView: 'core/base-view',
 		Button: 'core/button',
 		loader: 'core/loader',
+		camera: 'core/camera',
 		// views
 		TitleView: 'view/title/view',
 		SettingView: 'view/setting/view'
@@ -35,16 +36,18 @@ define(
 		'mediator',
 		'device',
 		'loader',
-		'renderer'
+		'renderer',
+		'camera'
 	],
 	function (load,
 			  mediator,
 			  device,
 			  loader,
-			  renderer) {
-
+			  renderer,
+			  camera) {
 
 		device.initialize();
+		camera.initialize();
 
 		loader
 			.load()

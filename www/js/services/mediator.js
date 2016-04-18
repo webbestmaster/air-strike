@@ -10,37 +10,61 @@ define(
 
 		function subscribe(channel, fn) {
 
-			var channels = mediator.channels;
+			var channels = mediator.channels,
+				neededChanel = channels[channel];
 
-			if (!channels[channel]) {
-				channels[channel] = [];
+			if (neededChanel) {
+				neededChanel[neededChanel.length] = {context: this, callback: fn};
+				return this;
 			}
 
-			channels[channel].push({context: this, callback: fn});
-
+			channels[channel] = [{context: this, callback: fn}];
 			return this;
 
 		}
 
 		function publish(channel) {
 
-			var list = mediator.channels[channel],
+			var list = mediator.channels[channel] || [],
+				item,
+				i, len = arguments.length,
 				args;
 
 			log('publish -', channel, arguments); // remove
 
-			if (!list) {
+			if ( len === 1 ) {
+				for (i = 0, len = list.length; i < len; i += 1) {
+					item = list[i];
+					item.callback.call(item.context);
+				}
 				return this;
 			}
 
-			args = Array.prototype.slice.call(arguments, 1);
+			if ( len === 2 ) {
+				args = arguments[1];
+				for (i = 0, len = list.length; i < len; i += 1) {
+					item = list[i];
+					item.callback.call(item.context, args);
+				}
+				return this;
+			}
 
-			list.forEach(function (item) {
+			args = [];
+			for (i = 1; i < len; i += 1) {
+				args[i - 1] = arguments[i];
+			}
+
+			for (i = 0, len = list.length; i < len; i += 1) {
+				item = list[i];
 				item.callback.apply(item.context, args);
-			});
+			}
 
 			return this;
 
+		}
+
+		function filter(item) {
+			return item.context !== this;
 		}
 
 		function unsubscribe(channel) {
@@ -64,9 +88,7 @@ define(
 				return this;
 			}
 
-			channels[channel] = channels[channel].filter(function (item) {
-				return item.context !== this;
-			}, this);
+			channels[channel] = channels[channel].filter(filter, this);
 
 			return this;
 

@@ -70,6 +70,7 @@ gulp.task('collect-js', function () {
 				BaseView: 'core/base-view',
 				Button: 'core/button',
 				loader: 'core/loader',
+				camera: 'core/camera',
 				// views
 				TitleView: 'view/title/view',
 				SettingView: 'view/setting/view'

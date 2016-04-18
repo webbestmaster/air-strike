@@ -1,6 +1,6 @@
 define(
-	['BaseView', 'Button', 'device', 'TweenLite', 'mediator'],
-	function (BaseView, Button, device, TweenLite, mediator) {
+	['BaseView', 'Button', 'device', 'TweenLite', 'mediator', 'camera'],
+	function (BaseView, Button, device, TweenLite, mediator, camera) {
 
 		var buttonMap = [
 
@@ -38,7 +38,7 @@ define(
 					delta;
 
 				button.createTextNode('I am the text on the button', {
-					font: '50px quake',
+					font: camera.remToPixel(3, 'px') + ' quake',
 					fill: '#FFF',
 					align: 'center',
 					wordWrap: true,

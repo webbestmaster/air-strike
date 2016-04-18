@@ -114,7 +114,7 @@ define(
 
 			renderer.remove(view);
 
-			console.log('view is hidden');
+			console.log('view is hidden'); // remove
 
 		};
 
