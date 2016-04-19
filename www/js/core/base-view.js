@@ -57,6 +57,7 @@ define(
 		BaseView.prototype.mainHide = function () {
 
 			this.unsubscribe();
+			mediator.uninstallFrom(this);
 			this.mainHideAnimation();
 
 		};

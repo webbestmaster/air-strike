@@ -105,10 +105,12 @@ define(
 				obj.unsubscribe = unsubscribe;
 			},
 			uninstallFrom: function (obj) {
-				['subscribe', 'publish', 'unsubscribe'].forEach(function (methodName) {
-					obj[methodName] = null;
-					delete obj[methodName];
-				});
+				obj.subscribe = null;
+				delete obj.subscribe;
+				obj.publish = null;
+				delete obj.publish;
+				obj.unsubscribe = null;
+				delete obj.unsubscribe;
 			}
 		};
 
