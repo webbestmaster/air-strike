@@ -59,6 +59,7 @@ define(['device'],
 				cfg = {
 					x: sprite.x - xy2.x + xy1.x + (leftOffset || 0),
 					y: sprite.y - xy2.y + xy1.y + (topOffset || 0),
+					delay: options.delay || 0,
 					onComplete: options.onComplete,
 					ease: options.ease || Back.easeOut
 				};

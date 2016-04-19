@@ -6,7 +6,27 @@ define(
 
 			{
 				text: 'text',
-				style: {}
+				offset: {
+					top: -3
+				}
+			},
+			{
+				text: 'text 1',
+				offset: {
+					top: 0
+				}
+			},
+			{
+				text: 'text 2',
+				offset: {
+					top: 3
+				}
+			},
+			{
+				text: 'text 3',
+				offset: {
+					top: 6
+				}
 			}
 
 		];
@@ -31,11 +51,11 @@ define(
 
 			var view = this;
 
-			buttonMap.forEach(function (buttonData) {
+			buttonMap.forEach(function (buttonData, index) {
 
 				var button = new Button(view);
 
-				button.createTextNode('I am the text on the button', {
+				button.createTextNode(buttonData.text, {
 					font: camera.remToPixel(3, 'px') + ' quake',
 					fill: '#FFF',
 					align: 'center',
@@ -43,17 +63,20 @@ define(
 					wordWrapWidth: button.sprite.width * 0.8
 				});
 
-				button.setSize(-1, 30);
+				button.setSize(-1, camera.remToPixel(2.8));
 
 				// debugger
-				button.moveTo(9, 9);
+				button.moveTo(4, 6, 0, camera.remToPixel(buttonData.offset.top));
 
 				// the same of
 				// button.moveToAnimate(1, 1, {
 				// 	time: 6
 				// });
 				// this
-				button.moveToAnimate(3, 3, 5);
+				button.moveToAnimate(5, 5, {
+					time: 2,
+					delay: index / 3
+				}, 0, camera.remToPixel(buttonData.offset.top));
 
 				button.on('click', function () {
 					mediator.publish('show:SettingView');
