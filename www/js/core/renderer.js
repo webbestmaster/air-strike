@@ -1,4 +1,4 @@
-define(['device', 'mediator'],
+define(['device', 'mediator', 'FPSMeter'],
 	function (device, mediator) {
 
 		return {
