@@ -409,6 +409,48 @@ define(
 						orientation: orientation
 					});
 
+				},
+
+				getCoordinatesOfPoint: function (point) {
+
+					var coordinates = {
+						x: 0,
+						y: 0
+					};
+
+					switch (point) {
+						case 2 :
+							coordinates.x = this.attr.width / 2;
+							break;
+						case 3 :
+							coordinates.x = this.attr.width;
+							break;
+						case 4 :
+							coordinates.y = this.attr.height / 2;
+							break;
+						case 5 :
+							coordinates.x = this.attr.width / 2;
+							coordinates.y = this.attr.height / 2;
+							break;
+						case 6 :
+							coordinates.x = this.attr.width;
+							coordinates.y = this.attr.height / 2;
+							break;
+						case 7 :
+							coordinates.y = this.attr.height;
+							break;
+						case 8 :
+							coordinates.x = this.attr.width / 2;
+							coordinates.y = this.attr.height;
+							break;
+						case 9 :
+							coordinates.x = this.attr.width;
+							coordinates.y = this.attr.height;
+							break;
+					}
+
+					return coordinates;
+
 				}
 
 			};

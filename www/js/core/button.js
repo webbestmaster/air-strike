@@ -66,32 +66,6 @@ define(['DisplayObject', 'device'],
 
 		};
 
-		Button.prototype.setSize = function (width, height) {
-
-			var sprite = this.sprite,
-				q;
-
-			if (width === -1) {
-				q = sprite.height / height;
-				sprite.height = height;
-				sprite.width = Math.round(sprite.width / q);
-				return this;
-			}
-
-			if (height === -1) {
-				q = sprite.width / width;
-				sprite.width = width;
-				sprite.height = Math.round(sprite.height / q);
-				return this;
-			}
-
-			sprite.width = width;
-			sprite.height = height;
-
-			return this;
-
-		};
-
 		Button.prototype.createTextNode = function (text, styles) {
 
 			var button = this,
@@ -109,16 +83,6 @@ define(['DisplayObject', 'device'],
 
 			return button;
 
-		};
-
-		Button.prototype.setAnchor = function (x, y) {
-			this.sprite.anchor.x = x;
-			this.sprite.anchor.y = y;
-		};
-
-		Button.prototype.setPosition = function (x, y) {
-			this.sprite.position.x = x;
-			this.sprite.position.y = y;
 		};
 
 		Button.prototype.on = function (type, fn) {
@@ -169,6 +133,8 @@ define(['DisplayObject', 'device'],
 			}
 
 			button.parentView.stage.removeChild(button.sprite);
+
+			console.log('button destroy'); // remove
 
 		};
 
