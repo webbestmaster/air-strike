@@ -15,11 +15,13 @@ requirejs.config({
 		FPSMeter: 'lib/fpsmeter',
 		// init service
 		device: 'services/device',
+		deviceEvents: 'services/device-events',
 		// core
 		renderer: 'core/renderer',
 		textureMaster: 'core/texture-master',
 		DisplayObject: 'core/display-object',
 		BaseView: 'core/base-view',
+		BaseViewEvents: 'core/base-view-events',
 		Button: 'core/button',
 		loader: 'core/loader',
 		camera: 'core/camera',

@@ -4,13 +4,17 @@ define(
 		'mediator',
 		'renderer',
 		'device',
-		'TweenLite'
+		'TweenLite',
+		'deviceEvents',
+		'BaseViewEvents'
 	],
 	function (DisplayObject,
 			  mediator,
 			  renderer,
 			  device,
-			  TweenLite) {
+			  TweenLite,
+			  deviceEvents,
+			  BaseViewEvents) {
 
 		function BaseView() {
 
@@ -26,7 +30,7 @@ define(
 
 			view.buttons = [];
 
-			mediator.publish('hideView');
+			mediator.publish(BaseViewEvents.HIDE);
 
 			view.bindMainEventListeners();
 
@@ -42,7 +46,7 @@ define(
 
 			mediator.installTo(view);
 
-			view.subscribe('hideView', view.mainHide);
+			view.subscribe(BaseViewEvents.HIDE, view.mainHide);
 
 		};
 
@@ -143,7 +147,7 @@ define(
 
 			view.updateBgPosition(device.attr);
 
-			view.subscribe('deviceEvent:resize', view.updateBgPosition);
+			view.subscribe(deviceEvents.RESIZE, view.updateBgPosition);
 
 		};
 

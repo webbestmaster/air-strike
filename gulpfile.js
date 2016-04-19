@@ -50,6 +50,7 @@ gulp.task('collect-js', function () {
 			name: 'main',
 			baseUrl: './www/js/',
 			out: 'main.js',
+			// copy paths from main.js
 			paths: {
 				// init service
 				log: 'services/log',
@@ -63,11 +64,13 @@ gulp.task('collect-js', function () {
 				FPSMeter: 'lib/fpsmeter',
 				// init service
 				device: 'services/device',
+				deviceEvents: 'services/device-events',
 				// core
 				renderer: 'core/renderer',
 				textureMaster: 'core/texture-master',
 				DisplayObject: 'core/display-object',
 				BaseView: 'core/base-view',
+				BaseViewEvents: 'core/base-view-events',
 				Button: 'core/button',
 				loader: 'core/loader',
 				camera: 'core/camera',

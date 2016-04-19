@@ -1,5 +1,5 @@
-define(['device', 'mediator', 'FPSMeter'],
-	function (device, mediator) {
+define(['device', 'mediator', 'deviceEvents', 'FPSMeter'],
+	function (device, mediator, deviceEvents) {
 
 		return {
 
@@ -32,6 +32,8 @@ define(['device', 'mediator', 'FPSMeter'],
 
 			draw: function () {
 
+				// this.publish('renderer:update');
+
 				this.renderer.render(this.stage);
 
 				this.fpsMeter.tick(); // remove
@@ -60,11 +62,10 @@ define(['device', 'mediator', 'FPSMeter'],
 			bindEventListeners: function () {
 
 				var renderer = this;
-				// mediator = window.requireAsset.get('mediator');
 
 				mediator.installTo(renderer);
 
-				renderer.subscribe('deviceEvent:resize', function (data) {
+				renderer.subscribe(deviceEvents.RESIZE, function (data) {
 					this.renderer.resize(data.width, data.height);
 				});
 
