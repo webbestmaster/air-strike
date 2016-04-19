@@ -64,17 +64,13 @@ define(
 
 		BaseView.prototype.mainHideAnimation = function () {
 
-			var view = this;
-
 			TweenLite
 				.to(
-					view.stage,
+					this.stage,
 					2,
 					{
 						alpha: 0,
-						onComplete: function () {
-							view.mainRemove();
-						}
+						onComplete: this.mainRemove.bind(this)
 						// ease: Back.easeOut
 					}
 				);
