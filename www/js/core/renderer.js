@@ -82,7 +82,7 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter'],
 
 				mediator.installTo(renderer);
 
-				renderer.subscribe(deviceEvents.RESIZE, function (data) {
+				renderer.subscribe(deviceEvents.RESIZE, function rendererOnResize(data) {
 					this.renderer.resize(data.width, data.height);
 				});
 

@@ -100,7 +100,7 @@ define(
 
 		};
 
-		mediator.subscribe('show:TitleView', function () {
+		mediator.subscribe('show:TitleView', function showTitleView() {
 			new TitleView();
 		});
 
