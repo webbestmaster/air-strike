@@ -76,7 +76,19 @@ gulp.task('collect-js', function () {
 				camera: 'core/camera',
 				// views
 				TitleView: 'view/title/view',
-				SettingView: 'view/setting/view'
+				SettingView: 'view/setting/view',
+
+
+
+				// game
+				GameModel: 'game/model',
+				GameView: 'game/view',
+				Factory: 'factory/factory',
+				factoryKeys: 'factory/factory-keys',
+				constructorMap: 'factory/constructor-map',
+
+				// game objects
+				Bullet: 'objects/bullet'
 			}
 		}))
 		.pipe(gulp.dest('./dist/www/js/'));

@@ -21,6 +21,7 @@ define(['log', 'Deferred'],
 				loader.add([
 					'src/bg-title.json',
 					'src/bg-setting.json',
+					'src/bg-game.json',
 					'src/button.png'
 				]);
 

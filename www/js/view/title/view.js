@@ -79,7 +79,8 @@ define(
 				}, 0, camera.remToPixel(buttonData.offset.top));
 
 				button.on('click', function () {
-					mediator.publish('show:SettingView');
+					// mediator.publish('show:SettingView');
+					mediator.publish('show:GameView');
 					// button.destroy();
 				});
 				//

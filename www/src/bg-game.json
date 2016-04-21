@@ -1,0 +1,20 @@
+{"frames": {
+
+"bg-game":
+{
+	"frame": {"x":1,"y":1,"w":857,"h":535},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":858,"h":536},
+	"sourceSize": {"w":858,"h":536}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "bg-game.jpg",
+	"format": "RGBA8888",
+	"size": {"w":858,"h":536},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:ca5553b3ae0666285d51a9d4b77b573f:0ae99ffa53da5464c08ad88831a8361c:ef4565707e47fc437a495e1a39380d82$"
+}
+}

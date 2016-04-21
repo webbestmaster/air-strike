@@ -27,7 +27,21 @@ requirejs.config({
 		camera: 'core/camera',
 		// views
 		TitleView: 'view/title/view',
-		SettingView: 'view/setting/view'
+		SettingView: 'view/setting/view',
+
+
+
+		// game
+		GameModel: 'game/model',
+		GameView: 'game/view',
+		Factory: 'factory/factory',
+		factoryKeys: 'factory/factory-keys',
+		constructorMap: 'factory/constructor-map',
+
+		// game objects
+		Bullet: 'objects/bullet'
+
+
 	}
 
 });
@@ -35,13 +49,15 @@ requirejs.config({
 define(
 	[
 		'lib/load',
+		'view/load',
 		'mediator',
 		'device',
 		'loader',
 		'renderer',
 		'camera'
 	],
-	function (load,
+	function (libLoad,
+			  viewLoad,
 			  mediator,
 			  device,
 			  loader,
