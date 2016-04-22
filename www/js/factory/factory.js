@@ -13,7 +13,8 @@ define([
 		var factory = this;
 
 		factory.attr = {
-			lists: {}
+			lists: {},
+			types: []
 		};
 
 		factory.initialize();
@@ -23,12 +24,17 @@ define([
 	Factory.prototype.initialize = function () {
 
 		// create lists for arrays
+		// create list of types
 		var factory = this,
-			lists = factory.attr.lists;
+			types = factory.attr.types,
+			lists = factory.attr.lists,
+			key, type;
 
-		for (var key in factoryKeys) {
+		for (key in factoryKeys) {
 			if (factoryKeys.hasOwnProperty(key)) {
-				lists[factoryKeys[key]] = {
+				type = factoryKeys[key];
+				types.push(type);
+				lists[type] = {
 					objects: [],
 					lifeMap: []
 				}
@@ -55,7 +61,6 @@ define([
 		return objects[index] = new constructorMap[type]();
 
 	};
-
 
 	return Factory;
 

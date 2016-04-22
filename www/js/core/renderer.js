@@ -1,5 +1,5 @@
-define(['device', 'mediator', 'deviceEvents', 'FPSMeter'],
-	function (device, mediator, deviceEvents) {
+define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys'],
+	function (device, mediator, deviceEvents, _fpsMeter, gameKeys) {
 
 		return {
 
@@ -32,24 +32,7 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter'],
 
 			draw: function () {
 
-
-
-				// this.publish('obj:update');
-				// update x, y and other parameters of object
-				// also obj have to has isEnable value to fast check: need work with this object or now
-				// you can add logic to obj which behaviour relative from obj's key 'inCamera'
-				// when object created it add self to camera's objects array
-
-
-
-				// this.publish('camera:update');
-				// check obj in camera
-				// set obj's key 'inCamera' to true or false
-				// position relative of center camera - deltaX, deltaY
-				// set obj's SPRITE visible to true of false
-				// set SPRITE coordinates and scale (width, height)
-
-
+				this.publish(gameKeys.UPDATE);
 
 				this.renderer.render(this.stage);
 

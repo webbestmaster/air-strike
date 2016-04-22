@@ -2,11 +2,15 @@ define(
 	['device'],
 	function (device) {
 
+	// WARNING  camera use game coordinates only
+
 	return {
 
 		defaults: {
-			width: 480,
-			height: 320,
+			// w: 480,
+			// h: 320,
+			w: 480,
+			h: 320,
 			remSize: {
 				min: 16,
 				max: 26
@@ -14,11 +18,13 @@ define(
 		},
 
 		attr: {
-			width: 480,
-			height: 320,
+			w: 0,
+			h: 0,
+			w05: 0,
+			h05: 0,
 			q: 1,
-			x: 0, // left top corner of camera
-			y: 0, // left top corner of camera
+			x: 0, // center camera is here
+			y: 0, // center camera is here
 			remSize: 20
 		},
 
@@ -58,23 +64,36 @@ define(
 
 		},
 
+		getBounds: function () {
+
+			var data = this.attr,
+				x = data.x,
+				y = data.y;
+
+			return [x - data.w05, y - data.h05, x + data.w05, y + data.h05, Date.now()];
+
+		},
+
 		adjust: function (width, height) {
 
 			var camera = this,
 				cameraData = camera.attr,
 				defaults = camera.defaults,
-				qWidth = width / defaults.width,
-				qHeight = height / defaults.height;
+				qWidth = width / defaults.w,
+				qHeight = height / defaults.h;
 
-			if (qWidth > qHeight) {
-				cameraData.width = Math.floor(cameraData.width * qWidth);
-				cameraData.height = defaults.height;
+			if (qWidth < qHeight) {
+				cameraData.w = defaults.w;
+				cameraData.h = Math.floor((cameraData.w * height / width) / qWidth);
 				cameraData.q = qWidth;
 			} else {
-				cameraData.width = defaults.width;
-				cameraData.height = Math.floor(cameraData.height * qHeight);
+				cameraData.h = defaults.h;
+				cameraData.w = Math.floor((cameraData.h * width / height) / qHeight);
 				cameraData.q = qHeight;
 			}
+
+			cameraData.w05 = cameraData.w / 2;
+			cameraData.h05 = cameraData.h / 2;
 
 		},
 
@@ -82,7 +101,7 @@ define(
 
 			var camera = this,
 				defaults = camera.defaults,
-				cameraArea = defaults.width * defaults.height,
+				cameraArea = defaults.w * defaults.h,
 				deviceData = device.attr,
 				deviceArea = deviceData.width * deviceData.height,
 				remSize = Math.round(deviceArea / cameraArea * defaults.remSize.min);
@@ -104,12 +123,11 @@ define(
 
 			return this.attr.remSize * rem;
 
+		},
+
+		adjustSprite: function (obj) {
+			console.log('camera adjust sprite');
 		}
-
-
-
-
-
 
 	};
 
