@@ -1,9 +1,11 @@
 define([
 	'factoryKeys',
-	'constructorMap'
+	'constructorMap',
+	'objectKeys'
 ], function (
 	factoryKeys,
-	constructorMap
+	constructorMap,
+	objectKeys
 ) {
 
 	function Factory() {
@@ -41,15 +43,15 @@ define([
 		var lists = this.attr.lists[type],
 			lifeMap = lists.lifeMap,
 			objects = lists.objects,
-			index = lifeMap.indexOf(factoryKeys.DEAD);
+			index = lifeMap.indexOf(objectKeys.DEAD);
 
 		if (index !== -1) {
-			lifeMap[index] = 1;
+			lifeMap[index] = objectKeys.ALIVE;
 			return objects[index];
 		}
 
 		index = lifeMap.length;
-		lifeMap[index] = factoryKeys.ALIVE;
+		lifeMap[index] = objectKeys.ALIVE;
 		return objects[index] = new constructorMap[type]();
 
 	};

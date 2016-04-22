@@ -36,6 +36,7 @@ requirejs.config({
 		GameView: 'game/view',
 		Factory: 'factory/factory',
 		factoryKeys: 'factory/factory-keys',
+		objectKeys: 'factory/object-keys',
 		constructorMap: 'factory/constructor-map',
 
 		// game objects
