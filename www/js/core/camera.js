@@ -5,8 +5,8 @@ define(
 	return {
 
 		defaults: {
-			width: 320,
-			height: 480,
+			width: 480,
+			height: 320,
 			remSize: {
 				min: 16,
 				max: 26
@@ -14,10 +14,11 @@ define(
 		},
 
 		attr: {
-			width: 320,
-			height: 480,
-			x: 0,
-			y: 0,
+			width: 480,
+			height: 320,
+			q: 1,
+			x: 0, // left top corner of camera
+			y: 0, // left top corner of camera
 			remSize: 20
 		},
 
@@ -26,6 +27,54 @@ define(
 			var camera = this;
 
 			camera.detectRemSize();
+
+			camera.adjust(device.attr.width, device.attr.height);
+
+		},
+
+		moveToObj: function (obj) {
+
+
+
+		},
+
+		moveToArray: function (arr) {
+
+
+
+		},
+
+		setBorders: function (minX, minY, maxX, maxY) {
+
+			// set max and min camera's position
+
+		},
+
+		update: function () {
+
+			// update camera's max/min X/Y
+			// save result and return it
+			// for this game Camera's X parameter has relative ship from Player's object
+
+		},
+
+		adjust: function (width, height) {
+
+			var camera = this,
+				cameraData = camera.attr,
+				defaults = camera.defaults,
+				qWidth = width / defaults.width,
+				qHeight = height / defaults.height;
+
+			if (qWidth > qHeight) {
+				cameraData.width = Math.floor(cameraData.width * qWidth);
+				cameraData.height = defaults.height;
+				cameraData.q = qWidth;
+			} else {
+				cameraData.width = defaults.width;
+				cameraData.height = Math.floor(cameraData.height * qHeight);
+				cameraData.q = qHeight;
+			}
 
 		},
 

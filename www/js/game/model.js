@@ -15,6 +15,11 @@ define(['Factory', 'factoryKeys'], function (Factory, factoryKeys) {
 
 	}
 
+	GameModel.prototype.update = function () {
+		
+		// update all game objects
+		
+	};
 	
 
 	return GameModel;
