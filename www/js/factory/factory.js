@@ -41,15 +41,16 @@ define([
 		var lists = this.attr.lists[type],
 			lifeMap = lists.lifeMap,
 			objects = lists.objects,
-			index = lifeMap.indexOf(0);
+			index = lifeMap.indexOf(factoryKeys.DEAD);
 
 		if (index !== -1) {
 			lifeMap[index] = 1;
 			return objects[index];
 		}
 
-		lifeMap[lifeMap.length] = 1;
-		return objects[objects.length] = new constructorMap[type]();
+		index = lifeMap.length;
+		lifeMap[index] = factoryKeys.ALIVE;
+		return objects[index] = new constructorMap[type]();
 
 	};
 

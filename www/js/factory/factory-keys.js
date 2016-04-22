@@ -1,7 +1,9 @@
 define(function () {
 
 	return {
-		BULLET: 'factory:Bullet'
+		BULLET: 'factory:Bullet',
+		ALIVE: true,
+		DEAD: false
 	}
 
 });
