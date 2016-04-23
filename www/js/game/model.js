@@ -61,7 +61,7 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 					object = objects[iiObjects];
 					/* alive object is here - begin */
 					/* use 'object' to work with object */
-					object.update(cameraBounds[0], cameraBounds[1], cameraBounds[2], cameraBounds[3], cameraBounds[4]);
+					object.update.apply(object, cameraBounds);
 
 					if (object.attr.visible) {
 						camera.adjustSprite(object);

@@ -18,7 +18,9 @@ requirejs.config({
 		deviceEvents: 'services/device-events',
 		// core
 		renderer: 'core/renderer',
+		rendererKeys: 'core/renderer-keys',
 		textureMaster: 'core/texture-master',
+		textureSources: 'core/texture-sources',
 		DisplayObject: 'core/display-object',
 		BaseView: 'core/base-view',
 		BaseViewEvents: 'core/base-view-events',

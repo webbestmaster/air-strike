@@ -2,17 +2,36 @@ define(function () {
 
 	function Bullet() {
 
-		this.attr = {
-			visible: true,
-			x: 0,
-			y: 0,
-			sprite: null,
-			w: 100,
-			h: 50,
-			w05: 100 / 2,
-			h05: 50 / 2
-			// ,a: 0 // FIXME: use angle for detect object bound
-		};
+		var bullet = this,
+			data = {
+				visible: true,
+				x: 320.00,
+				y: 300.00,
+				sprite: new PIXI.Sprite.fromFrame('bullet'),
+				w: 300,
+				h: 20,
+				w05: 0, // w /2
+				h05: 0// h / 2
+				/*
+				 cam: {
+				 x: 0,
+				 y: 0
+				 }
+				 */
+				// ,a: 0 // FIXME: use angle for detect object bound
+			};
+
+
+		data.sprite.anchor.set(0.5, 0.5);
+
+		data.w05 = data.w / 2;
+		data.h05 = data.h / 2;
+
+		bullet.attr = data;
+
+		// TweenLite.to(data, 5, {
+		// 	x: 0
+		// })
 
 	}
 
@@ -33,12 +52,21 @@ define(function () {
 
 	Bullet.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, time) {
 
-/*
-		console.log(cameraX0, cameraY0, cameraX1, cameraY1, time);
+		// count position relative camera
+		var objData = this.attr;
 
-		console.log('set for sprite.visible to true or false for renderer');
-		console.log('set for object.visible to true or false for camera');
-*/
+		if (
+			objData.x + objData.w05 < cameraX0 ||
+			objData.y + objData.h05 < cameraY0 ||
+			objData.x - objData.w05 > cameraX1 ||
+			objData.y - objData.h05 > cameraY1
+		) {
+			objData.visible = false;
+			objData.sprite.visible = false;
+		}
+
+
+
 
 	};
 

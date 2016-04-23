@@ -1,0 +1,8 @@
+game camera
+    default
+        // like iPhone4 in portrait mode
+        width 320
+        height 480
+
+game world
+    width: 640 // twice camera width

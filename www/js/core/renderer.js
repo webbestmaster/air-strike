@@ -1,5 +1,5 @@
-define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys'],
-	function (device, mediator, deviceEvents, _fpsMeter, gameKeys) {
+define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys', 'rendererKeys'],
+	function (device, mediator, deviceEvents, _fpsMeter, gameKeys, rendererKeys) {
 
 		return {
 
@@ -69,6 +69,8 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys'],
 					this.renderer.resize(data.width, data.height);
 				});
 
+				renderer.subscribe(rendererKeys.APPEND_SPRITE, renderer.appendSprite);
+
 			},
 
 			append: function (view) {
@@ -82,6 +84,16 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys'],
 				this.stage.removeChild(view.stage);
 
 			},
+
+			appendSprite: function (sprite) {
+				this.stage.addChild(sprite);
+			},
+
+/*
+			removeSprite: function (sprite) {
+				this.stage.removeChild(sprite);
+			},
+*/
 
 			//////
 			//  only for mediator

@@ -1,11 +1,15 @@
 define([
 	'factoryKeys',
 	'constructorMap',
-	'objectKeys'
+	'objectKeys',
+	'mediator',
+	'rendererKeys'
 ], function (
 	factoryKeys,
 	constructorMap,
-	objectKeys
+	objectKeys,
+	mediator,
+	rendererKeys
 ) {
 
 	function Factory() {
@@ -58,7 +62,9 @@ define([
 
 		index = lifeMap.length;
 		lifeMap[index] = objectKeys.ALIVE;
-		return objects[index] = new constructorMap[type]();
+		objects[index] = new constructorMap[type]();
+		mediator.publish(rendererKeys.APPEND_SPRITE, objects[index].attr.sprite);
+		return objects[index];
 
 	};
 

@@ -52,7 +52,6 @@ gulp.task('collect-js', function () {
 			out: 'main.js',
 			// copy paths from main.js
 			paths: {
-				// init service
 				log: 'services/log',
 				mediator: 'services/mediator',
 				// init libs
@@ -67,7 +66,9 @@ gulp.task('collect-js', function () {
 				deviceEvents: 'services/device-events',
 				// core
 				renderer: 'core/renderer',
+				rendererKeys: 'core/renderer-keys',
 				textureMaster: 'core/texture-master',
+				textureSources: 'core/texture-sources',
 				DisplayObject: 'core/display-object',
 				BaseView: 'core/base-view',
 				BaseViewEvents: 'core/base-view-events',

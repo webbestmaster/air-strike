@@ -1,6 +1,6 @@
 define(
-	['device'],
-	function (device) {
+	['device', 'mediator', 'deviceEvents'],
+	function (device, mediator, deviceEvents) {
 
 	// WARNING  camera use game coordinates only
 
@@ -9,8 +9,8 @@ define(
 		defaults: {
 			// w: 480,
 			// h: 320,
-			w: 480,
-			h: 320,
+			w: 320,
+			h: 480,
 			remSize: {
 				min: 16,
 				max: 26
@@ -23,9 +23,12 @@ define(
 			w05: 0,
 			h05: 0,
 			q: 1,
-			x: 0, // center camera is here
-			y: 0, // center camera is here
-			remSize: 20
+			x: 320.00, // center camera is here // half of word size
+			y: 300.00, // center camera is here
+			remSize: 20,
+			devW: 0,
+			devH: 0
+			// bounds: [0.0, 0.0, 0.0, 0.0, 0.0],
 		},
 
 		initialize: function () {
@@ -34,27 +37,52 @@ define(
 
 			camera.detectRemSize();
 
-			camera.adjust(device.attr.width, device.attr.height);
+			camera.bindEventListeners();
+
+			camera.adjust({
+				width: device.attr.width,
+				height: device.attr.height
+			});
 
 		},
 
-		moveToObj: function (obj) {
+		bindEventListeners: function () {
+
+			var camera = this;
+
+			mediator.installTo(camera);
+
+			camera.subscribe(deviceEvents.RESIZE, camera.adjust);
+
+		},
+
+/*
+		moveTo: function (x, y) {
+
+			// FIXME: detect edge position of camera relative from game's world
+			this.attr.x = x;
+			this.attr.y = y;
+
+		},
+
+		followToObj: function (obj) {
 
 
 
 		},
 
-		moveToArray: function (arr) {
+		followToArray: function (arr) {
 
 
 
 		},
 
-		setBorders: function (minX, minY, maxX, maxY) {
+		detectBorders: function (minX, minY, maxX, maxY) {
 
-			// set max and min camera's position
+			// detect max and min camera's position
 
 		},
+*/
 
 		update: function () {
 
@@ -74,10 +102,12 @@ define(
 
 		},
 
-		adjust: function (width, height) {
+		adjust: function (data) {
 
 			var camera = this,
 				cameraData = camera.attr,
+				width = data.width,
+				height = data.height,
 				defaults = camera.defaults,
 				qWidth = width / defaults.w,
 				qHeight = height / defaults.h;
@@ -94,6 +124,9 @@ define(
 
 			cameraData.w05 = cameraData.w / 2;
 			cameraData.h05 = cameraData.h / 2;
+
+			cameraData.devW = width;
+			cameraData.devH = height;
 
 		},
 
@@ -126,7 +159,19 @@ define(
 		},
 
 		adjustSprite: function (obj) {
-			console.log('camera adjust sprite');
+
+			var cameraData = this.attr,
+				objData = obj.attr,
+				sprite = objData.sprite;
+
+			// sprite pos
+			sprite.position.x = (((objData.x - cameraData.x) + cameraData.w05) / cameraData.w * cameraData.devW) | 0;
+			sprite.position.y = (((objData.y - cameraData.y) + cameraData.h05) / cameraData.h * cameraData.devH) | 0;
+
+			sprite.width = objData.w * cameraData.q;
+			sprite.height = objData.h * cameraData.q;
+
+
 		}
 
 	};

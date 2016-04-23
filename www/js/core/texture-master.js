@@ -1,7 +1,8 @@
-define(['log', 'Deferred'],
+define(['log', 'Deferred', 'textureSources'],
 	function (
 			log, // remove
-			Deferred
+			Deferred,
+			textureSources
 	) {
 		return {
 
@@ -18,12 +19,7 @@ define(['log', 'Deferred'],
 
 				// loader.baseUrl = master.baseUrl;
 
-				loader.add([
-					'src/bg-title.json',
-					'src/bg-setting.json',
-					'src/bg-game.json',
-					'src/button.png'
-				]);
+				loader.add(textureSources);
 
 				// loader.add();
 				// loader.add('src/bg-setting.json');
