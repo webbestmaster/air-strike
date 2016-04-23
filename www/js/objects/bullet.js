@@ -8,8 +8,8 @@ define(function () {
 				x: 320.00,
 				y: 300.00,
 				sprite: new PIXI.Sprite.fromFrame('bullet'),
-				w: 300,
-				h: 20,
+				w: 146,
+				h: 50,
 				w05: 0, // w /2
 				h05: 0// h / 2
 				/*
