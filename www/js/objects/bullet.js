@@ -31,7 +31,7 @@ define(function () {
 
 		// TweenLite.to(data, 5, {
 		// 	x: 0
-		// })
+		// });
 
 	}
 

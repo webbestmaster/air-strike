@@ -42,6 +42,8 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys', 'rendererK
 
 			createRenderer: function () {
 
+				PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
+
 				var renderer = this,
 
 					deviceData = device.attr,
@@ -49,6 +51,11 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys', 'rendererK
 					pixiRenderer = PIXI.autoDetectRenderer(
 						deviceData.width,
 						deviceData.height
+/*
+						,{
+							resolution: 2
+						}
+*/
 					);
 
 				renderer.stage = new PIXI.Container();
