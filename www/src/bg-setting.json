@@ -2,18 +2,18 @@
 
 "bg-setting":
 {
-	"frame": {"x":1,"y":1,"w":948,"h":533},
+	"frame": {"x":0,"y":0,"w":320,"h":480},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":949,"h":534},
-	"sourceSize": {"w":949,"h":534}
+	"spriteSourceSize": {"x":0,"y":0,"w":320,"h":480},
+	"sourceSize": {"w":320,"h":480}
 }},
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
 	"image": "bg-setting.jpg",
 	"format": "RGBA8888",
-	"size": {"w":949,"h":534},
+	"size": {"w":320,"h":480},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:ca5553b3ae0666285d51a9d4b77b573f:0ae99ffa53da5464c08ad88831a8361c:ef4565707e47fc437a495e1a39380d82$"
 }
