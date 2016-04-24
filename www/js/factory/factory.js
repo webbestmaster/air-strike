@@ -3,13 +3,13 @@ define([
 	'constructorMap',
 	'objectKeys',
 	'mediator',
-	'rendererKeys'
+	'gameKeys'
 ], function (
 	factoryKeys,
 	constructorMap,
 	objectKeys,
 	mediator,
-	rendererKeys
+	gameKeys
 ) {
 
 	function Factory() {
@@ -63,7 +63,7 @@ define([
 		index = lifeMap.length;
 		lifeMap[index] = objectKeys.ALIVE;
 		objects[index] = new constructorMap[type]();
-		mediator.publish(rendererKeys.APPEND_SPRITE, objects[index].attr.sprite);
+		mediator.publish(gameKeys.APPEND_SPRITE, objects[index].attr.sprite);
 		return objects[index];
 
 	};

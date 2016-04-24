@@ -2,7 +2,7 @@ define(
 	[
 		'DisplayObject',
 		'mediator',
-		'renderer',
+		'rendererKeys',
 		'device',
 		'TweenLite',
 		'deviceEvents',
@@ -10,7 +10,7 @@ define(
 	],
 	function (DisplayObject,
 			  mediator,
-			  renderer,
+			  rendererKeys,
 			  device,
 			  TweenLite,
 			  deviceEvents,
@@ -52,7 +52,7 @@ define(
 
 		BaseView.prototype.mainShow = function () {
 
-			renderer.append(this);
+			this.publish(rendererKeys.APPEND, this.stage);
 
 			this.mainShowAnimation();
 
@@ -113,7 +113,7 @@ define(
 				button.destroy();
 			});
 
-			renderer.remove(view);
+			mediator.publish(rendererKeys.REMOVE, this.stage);
 
 			console.log('view is hidden'); // remove
 
@@ -149,6 +149,14 @@ define(
 
 			view.subscribe(deviceEvents.RESIZE, view.updateBgPosition);
 
+		};
+
+		BaseView.prototype.appendSprite = function (sprite) {
+			this.stage.addChild(sprite);
+		};
+
+		BaseView.prototype.removeSprite = function (sprite) {
+			this.stage.removeChild(sprite);
 		};
 
 		return BaseView;

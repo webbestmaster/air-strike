@@ -1,7 +1,8 @@
 define(function () {
 	
 		return {
-			APPEND_SPRITE: 'renderer:append-sprite'
+			APPEND: 'renderer:append',
+			REMOVE: 'renderer:remove'
 		}
 	
 	}

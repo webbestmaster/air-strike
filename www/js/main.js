@@ -34,9 +34,10 @@ requirejs.config({
 
 
 		// game
-		GameModel: 'game/model',
-		GameView: 'game/view',
+		GameModel: 'game/game-model',
+		GameView: 'game/game-view',
 		gameKeys: 'game/game-keys',
+		gameConfig: 'game/game-config',
 		Factory: 'factory/factory',
 		factoryKeys: 'factory/factory-keys',
 		objectKeys: 'factory/object-keys',

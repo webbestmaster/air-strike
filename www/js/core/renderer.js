@@ -76,31 +76,18 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys', 'rendererK
 					this.renderer.resize(data.width, data.height);
 				});
 
-				renderer.subscribe(rendererKeys.APPEND_SPRITE, renderer.appendSprite);
+				renderer.subscribe(rendererKeys.APPEND, renderer.append);
+				renderer.subscribe(rendererKeys.REMOVE, renderer.remove);
 
 			},
 
-			append: function (view) {
-
-				this.stage.addChild(view.stage);
-
-			},
-
-			remove: function (view) {
-
-				this.stage.removeChild(view.stage);
-
-			},
-
-			appendSprite: function (sprite) {
+			append: function (sprite) {
 				this.stage.addChild(sprite);
 			},
 
-/*
-			removeSprite: function (sprite) {
+			remove: function (sprite) {
 				this.stage.removeChild(sprite);
 			},
-*/
 
 			//////
 			//  only for mediator

@@ -1,4 +1,4 @@
-define(function () {
+define(['GameObject'], function (GameObject) {
 
 	function Aircraft() {
 
@@ -6,6 +6,9 @@ define(function () {
 
 	}
 
+	Aircraft.prototype = Object.create(GameObject);
+
+	
 
 	return Aircraft;
 

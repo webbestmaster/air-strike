@@ -1,6 +1,6 @@
 define(
-	['device', 'mediator', 'deviceEvents'],
-	function (device, mediator, deviceEvents) {
+	['device', 'mediator', 'deviceEvents', 'gameConfig'],
+	function (device, mediator, deviceEvents, gameConfig) {
 
 	// WARNING  camera use game coordinates only
 
@@ -23,11 +23,11 @@ define(
 			w05: 0,
 			h05: 0,
 			q: 1,
-			x: 320.00, // center camera is here // half of word size
-			y: 300.00, // center camera is here
+			x: gameConfig.world.width / 2, // center camera is here // half of word size
+			y: gameConfig.world.height / 2, // center camera is here
 			remSize: 20,
-			devW: 0,
-			devH: 0
+			dw: 0, 	//device width
+			dh: 0 	//device height
 			// bounds: [0.0, 0.0, 0.0, 0.0, 0.0],
 		},
 
@@ -84,6 +84,7 @@ define(
 		},
 */
 
+/*
 		update: function () {
 
 			// update camera's max/min X/Y
@@ -91,6 +92,7 @@ define(
 			// for this game Camera's X parameter has relative ship from Player's object
 
 		},
+*/
 
 		getBounds: function () {
 
@@ -125,8 +127,8 @@ define(
 			cameraData.w05 = cameraData.w / 2;
 			cameraData.h05 = cameraData.h / 2;
 
-			cameraData.devW = width;
-			cameraData.devH = height;
+			cameraData.dw = width;
+			cameraData.dh = height;
 
 		},
 
@@ -165,8 +167,8 @@ define(
 				sprite = objData.sprite;
 
 			// sprite pos
-			sprite.position.x = (((objData.x - cameraData.x) + cameraData.w05) / cameraData.w * cameraData.devW) | 0;
-			sprite.position.y = (((objData.y - cameraData.y) + cameraData.h05) / cameraData.h * cameraData.devH) | 0;
+			sprite.position.x = (((objData.x - cameraData.x) + cameraData.w05) / cameraData.w * cameraData.dw) | 0;
+			sprite.position.y = (((objData.y - cameraData.y) + cameraData.h05) / cameraData.h * cameraData.dh) | 0;
 
 			sprite.width = objData.w * cameraData.q;
 			sprite.height = objData.h * cameraData.q;
