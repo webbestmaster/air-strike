@@ -1,5 +1,5 @@
-define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys', 'rendererKeys'],
-	function (device, mediator, deviceEvents, _fpsMeter, gameKeys, rendererKeys) {
+define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKeys'],
+	function (device, mediator, deviceKeys, _fpsMeter, gameKeys, rendererKeys) {
 
 		return {
 
@@ -72,7 +72,7 @@ define(['device', 'mediator', 'deviceEvents', 'FPSMeter', 'gameKeys', 'rendererK
 
 				mediator.installTo(renderer);
 
-				renderer.subscribe(deviceEvents.RESIZE, function rendererOnResize(data) {
+				renderer.subscribe(deviceKeys.RESIZE, function rendererOnResize(data) {
 					this.renderer.resize(data.width, data.height);
 				});
 

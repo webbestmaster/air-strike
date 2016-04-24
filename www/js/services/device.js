@@ -2,11 +2,11 @@ define(
 	[
 		'mediator',
 		'lib/endless-array',
-		'deviceEvents'
+		'deviceKeys'
 	],
 	function (mediator,
 			  EndlessArray,
-			  deviceEvents) {
+			  deviceKeys) {
 
 		var win = window,
 			doc = win.document,
@@ -317,7 +317,7 @@ define(
 						attr._pointDataY = y;
 					}
 
-					device.mediator.publish(deviceEvents.MOVE, {
+					device.mediator.publish(deviceKeys.MOVE, {
 						x: currentEventXY.x,
 						y: currentEventXY.y,
 						dx: dx,
@@ -387,7 +387,7 @@ define(
 						return;
 					}
 
-					device.mediator.publish(deviceEvents.DBL_TAP, lastDown);
+					device.mediator.publish(deviceKeys.DBL_TAP, lastDown);
 
 				},
 
@@ -405,7 +405,7 @@ define(
 					attr.orientation = orientation;
 					attr.viewPortSize = spaceSize;
 
-					device.mediator.publish(deviceEvents.RESIZE, {
+					device.mediator.publish(deviceKeys.RESIZE, {
 						width: width,
 						height: height,
 						orientation: orientation

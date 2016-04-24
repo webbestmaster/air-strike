@@ -1,6 +1,6 @@
 define(
-	['device', 'mediator', 'deviceEvents', 'gameConfig'],
-	function (device, mediator, deviceEvents, gameConfig) {
+	['device', 'mediator', 'deviceKeys', 'gameConfig', 'cameraKeys'],
+	function (device, mediator, deviceKeys, gameConfig, cameraKeys) {
 
 	// WARNING  camera use game coordinates only
 
@@ -23,6 +23,8 @@ define(
 			w05: 0,
 			h05: 0,
 			q: 1,
+			qX: 1,
+			qY: 1,
 			x: gameConfig.world.width / 2, // center camera is here // half of word size
 			y: gameConfig.world.height / 2, // center camera is here
 			remSize: 20,
@@ -46,13 +48,21 @@ define(
 
 		},
 
+		set: function (key, value) {
+			this.attr[key] = value;
+		},
+
+		get: function (key) {
+			return this.attr[key];
+		},
+
 		bindEventListeners: function () {
 
 			var camera = this;
 
 			mediator.installTo(camera);
 
-			camera.subscribe(deviceEvents.RESIZE, camera.adjust);
+			camera.subscribe(deviceKeys.RESIZE, camera.adjust);
 
 		},
 
@@ -117,11 +127,13 @@ define(
 			if (qWidth < qHeight) {
 				cameraData.w = defaults.w;
 				cameraData.h = Math.floor((cameraData.w * height / width) / qWidth);
-				cameraData.q = qWidth;
+				cameraData.qX = cameraData.q = qWidth;
+				cameraData.qY = height / cameraData.h;
 			} else {
 				cameraData.h = defaults.h;
 				cameraData.w = Math.floor((cameraData.h * width / height) / qHeight);
-				cameraData.q = qHeight;
+				cameraData.qY = cameraData.q = qHeight;
+				cameraData.qX = width / cameraData.w;
 			}
 
 			cameraData.w05 = cameraData.w / 2;
@@ -129,6 +141,8 @@ define(
 
 			cameraData.dw = width;
 			cameraData.dh = height;
+
+			camera.publish(cameraKeys.BOUNDS_UPDATED, cameraData);
 
 		},
 

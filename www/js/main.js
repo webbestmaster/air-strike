@@ -15,7 +15,7 @@ requirejs.config({
 		FPSMeter: 'lib/fpsmeter',
 		// init service
 		device: 'services/device',
-		deviceEvents: 'services/device-events',
+		deviceKeys: 'services/device-events',
 		// core
 		renderer: 'core/renderer',
 		rendererKeys: 'core/renderer-keys',
@@ -27,11 +27,10 @@ requirejs.config({
 		Button: 'core/button',
 		loader: 'core/loader',
 		camera: 'core/camera',
+		cameraKeys: 'core/camera-keys',
 		// views
 		TitleView: 'view/title/view',
 		SettingView: 'view/setting/view',
-
-
 
 		// game
 		GameModel: 'game/game-model',

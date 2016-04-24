@@ -64,7 +64,7 @@ define(function () {
 		}
 
 		this.attr.visible = this.attr.sprite.visible = false;
-		console.log('add destroy here');
+		// console.log('add destroy here');
 	};
 
 	GameObject.prototype.updateBounds = function () {

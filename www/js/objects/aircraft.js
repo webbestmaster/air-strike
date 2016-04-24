@@ -1,4 +1,6 @@
-define(['GameObject', 'gameConfig'], function (GameObject, gameConfig) {
+define(['GameObject', 'gameConfig', 'mediator', 'camera', 'cameraKeys', 'deviceKeys'], function (GameObject, gameConfig, mediator, camera, cameraKeys, deviceKeys) {
+
+	//TODO: moveQx and moveQy - should be named better
 
 	function Aircraft() {
 
@@ -14,13 +16,42 @@ define(['GameObject', 'gameConfig'], function (GameObject, gameConfig) {
 		aircraft.set('sprite',  sprite);
 		sprite.anchor.set(0.5, 0.5);
 
+		aircraft.bindEventListeners();
+
+/*
 		TweenLite.to(aircraft.attr, 50, {
 			x: 0
 		});
+*/
+
+		aircraft.set('moveQx', camera.get('qX'));
+		aircraft.set('moveQy', camera.get('qY'));
 
 	}
 
 	Aircraft.prototype = Object.create(GameObject.prototype);
+
+	Aircraft.prototype.bindEventListeners = function () {
+
+		var obj = this;
+
+		mediator.installTo(obj);
+
+		obj.subscribe(cameraKeys.BOUNDS_UPDATED, function (data) {
+			this.set('moveQx', data.qX);
+			this.set('moveQy', data.qY);
+		});
+
+		obj.subscribe(deviceKeys.MOVE, obj.onDeviceMove);
+
+	};
+
+	Aircraft.prototype.onDeviceMove = function (data) {
+
+		this.attr.x += (data.dx / this.attr.moveQx);
+		this.attr.y += (data.dy / this.attr.moveQy);
+
+	};
 
 	Aircraft.prototype.initialConfig = {
 		w: 47,

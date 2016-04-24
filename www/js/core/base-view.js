@@ -5,7 +5,7 @@ define(
 		'rendererKeys',
 		'device',
 		'TweenLite',
-		'deviceEvents',
+		'deviceKeys',
 		'BaseViewEvents'
 	],
 	function (DisplayObject,
@@ -13,7 +13,7 @@ define(
 			  rendererKeys,
 			  device,
 			  TweenLite,
-			  deviceEvents,
+			  deviceKeys,
 			  BaseViewEvents) {
 
 		function BaseView() {
@@ -147,7 +147,7 @@ define(
 
 			view.updateBgPosition(device.attr);
 
-			view.subscribe(deviceEvents.RESIZE, view.updateBgPosition);
+			view.subscribe(deviceKeys.RESIZE, view.updateBgPosition);
 
 		};
 
