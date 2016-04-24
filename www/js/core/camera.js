@@ -160,10 +160,9 @@ define(
 
 		},
 
-		adjustSprite: function (obj) {
+		adjustSprite: function (objData) {
 
 			var cameraData = this.attr,
-				objData = obj.attr,
 				sprite = objData.sprite;
 
 			// sprite pos

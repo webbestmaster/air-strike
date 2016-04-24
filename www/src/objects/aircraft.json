@@ -1,0 +1,36 @@
+{"frames": {
+
+"aircraft-rotate-1.png":
+{
+	"frame": {"x":0,"y":0,"w":47,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":47,"h":29},
+	"sourceSize": {"w":47,"h":29}
+},
+"aircraft-rotate-2.png":
+{
+	"frame": {"x":47,"y":0,"w":47,"h":31},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":47,"h":31},
+	"sourceSize": {"w":47,"h":31}
+},
+"aircraft.png":
+{
+	"frame": {"x":94,"y":0,"w":47,"h":28},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":47,"h":28},
+	"sourceSize": {"w":47,"h":28}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "aircraft.png",
+	"format": "RGBA8888",
+	"size": {"w":141,"h":31},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:9181543301a9f91ba690374269b776e1:13b3ac16bc4e76b8609a41c7ea8897a3:7455b1e6c720d70b0a7bda0965502add$"
+}
+}

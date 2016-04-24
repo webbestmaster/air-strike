@@ -5,7 +5,7 @@ define(['GameObject'], function (GameObject) {
 		var bullet = this,
 			sprite = new PIXI.Sprite.fromFrame('bullet');
 
-		bullet.mainInitialize();
+		bullet.mainInitialize(bullet.initialConfig);
 
 		bullet.set('sprite',  sprite);
 		sprite.anchor.set(0.5, 0.5);
@@ -18,7 +18,7 @@ define(['GameObject'], function (GameObject) {
 
 	Bullet.prototype = Object.create(GameObject.prototype);
 
-	Bullet.prototype.config = {
+	Bullet.prototype.initialConfig = {
 		w: 146,
 		h: 50,
 		x: 320.00,

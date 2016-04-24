@@ -1,7 +1,8 @@
 define(function () {
 
 	return {
-		BULLET: 'factory:Bullet'
+		BULLET: 'factory:Bullet',
+		AIRCRAFT: 'factory:Aircraft'
 	}
 
 });

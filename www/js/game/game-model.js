@@ -9,6 +9,7 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 		};
 
 		var obj = game.attr.factory.getObject(factoryKeys.BULLET);
+		game.attr.factory.getObject(factoryKeys.AIRCRAFT);
 
 		console.log(obj);
 
@@ -64,7 +65,7 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 					object.update.apply(object, cameraBounds);
 
 					if (object.attr.visible) {
-						camera.adjustSprite(object);
+						camera.adjustSprite(object.attr);
 					}
 					
 					/* alive object is here - end */

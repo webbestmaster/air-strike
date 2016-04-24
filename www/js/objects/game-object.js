@@ -24,10 +24,9 @@ define(function () {
 		h05: 0// h / 2
 	};
 
-	GameObject.prototype.mainInitialize = function () {
+	GameObject.prototype.mainInitialize = function (cfg) {
 		
 		var obj = this,
-			cfg = obj.config,
 			mainDefaultProperties = this.mainDefaultProperties,
 			data = {},
 			key;
@@ -66,6 +65,28 @@ define(function () {
 
 		this.attr.visible = this.attr.sprite.visible = false;
 		console.log('add destroy here');
+	};
+
+	GameObject.prototype.updateBounds = function () {
+
+		this.attr.w05 = this.attr.w / 2;
+		this.attr.h05 = this.attr.h / 2;
+
+	};
+
+	GameObject.prototype.mainBindTextures = function (data) {
+
+		var key,
+			textures = {};
+
+		for (key in data) {
+			if (data.hasOwnProperty(key)) {
+				textures[key] = PIXI.Texture.fromFrame(data[key]);
+			}
+		}
+
+		this.textures = textures;
+
 	};
 
 /*	// not used yet
