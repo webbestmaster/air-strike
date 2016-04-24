@@ -43,6 +43,8 @@ requirejs.config({
 		constructorMap: 'factory/constructor-map',
 
 		// game objects
+		GameObject: 'objects/game-object',
+		Aircraft: 'objects/aircraft',
 		Bullet: 'objects/bullet'
 
 
