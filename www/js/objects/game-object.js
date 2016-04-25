@@ -28,6 +28,7 @@ define(function () {
 		return this.attr[key];
 	};
 
+/*
 	GameObject.prototype.mainDefaultProperties = {
 		visible: true,
 		x: 0,
@@ -36,14 +37,20 @@ define(function () {
 		w: 0,
 		h: 0,
 		w05: 0, // w /2
-		h05: 0// h / 2
+		h05: 0	// h / 2,
 	};
 
 	GameObject.prototype.mainInitialize = function (cfg) {
 		
 		var obj = this,
 			mainDefaultProperties = this.mainDefaultProperties,
-			data = {},
+			data = {
+				lastUpdate: Date.now(),
+				speed: {
+					x: 0,
+					y: 0
+				}
+			},
 			key;
 
 		for (key in mainDefaultProperties) {
@@ -58,6 +65,7 @@ define(function () {
 		obj.attr = data;
 
 	};
+*/
 
 	GameObject.prototype.isInRectangle = function (cameraX0, cameraY0, cameraX1, cameraY1) {
 

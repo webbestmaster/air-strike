@@ -186,6 +186,16 @@ define(
 			sprite.width = objData.w * cameraData.q;
 			sprite.height = objData.h * cameraData.q;
 
+		},
+
+		toGameCoordinates: function (xy) {
+
+			var attr = this.attr;
+
+			return {
+				x: xy.x / attr.dw * attr.w + attr.x - attr.w05,
+				y: xy.y / attr.dh * attr.h + attr.y - attr.h05
+			}
 
 		}
 

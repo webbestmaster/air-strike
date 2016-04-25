@@ -276,6 +276,9 @@ define(
 						attr._pinchIsActive = false;
 					}
 
+					device.mediator.publish(deviceKeys.DOWN, startEventXY);
+					// device.mediator.publish(deviceKeys.DOWNS, events.events);
+
 				},
 
 				onMove: function (e) {
@@ -324,6 +327,8 @@ define(
 						dy: dy
 					});
 
+					// device.mediator.publish(deviceKeys.MOVES, events.events);
+
 					attr._logMoving.push({
 						x: currentEventXY.x,
 						y: currentEventXY.y
@@ -344,6 +349,16 @@ define(
 
 					// try to detect double click
 					// and auto trigger event
+
+
+					device.mediator.publish(deviceKeys.UP);
+					// if (eventsArrLength) {
+						// device.mediator.publish(deviceKeys.UP, device.getAverageXY(eventsArr));
+						// device.mediator.publish(deviceKeys.UPS, eventsArr);
+					// } else {
+						// device.mediator.publish(deviceKeys.UP, null);
+						// device.mediator.publish(deviceKeys.UPS, null);
+					// }
 
 					if (!eventsArrLength && isTouch && pinchIsActive) { // 2 fingers -> 0 finger
 						attr._pinchIsActive = false;

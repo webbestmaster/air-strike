@@ -15,7 +15,7 @@ requirejs.config({
 		FPSMeter: 'lib/fpsmeter',
 		// init service
 		device: 'services/device',
-		deviceKeys: 'services/device-events',
+		deviceKeys: 'services/device-keys',
 		// core
 		renderer: 'core/renderer',
 		rendererKeys: 'core/renderer-keys',
@@ -44,7 +44,7 @@ requirejs.config({
 
 		// game objects
 		GameObject: 'objects/game-object',
-		gameObjectHelper: 'objects/game-object-helper',
+		// gameObjectHelper: 'objects/game-object-helper',
 		Aircraft: 'objects/aircraft',
 		Bullet: 'objects/bullet'
 
@@ -61,8 +61,8 @@ define(
 		'device',
 		'loader',
 		'renderer',
-		'camera',
-		'gameObjectHelper'
+		'camera'
+		//'gameObjectHelper'
 	],
 	function (libLoad,
 			  viewLoad,
@@ -70,11 +70,12 @@ define(
 			  device,
 			  loader,
 			  renderer,
-			  camera,
-			  gameObjectHelper) {
+			  camera
+			  //gameObjectHelper
+				) {
 
 		device.initialize();
-		gameObjectHelper.initialize();
+		// gameObjectHelper.initialize();
 		camera.initialize();
 
 		loader

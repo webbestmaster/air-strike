@@ -31,7 +31,7 @@ define(
 				args;
 
 			// log('publish -', channel, arguments); // remove
-			log('publish -', channel); // remove
+			// log('publish -', channel); // remove
 
 			if ( len === 1 ) {
 				for (i = 0, len = list.length; i < len; i += 1) {
