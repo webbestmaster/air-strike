@@ -1,6 +1,19 @@
-define(['GameObject', 'gameConfig', 'mediator', 'camera', 'cameraKeys', 'deviceKeys'], function (GameObject, gameConfig, mediator, camera, cameraKeys, deviceKeys) {
-
-	//TODO: moveQx and moveQy - should be named better
+define([
+	'GameObject',
+	'gameConfig',
+	'mediator',
+	'camera',
+	'cameraKeys',
+	'deviceKeys',
+	'gameObjectHelper'
+], function (
+	GameObject,
+	gameConfig,
+	mediator,
+	camera,
+	cameraKeys,
+	deviceKeys,
+	gameObjectHelper) {
 
 	function Aircraft() {
 
@@ -13,19 +26,10 @@ define(['GameObject', 'gameConfig', 'mediator', 'camera', 'cameraKeys', 'deviceK
 
 		sprite = new PIXI.Sprite(aircraft.textures.rotate_2);
 
-		aircraft.set('sprite',  sprite);
+		aircraft.set('sprite', sprite);
 		sprite.anchor.set(0.5, 0.5);
 
 		aircraft.bindEventListeners();
-
-/*
-		TweenLite.to(aircraft.attr, 50, {
-			x: 0
-		});
-*/
-
-		aircraft.set('moveQx', camera.get('qX'));
-		aircraft.set('moveQy', camera.get('qY'));
 
 	}
 
@@ -37,19 +41,14 @@ define(['GameObject', 'gameConfig', 'mediator', 'camera', 'cameraKeys', 'deviceK
 
 		mediator.installTo(obj);
 
-		obj.subscribe(cameraKeys.BOUNDS_UPDATED, function (data) {
-			this.set('moveQx', data.qX);
-			this.set('moveQy', data.qY);
-		});
-
 		obj.subscribe(deviceKeys.MOVE, obj.onDeviceMove);
 
 	};
 
 	Aircraft.prototype.onDeviceMove = function (data) {
 
-		this.attr.x += (data.dx / this.attr.moveQx);
-		this.attr.y += (data.dy / this.attr.moveQy);
+		this.attr.x += (data.dx / gameObjectHelper.attr.qX);
+		this.attr.y += (data.dy / gameObjectHelper.attr.qY);
 
 	};
 
@@ -71,9 +70,7 @@ define(['GameObject', 'gameConfig', 'mediator', 'camera', 'cameraKeys', 'deviceK
 		// detect is in camera or not - in not needed, cause this object belongs to player
 
 
-
 	};
-
 
 
 	return Aircraft;

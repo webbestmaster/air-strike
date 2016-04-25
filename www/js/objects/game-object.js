@@ -5,8 +5,23 @@ define(function () {
 
 	}
 
-	GameObject.prototype.set = function (key, value) {
-		this.attr[key] = value;
+	GameObject.prototype.set = function (keyOrObject, value) {
+
+		var key;
+
+		if (typeof keyOrObject === 'string') {
+			this.attr[keyOrObject] = value;
+			return this;
+		}
+
+		for (key in keyOrObject) {
+			if (keyOrObject.hasOwnProperty(key)) {
+				this.attr[key] = keyOrObject[key];
+			}
+		}
+
+		return this;
+		
 	};
 
 	GameObject.prototype.get = function (key) {

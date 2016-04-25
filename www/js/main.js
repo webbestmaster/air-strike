@@ -44,6 +44,7 @@ requirejs.config({
 
 		// game objects
 		GameObject: 'objects/game-object',
+		gameObjectHelper: 'objects/game-object-helper',
 		Aircraft: 'objects/aircraft',
 		Bullet: 'objects/bullet'
 
@@ -60,7 +61,8 @@ define(
 		'device',
 		'loader',
 		'renderer',
-		'camera'
+		'camera',
+		'gameObjectHelper'
 	],
 	function (libLoad,
 			  viewLoad,
@@ -68,9 +70,11 @@ define(
 			  device,
 			  loader,
 			  renderer,
-			  camera) {
+			  camera,
+			  gameObjectHelper) {
 
 		device.initialize();
+		gameObjectHelper.initialize();
 		camera.initialize();
 
 		loader
