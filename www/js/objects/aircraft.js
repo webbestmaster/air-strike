@@ -47,7 +47,7 @@ define([
 			y: gameConfig.world.height / 2,
 			visible: true,
 			lastUpdate: Date.now(),
-			fullSpeed: 50, // 50 px per sec
+			fullSpeed: 200, // 50 px per sec
 			speed: {
 				x: 0,
 				y: 0
