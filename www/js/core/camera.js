@@ -23,8 +23,6 @@ define(
 			w05: 0,
 			h05: 0,
 			q: 1,
-			qX: 1,
-			qY: 1,
 			x: gameConfig.world.width / 2, // center camera is here // half of word size
 			y: gameConfig.world.height / 2, // center camera is here
 			remSize: 20,
@@ -122,19 +120,17 @@ define(
 				width = data.width,
 				height = data.height,
 				defaults = camera.defaults,
-				qWidth = width / defaults.w,
-				qHeight = height / defaults.h;
+				devQ = width / height,
+				camQ = defaults.w / defaults.h;
 
-			if (qWidth < qHeight) {
-				cameraData.w = defaults.w;
-				cameraData.h = Math.floor((cameraData.w * height / width) / qWidth);
-				cameraData.qX = cameraData.q = qWidth;
-				cameraData.qY = height / cameraData.h;
-			} else {
+			if (devQ > camQ) {
 				cameraData.h = defaults.h;
-				cameraData.w = Math.floor((cameraData.h * width / height) / qHeight);
-				cameraData.qY = cameraData.q = qHeight;
-				cameraData.qX = width / cameraData.w;
+				cameraData.w = defaults.h * devQ;
+				cameraData.q = height / defaults.h;
+			} else {
+				cameraData.w = defaults.w;
+				cameraData.h = defaults.w / devQ;
+				cameraData.q = width / defaults.w;
 			}
 
 			cameraData.w05 = cameraData.w / 2;

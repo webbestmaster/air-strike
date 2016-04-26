@@ -21,7 +21,7 @@ define([
 
 		aircraft.mainBindTextures(aircraft.initialTexture);
 
-		sprite = new PIXI.Sprite(aircraft.textures.rotate_2);
+		sprite = new PIXI.Sprite(aircraft.textures.normal);
 		sprite.anchor.set(0.5, 0.5);
 
 		aircraft.attr = {
@@ -40,6 +40,8 @@ define([
 
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
+		var now = Date.now();
+
 		return this.set({
 			w: 47,
 			h: 28,
@@ -48,8 +50,9 @@ define([
 			x: gameConfig.world.width / 2,
 			y: gameConfig.world.height / 2,
 			visible: true,
-			lastUpdate: Date.now(),
-			fullSpeed: 200, // 50 px per sec
+			lastUpdate: now,
+			lastUpdateShooting: now,
+			fullSpeed: 150, // 50 px per sec
 			speed: {
 				x: 0,
 				y: 0
@@ -130,12 +133,34 @@ define([
 		// detect is in camera or not - in not needed, cause this object belongs to player
 		this.updateByMoveTo(this.attr.movieTarget, now);
 
-		var options = {x: this.attr.x, y: this.attr.y, speed: { x: 0, y: -100 }};
-
-		this.publish(factoryKeys.events.CREATE, factoryKeys.objects.BULLET, options);
+		this.updateShooting(now);
 
 	};
 
+	Aircraft.prototype.updateShooting = function (now) {
+
+		var aircraft = this,
+			attr = aircraft.attr,
+			dTime = now - attr.lastUpdateShooting,
+			options;
+
+		if (dTime >= 300) {
+
+			options = {x: attr.x - attr.w05, y: attr.y, speed: {x: 0, y: -150}};
+			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
+
+			options = {x: attr.x, y: attr.y - attr.h05, speed: {x: 0, y: -150}};
+			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
+
+			options = {x: attr.x + attr.w05, y: attr.y, speed: {x: 0, y: -150}};
+			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
+
+			attr.lastUpdateShooting = now;
+
+		}
+
+
+	};
 
 	return Aircraft;
 

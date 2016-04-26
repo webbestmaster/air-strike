@@ -115,12 +115,21 @@ define(['factoryKeys', 'mediator'], function (factoryKeys, mediator) {
 
 	GameObject.prototype.mainBindTextures = function (data) {
 
-		var key,
-			textures = {};
+		var i, len, textures;
 
-		for (key in data) {
-			if (data.hasOwnProperty(key)) {
-				textures[key] = PIXI.Texture.fromFrame(data[key]);
+		if (Array.isArray(data)) {
+			textures = [];
+			for (i = 0, len = data.length; i < len; i += 1) {
+				textures[i] = PIXI.Texture.fromFrame(data[i])
+			}
+			this.attr.texturesLength = len;
+			this.attr.texturesIndex = 0;
+		} else {
+			textures = {};
+			for (i in data) {
+				if (data.hasOwnProperty(i)) {
+					textures[i] = PIXI.Texture.fromFrame(data[i]);
+				}
 			}
 		}
 
@@ -179,6 +188,24 @@ define(['factoryKeys', 'mediator'], function (factoryKeys, mediator) {
 		}
 
 		attr.lastUpdate = now;
+
+	};
+
+	GameObject.prototype.useNextTexture = function () {
+
+		var obj = this,
+			data = obj.attr,
+			index = data.texturesIndex + 1;
+
+		if (index === data.texturesLength) {
+			index = 0;
+		}
+
+		data.texturesIndex = index;
+
+		// debugger
+
+		data.sprite.texture = obj.textures[index];
 
 	};
 

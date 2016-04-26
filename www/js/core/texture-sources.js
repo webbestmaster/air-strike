@@ -6,6 +6,7 @@ define(function () {
 		'src/bg-game.json',
 		'src/objects/bullet.json',
 		'src/objects/aircraft.json',
+		'src/objects/junior-missile.json',
 		'src/button.png'
 	]
 

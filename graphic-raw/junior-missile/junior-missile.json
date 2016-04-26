@@ -1,0 +1,44 @@
+{"frames": {
+
+"junior-missile-0.png":
+{
+	"frame": {"x":0,"y":0,"w":11,"h":36},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":36},
+	"sourceSize": {"w":11,"h":36}
+},
+"junior-missile-1.png":
+{
+	"frame": {"x":0,"y":36,"w":11,"h":36},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":36},
+	"sourceSize": {"w":11,"h":36}
+},
+"junior-missile-2.png":
+{
+	"frame": {"x":0,"y":72,"w":11,"h":36},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":36},
+	"sourceSize": {"w":11,"h":36}
+},
+"junior-missile-3.png":
+{
+	"frame": {"x":0,"y":108,"w":11,"h":36},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":36},
+	"sourceSize": {"w":11,"h":36}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "junior-missile.png",
+	"format": "RGBA8888",
+	"size": {"w":11,"h":144},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:dfe2815d340400a8c8178048f44588d2:6a4792c07800802b6fa3d8e336900d55:6496513847caf6a285f9ef4afe55676a$"
+}
+}
