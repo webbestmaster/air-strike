@@ -1,9 +1,26 @@
-define(function () {
+define(['factoryKeys', 'mediator'], function (factoryKeys, mediator) {
 
 	// abstract class
 	function GameObject() {
 
 	}
+
+	GameObject.prototype.destroy = function () {
+
+		this.hide();
+		mediator.publish(factoryKeys.events.DESTROY, this);
+
+	};
+
+	GameObject.prototype.hide = function () {
+		this.attr.visible = false;
+		this.attr.sprite.visible = false;
+	};
+
+	GameObject.prototype.show = function () {
+		this.attr.visible = true;
+		this.attr.sprite.visible = true;
+	};
 
 	GameObject.prototype.set = function (keyOrObject, value) {
 
@@ -81,7 +98,6 @@ define(function () {
 
 	GameObject.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, time) {
 
-
 		if ( this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1) ) {
 			return;
 		}
@@ -128,6 +144,43 @@ define(function () {
 
 		};
 	*/
+
+	GameObject.prototype.updateBySpeed = function (now) {
+
+		var attr = this.attr,
+			dTime = (now - attr.lastUpdate) / 1000;
+
+		attr.x += attr.speed.x * dTime;
+		attr.y += attr.speed.y * dTime;
+
+		attr.lastUpdate = now;
+
+	};
+
+	GameObject.prototype.updateByMoveTo = function (xy, now) {
+
+		var attr = this.attr,
+			dTime = (now - attr.lastUpdate) / 1000,
+			dx = attr.speed.x * dTime,
+			dy = attr.speed.y * dTime;
+
+		if (Math.abs(attr.x - xy.x) <= Math.abs(dx)) {
+			attr.x = xy.x;
+			attr.speed.x = 0;
+		} else {
+			attr.x += dx;
+		}
+
+		if (Math.abs(attr.y - xy.y) <= Math.abs(dy)) {
+			attr.y = xy.y;
+			attr.speed.y = 0;
+		} else {
+			attr.y += dy;
+		}
+
+		attr.lastUpdate = now;
+
+	};
 
 	return GameObject;
 

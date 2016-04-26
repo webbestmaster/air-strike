@@ -15,8 +15,6 @@ define(['GameObject'], function (GameObject) {
 
 		bullet.updateBounds();
 
-
-
 	}
 
 	Bullet.prototype = Object.create(GameObject.prototype);
@@ -41,13 +39,15 @@ define(['GameObject'], function (GameObject) {
 
 	};
 
-	Bullet.prototype.update = function () {
+	Bullet.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, now) {
 
-		var attr = this.attr;
+		this.updateBySpeed(now);
 
-		attr.x += attr.speed.x;
-		attr.y += attr.speed.y;
+		if ( this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1) ) {
+			return;
+		}
 
+		this.destroy();
 
 	};
 

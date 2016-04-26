@@ -63,6 +63,7 @@ define(
 			mediator.installTo(camera);
 
 			camera.subscribe(deviceKeys.RESIZE, camera.adjust);
+			camera.subscribe(cameraKeys.ADJUST_SPRITE, camera.adjustSprite);
 
 		},
 

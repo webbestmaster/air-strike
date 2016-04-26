@@ -3,14 +3,14 @@ define([
 	'constructorMap',
 	'objectKeys',
 	'mediator',
-	'gameKeys'
-], function (
-	factoryKeys,
-	constructorMap,
-	objectKeys,
-	mediator,
-	gameKeys
-) {
+	'gameKeys',
+	'cameraKeys'
+], function (factoryKeys,
+			 constructorMap,
+			 objectKeys,
+			 mediator,
+			 gameKeys,
+			 cameraKeys) {
 
 	function Factory() {
 
@@ -33,7 +33,17 @@ define([
 
 		mediator.installTo(factory);
 
-		factory.subscribe(factoryKeys.events.GET, factory.getObject);
+		factory.subscribe(factoryKeys.events.CREATE, factory.getObject);
+		factory.subscribe(factoryKeys.events.DESTROY, factory.destroyObject);
+
+	};
+
+	Factory.prototype.destroyObject = function (obj) {
+
+		var lists = this.attr.lists[obj.attr.factoryKey],
+			index = lists.objects.indexOf(obj);
+
+		lists.lifeMap[index] = objectKeys.DEAD;
 
 	};
 
@@ -72,15 +82,18 @@ define([
 		if (index !== -1) {
 			lifeMap[index] = objectKeys.ALIVE;
 			neededObject = objects[index].setDefaultProperties(options);
+			neededObject.show();
 		} else {
 			index = lifeMap.length;
 			lifeMap[index] = objectKeys.ALIVE;
-			objects[index] = new constructorMap[type](options);
-			this.publish(gameKeys.APPEND_SPRITE, objects[index].attr.sprite);
-			neededObject = objects[index];
+			objects[index] = neededObject = new constructorMap[type](options);
+			this.publish(gameKeys.APPEND_SPRITE, neededObject.attr.sprite);
+			neededObject.attr.factoryKey = type;
 		}
 
-		return (options && options.transferContainer) ? (options.transferContainer = neededObject) : neededObject;
+		this.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
+
+		return neededObject;
 
 	};
 

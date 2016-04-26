@@ -23,44 +23,20 @@ define(
 
 		}
 
-		function publish(channel) {
+		function publish(channel, command, options) {
 
 			var list = mediator.channels[channel] || [],
 				item,
-				i, len = arguments.length,
-				args;
+				i = 0,
+				len = list.length;
 
 			// log('publish -', channel, arguments); // remove
 			// log('publish -', channel); // remove
 
-			if ( len === 1 ) {
-				for (i = 0, len = list.length; i < len; i += 1) {
-					item = list[i];
-					item.callback.call(item.context);
-				}
-				return this;
-			}
-
-			if ( len === 2 ) {
-				args = arguments[1];
-				for (i = 0, len = list.length; i < len; i += 1) {
-					item = list[i];
-					item.callback.call(item.context, args);
-				}
-				return this;
-			}
-
-			args = [];
-			for (i = 1; i < len; i += 1) {
-				args[i - 1] = arguments[i];
-			}
-
-			for (i = 0, len = list.length; i < len; i += 1) {
+			for (; i < len; i += 1) {
 				item = list[i];
-				item.callback.apply(item.context, args);
+				item.callback.call(item.context, command, options);
 			}
-
-			return this;
 
 		}
 

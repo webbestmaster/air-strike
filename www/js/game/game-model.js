@@ -15,7 +15,7 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 
 		game.bindEventListeners();
 
-		game.publish(factoryKeys.events.GET, factoryKeys.objects.AIRCRAFT);
+		game.publish(factoryKeys.events.CREATE, factoryKeys.objects.AIRCRAFT);
 
 	}
 

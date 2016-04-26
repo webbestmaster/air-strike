@@ -6,7 +6,8 @@ define(function () {
 			AIRCRAFT: 'factory:Aircraft'
 		},
 		events: {
-			GET: 'factory:get'
+			CREATE: 'factory:create',
+			DESTROY: 'factory:destroy'
 		}
 	}
 

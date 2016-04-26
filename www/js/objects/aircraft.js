@@ -128,40 +128,11 @@ define([
 		// attr.movieTarget.x and attr.movieTarget.y were seldom called twice in this function
 
 		// detect is in camera or not - in not needed, cause this object belongs to player
-		var attr = this.attr,
-			dTime = (now - attr.lastUpdate) / 1000,
-			dx = attr.speed.x * dTime,
-			dy = attr.speed.y * dTime;
+		this.updateByMoveTo(this.attr.movieTarget, now);
 
-		if (Math.abs(attr.x - attr.movieTarget.x) <= Math.abs(dx)) {
-			attr.x = attr.movieTarget.x;
-			attr.speed.x = 0;
-		} else {
-			attr.x += dx;
-		}
+		var options = {x: this.attr.x, y: this.attr.y, speed: { x: 0, y: -100 }};
 
-		if (Math.abs(attr.y - attr.movieTarget.y) <= Math.abs(dy)) {
-			attr.y = attr.movieTarget.y;
-			attr.speed.y = 0;
-		} else {
-			attr.y += dy;
-		}
-
-		attr.lastUpdate = now;
-
-		var transfer = {x: attr.x, y: attr.y, speed: {x: 1, y: 1}, transferContainer: true};
-
-		this.attr.bullets = this.attr.bullets || 0 ;
-
-		if (this.attr.bullets <= 10) {
-			this.attr.bullets++;
-			this.publish(factoryKeys.events.GET, factoryKeys.objects.BULLET, transfer);
-
-			console.log(transfer);
-
-			debugger
-
-		}
+		this.publish(factoryKeys.events.CREATE, factoryKeys.objects.BULLET, options);
 
 	};
 
