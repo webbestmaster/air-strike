@@ -1,8 +1,13 @@
 define(function () {
 
 	return {
-		BULLET: 'factory:Bullet',
-		AIRCRAFT: 'factory:Aircraft'
+		objects: {
+			BULLET: 'factory:Bullet',
+			AIRCRAFT: 'factory:Aircraft'
+		},
+		events: {
+			GET: 'factory:get'
+		}
 	}
 
 });

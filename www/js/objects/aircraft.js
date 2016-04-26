@@ -4,15 +4,17 @@ define([
 	'mediator',
 	'camera',
 	'cameraKeys',
-	'deviceKeys'
+	'deviceKeys',
+	'factoryKeys'
 ], function (GameObject,
 			 gameConfig,
 			 mediator,
 			 camera,
 			 cameraKeys,
-			 deviceKeys) {
+			 deviceKeys,
+			 factoryKeys) {
 
-	function Aircraft() {
+	function Aircraft(options) {
 
 		var aircraft = this,
 			sprite;
@@ -26,7 +28,7 @@ define([
 			sprite: sprite
 		};
 
-		aircraft.setDefaultProperties();
+		aircraft.setDefaultProperties(options);
 
 		aircraft.updateBounds();
 
@@ -36,7 +38,7 @@ define([
 
 	Aircraft.prototype = Object.create(GameObject.prototype);
 
-	Aircraft.prototype.setDefaultProperties = function () {
+	Aircraft.prototype.setDefaultProperties = function (options) {
 
 		return this.set({
 			w: 47,
@@ -56,7 +58,7 @@ define([
 				x: 0,
 				y: 0
 			}
-		});
+		}).set(options || {});
 
 	};
 
@@ -146,6 +148,20 @@ define([
 		}
 
 		attr.lastUpdate = now;
+
+		var transfer = {x: attr.x, y: attr.y, speed: {x: 1, y: 1}, transferContainer: true};
+
+		this.attr.bullets = this.attr.bullets || 0 ;
+
+		if (this.attr.bullets <= 10) {
+			this.attr.bullets++;
+			this.publish(factoryKeys.events.GET, factoryKeys.objects.BULLET, transfer);
+
+			console.log(transfer);
+
+			debugger
+
+		}
 
 	};
 

@@ -23,7 +23,19 @@ define([
 
 		factory.initialize();
 
+		factory.bindEventListeners();
+
 	}
+
+	Factory.prototype.bindEventListeners = function () {
+
+		var factory = this;
+
+		mediator.installTo(factory);
+
+		factory.subscribe(factoryKeys.events.GET, factory.getObject);
+
+	};
 
 	Factory.prototype.initialize = function () {
 
@@ -32,11 +44,12 @@ define([
 		var factory = this,
 			types = factory.attr.types,
 			lists = factory.attr.lists,
+			factoryObjectKeys = factoryKeys.objects,
 			key, type;
 
-		for (key in factoryKeys) {
-			if (factoryKeys.hasOwnProperty(key)) {
-				type = factoryKeys[key];
+		for (key in factoryObjectKeys) {
+			if (factoryObjectKeys.hasOwnProperty(key)) {
+				type = factoryObjectKeys[key];
 				types.push(type);
 				lists[type] = {
 					objects: [],
@@ -47,24 +60,27 @@ define([
 
 	};
 
-	Factory.prototype.getObject = function (type) {
+	Factory.prototype.getObject = function (type, options) {
 
 		// try to find object in saved array
 		var lists = this.attr.lists[type],
 			lifeMap = lists.lifeMap,
 			objects = lists.objects,
-			index = lifeMap.indexOf(objectKeys.DEAD);
+			index = lifeMap.indexOf(objectKeys.DEAD),
+			neededObject;
 
 		if (index !== -1) {
 			lifeMap[index] = objectKeys.ALIVE;
-			return objects[index].setDefaultProperties();
+			neededObject = objects[index].setDefaultProperties(options);
+		} else {
+			index = lifeMap.length;
+			lifeMap[index] = objectKeys.ALIVE;
+			objects[index] = new constructorMap[type](options);
+			this.publish(gameKeys.APPEND_SPRITE, objects[index].attr.sprite);
+			neededObject = objects[index];
 		}
 
-		index = lifeMap.length;
-		lifeMap[index] = objectKeys.ALIVE;
-		objects[index] = new constructorMap[type]();
-		mediator.publish(gameKeys.APPEND_SPRITE, objects[index].attr.sprite);
-		return objects[index];
+		return (options && options.transferContainer) ? (options.transferContainer = neededObject) : neededObject;
 
 	};
 

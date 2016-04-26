@@ -8,14 +8,14 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 			factory: new Factory()
 		};
 
-		var obj = game.attr.factory.getObject(factoryKeys.BULLET);
-		game.attr.factory.getObject(factoryKeys.AIRCRAFT);
+		// var obj = game.attr.factory.getObject(factoryKeys.BULLET);
+		// var obj = game.attr.factory.getObject(factoryKeys.AIRCRAFT);
 
-		console.log(obj);
-
-		console.log(game.attr.factory);
+		// console.log(game.attr.factory);
 
 		game.bindEventListeners();
+
+		game.publish(factoryKeys.events.GET, factoryKeys.objects.AIRCRAFT);
 
 	}
 

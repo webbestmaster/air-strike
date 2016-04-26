@@ -3,8 +3,8 @@ define(['factoryKeys', 'Aircraft', 'Bullet'],function (factoryKeys, Aircraft, Bu
 
 	var map = {};
 
-	map[factoryKeys.AIRCRAFT] = Aircraft;
-	map[factoryKeys.BULLET] = Bullet;
+	map[factoryKeys.objects.AIRCRAFT] = Aircraft;
+	map[factoryKeys.objects.BULLET] = Bullet;
 
 	return map;
 

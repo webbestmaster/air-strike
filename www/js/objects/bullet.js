@@ -1,6 +1,6 @@
 define(['GameObject'], function (GameObject) {
 
-	function Bullet() {
+	function Bullet(options) {
 
 		var bullet = this,
 			sprite = new PIXI.Sprite.fromFrame('bullet');
@@ -11,20 +11,18 @@ define(['GameObject'], function (GameObject) {
 			sprite: sprite
 		};
 
-		bullet.setDefaultProperties();
+		bullet.setDefaultProperties(options);
 
 		bullet.updateBounds();
 
-		TweenLite.to(bullet.attr, 5, {
-			x: 0
-		});
+
 
 	}
 
 	Bullet.prototype = Object.create(GameObject.prototype);
 
-	Bullet.prototype.setDefaultProperties = function () {
-		
+	Bullet.prototype.setDefaultProperties = function (options) {
+
 		return this.set({
 			w: 146,
 			h: 50,
@@ -32,18 +30,33 @@ define(['GameObject'], function (GameObject) {
 			h05: 0,	// h / 2,
 			x: 320.00,
 			y: 300.00,
-			visible: true
-		});
-		
+			visible: true,
+			lastUpdate: Date.now(),
+			fullSpeed: 200, // 50 px per sec
+			speed: {
+				x: 10,
+				y: 10
+			}
+		}).set(options || {});
+
 	};
-	
+
+	Bullet.prototype.update = function () {
+
+		var attr = this.attr;
+
+		attr.x += attr.speed.x;
+		attr.y += attr.speed.y;
+
+
+	};
+
 	// Bullet.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, time) {
 
-		// this.attr.visible = this.attr.sprite.visible = this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1);
+	// this.attr.visible = this.attr.sprite.visible = this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1);
 
-		
-		
-		// console.log(this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1));
+
+	// console.log(this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1));
 
 	// };
 
