@@ -57,7 +57,7 @@ define([
 
 		if (index !== -1) {
 			lifeMap[index] = objectKeys.ALIVE;
-			return objects[index];
+			return objects[index].setDefaultProperties();
 		}
 
 		index = lifeMap.length;

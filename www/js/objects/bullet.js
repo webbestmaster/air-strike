@@ -25,7 +25,7 @@ define(['GameObject'], function (GameObject) {
 
 	Bullet.prototype.setDefaultProperties = function () {
 		
-		this.set({
+		return this.set({
 			w: 146,
 			h: 50,
 			w05: 0, // w /2

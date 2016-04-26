@@ -38,7 +38,7 @@ define([
 
 	Aircraft.prototype.setDefaultProperties = function () {
 
-		this.set({
+		return this.set({
 			w: 47,
 			h: 28,
 			w05: 0, // w /2
@@ -49,6 +49,10 @@ define([
 			lastUpdate: Date.now(),
 			fullSpeed: 200, // 50 px per sec
 			speed: {
+				x: 0,
+				y: 0
+			},
+			movieTarget: {
 				x: 0,
 				y: 0
 			}
@@ -78,17 +82,21 @@ define([
 		var aircraft = this,
 			aircraftData = aircraft.attr,
 			xy1 = camera.toGameCoordinates(data),
-			dx = xy1.x - aircraftData.x,
-			dy = xy1.y - aircraftData.y,
+			x1 = xy1.x,
+			y1 = xy1.y,
+			dx = x1 - aircraftData.x,
+			dy = y1 - aircraftData.y,
 			angleRadians = Math.atan2(dy, dx),
 			sin = Math.sin(angleRadians),
 			cos = Math.cos(angleRadians),
 			fullSpeed = aircraftData.fullSpeed,
 			speed = aircraftData.speed;
 
-// debugger
 		speed.x = cos * fullSpeed;
 		speed.y = sin * fullSpeed;
+
+		aircraftData.movieTarget.x = x1;
+		aircraftData.movieTarget.y = y1;
 
 	};
 
@@ -114,15 +122,30 @@ define([
 
 	Aircraft.prototype.update = function (x0, y0, x1, y1, now) {
 
+		// NOTE: - attr.movieTarget.x and attr.movieTarget.y did not have a variable cause
+		// attr.movieTarget.x and attr.movieTarget.y were seldom called twice in this function
+
 		// detect is in camera or not - in not needed, cause this object belongs to player
 		var attr = this.attr,
-			dTime = (now - attr.lastUpdate) / 1000;
+			dTime = (now - attr.lastUpdate) / 1000,
+			dx = attr.speed.x * dTime,
+			dy = attr.speed.y * dTime;
 
-		attr.x += attr.speed.x * dTime;
-		attr.y += attr.speed.y * dTime;
+		if (Math.abs(attr.x - attr.movieTarget.x) <= Math.abs(dx)) {
+			attr.x = attr.movieTarget.x;
+			attr.speed.x = 0;
+		} else {
+			attr.x += dx;
+		}
+
+		if (Math.abs(attr.y - attr.movieTarget.y) <= Math.abs(dy)) {
+			attr.y = attr.movieTarget.y;
+			attr.speed.y = 0;
+		} else {
+			attr.y += dy;
+		}
 
 		attr.lastUpdate = now;
-
 
 	};
 
