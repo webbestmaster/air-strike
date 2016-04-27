@@ -30,7 +30,7 @@ define(['GameObject'], function (GameObject) {
 
 	JuniorMissile.prototype.setDefaultProperties = function (options) {
 
-		return this.set({
+		this.set({
 			w: 11,
 			h: 36,
 			w05: 0, // w /2
@@ -46,6 +46,10 @@ define(['GameObject'], function (GameObject) {
 			}
 		}).set(options || {});
 
+		TweenMax.to(this.attr, 1, {x: this.attr.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut});
+
+		return this;
+
 	};
 
 	JuniorMissile.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, now) {
@@ -53,7 +57,7 @@ define(['GameObject'], function (GameObject) {
 		var missile = this;
 
 		missile.attr.frameCounter += 1;
-		if ( missile.attr.frameCounter % 4 === 0 ) {
+		if (missile.attr.frameCounter % 4 === 0) {
 			missile.useNextTexture();
 		}
 
@@ -61,9 +65,9 @@ define(['GameObject'], function (GameObject) {
 			return;
 		}
 
-		missile.updateBySpeed(now);
+		missile.updateBySpeedY(now);
 
-		if ( missile.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1) ) {
+		if (missile.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1)) {
 			return;
 		}
 

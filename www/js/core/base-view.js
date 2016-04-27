@@ -4,7 +4,7 @@ define(
 		'mediator',
 		'rendererKeys',
 		'device',
-		'TweenLite',
+		'TweenMax',
 		'deviceKeys',
 		'BaseViewEvents'
 	],
@@ -12,7 +12,7 @@ define(
 			  mediator,
 			  rendererKeys,
 			  device,
-			  TweenLite,
+			  TweenMax,
 			  deviceKeys,
 			  BaseViewEvents) {
 
@@ -68,7 +68,7 @@ define(
 
 		BaseView.prototype.mainHideAnimation = function () {
 
-			TweenLite
+			TweenMax
 				.to(
 					this.stage,
 					2,
@@ -85,7 +85,7 @@ define(
 
 			this.stage.alpha = 0;
 
-			TweenLite
+			TweenMax
 				.to(
 					this.stage,
 					2,

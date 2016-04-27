@@ -10,8 +10,8 @@ requirejs.config({
 		Deferred: 'lib/deferred',
 		fontLoader: 'lib/font-loader',
 		PIXI: 'lib/pixi',
-		EasePack: 'lib/EasePack',
-		TweenLite: 'lib/TweenLite',
+		//EasePack: 'lib/EasePack',
+		TweenMax: 'lib/TweenMax',
 		FPSMeter: 'lib/fpsmeter',
 		// init service
 		device: 'services/device',

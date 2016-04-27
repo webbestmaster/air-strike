@@ -27,6 +27,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 	GameObject.prototype.destroy = function () {
 
 		this.hide();
+		TweenMax.killTweensOf(this.attr);
 		mediator.publish(factoryKeys.events.DESTROY, this);
 
 	};
@@ -180,6 +181,26 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 		attr.x += attr.speed.x * dTime;
 		attr.y += attr.speed.y * dTime;
+
+		attr.lastUpdate = now;
+
+	};
+
+	GameObject.prototype.updateBySpeedX = function (now) {
+
+		var attr = this.attr;
+
+		attr.x += attr.speed.x * (now - attr.lastUpdate) / 1000;
+
+		attr.lastUpdate = now;
+
+	};
+
+	GameObject.prototype.updateBySpeedY = function (now) {
+
+		var attr = this.attr;
+
+		attr.y += attr.speed.y * (now - attr.lastUpdate) / 1000;
 
 		attr.lastUpdate = now;
 

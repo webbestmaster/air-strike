@@ -64,7 +64,7 @@ define(['device'],
 					ease: options.ease || Back.easeOut
 				};
 
-			TweenLite.to(sprite, options.time, cfg);
+			TweenMax.to(sprite, options.time, cfg);
 
 		};
 

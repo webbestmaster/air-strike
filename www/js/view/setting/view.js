@@ -1,6 +1,6 @@
 define(
-	['BaseView', 'Button', 'device', 'TweenLite', 'mediator', 'camera'],
-	function (BaseView, Button, device, TweenLite, mediator, camera) {
+	['BaseView', 'Button', 'device', 'TweenMax', 'mediator', 'camera'],
+	function (BaseView, Button, device, TweenMax, mediator, camera) {
 
 		function SettingView() {
 

@@ -1,7 +1,7 @@
 define(
 	[
-		'EasePack',
-		'TweenLite',
+		//'EasePack',
+		'TweenMax',
 		'PIXI',
 		'FPSMeter'
 	],
