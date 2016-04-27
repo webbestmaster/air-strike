@@ -5,14 +5,13 @@ define(['GameObject'], function (GameObject) {
 		var missile = this,
 			sprite;
 
-		missile.attr = {};
+		missile.mainInitialize();
 
 		missile.mainBindTextures(missile.initialTexture);
 
 		sprite = new PIXI.Sprite(missile.textures[0]);
 		sprite.anchor.set(0.5, 0.5);
-
-		missile.attr.sprite = sprite;
+		missile.set('sprite', sprite);
 
 		missile.setDefaultProperties(options);
 
@@ -39,7 +38,7 @@ define(['GameObject'], function (GameObject) {
 			x: 320.00,
 			y: 300.00,
 			visible: true,
-			lastUpdate: Date.now(),
+			//lastUpdate: options.lastUpdate,
 			fullSpeed: 0, // 50 px per sec
 			speed: {
 				x: 0,
@@ -51,15 +50,21 @@ define(['GameObject'], function (GameObject) {
 
 	JuniorMissile.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, now) {
 
-		this.updateBySpeed(now);
-		
-		this.useNextTexture();
+		var missile = this;
 
-		if ( this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1) ) {
+		if (missile.attr.isPause) {
 			return;
 		}
 
-		this.destroy();
+		missile.updateBySpeed(now);
+
+		missile.useNextTexture();
+
+		if ( missile.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1) ) {
+			return;
+		}
+
+		missile.destroy();
 
 	};
 

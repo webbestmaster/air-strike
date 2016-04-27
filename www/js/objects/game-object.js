@@ -1,9 +1,28 @@
-define(['factoryKeys', 'mediator'], function (factoryKeys, mediator) {
+define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys, mediator) {
 
 	// abstract class
 	function GameObject() {
 
 	}
+
+	GameObject.prototype.mainInitialize = function () {
+		this.attr = { isPause: false };
+		this.mainBindEventListeners();
+	};
+
+	GameObject.prototype.mainBindEventListeners = function () {
+		mediator.installTo(this);
+		this.subscribe(gameKeys.PAUSE, this.onPause);
+		this.subscribe(gameKeys.RESUME, this.onResume);
+	};
+
+	GameObject.prototype.onPause = function () {
+		this.attr.isPause = true;
+	};
+
+	GameObject.prototype.onResume = function () {
+		this.attr.isPause = false;
+	};
 
 	GameObject.prototype.destroy = function () {
 

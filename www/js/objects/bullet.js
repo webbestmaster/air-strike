@@ -5,11 +5,11 @@ define(['GameObject'], function (GameObject) {
 		var bullet = this,
 			sprite = new PIXI.Sprite.fromFrame('bullet');
 
+		bullet.mainInitialize();
+
 		sprite.anchor.set(0.5, 0.5);
 
-		bullet.attr = {
-			sprite: sprite
-		};
+		bullet.set('sprite', sprite);
 
 		bullet.setDefaultProperties(options);
 
@@ -29,7 +29,7 @@ define(['GameObject'], function (GameObject) {
 			x: 320.00,
 			y: 300.00,
 			visible: true,
-			lastUpdate: Date.now(),
+			// lastUpdate: options.lastUpdate,
 			fullSpeed: 200, // 50 px per sec
 			speed: {
 				x: 10,

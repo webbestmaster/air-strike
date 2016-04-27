@@ -1,6 +1,6 @@
 define(
-	['device', 'mediator', 'deviceKeys', 'gameConfig', 'cameraKeys'],
-	function (device, mediator, deviceKeys, gameConfig, cameraKeys) {
+	['device', 'mediator', 'deviceKeys', 'gameConfig', 'cameraKeys', 'gameKeys'],
+	function (device, mediator, deviceKeys, gameConfig, cameraKeys, gameKeys) {
 
 	// WARNING  camera use game coordinates only
 
@@ -25,6 +25,12 @@ define(
 			q: 1,
 			x: gameConfig.world.width / 2, // center camera is here // half of word size
 			y: gameConfig.world.height / 2, // center camera is here
+			now: Date.now(),
+			pause: {
+				start: 0,
+				// stop: 0,
+				time: 0
+			},
 			remSize: 20,
 			dw: 0, 	//device width
 			dh: 0 	//device height
@@ -62,6 +68,34 @@ define(
 
 			camera.subscribe(deviceKeys.RESIZE, camera.adjust);
 			camera.subscribe(cameraKeys.ADJUST_SPRITE, camera.adjustSprite);
+
+			camera.subscribe(gameKeys.PAUSE, camera.onPause);
+			camera.subscribe(gameKeys.RESUME, camera.onResume);
+
+		},
+
+		onPause: function () {
+
+			var pause = this.attr.pause;
+
+			// if start === 0 -> game is paused yet
+			if (pause.start) {
+				return;
+			}
+
+			pause.start = Date.now();
+
+		},
+
+		onResume: function () {
+
+			var pause = this.attr.pause;
+
+			// if start !== 0 -> game is resumed yet
+			if (pause.start) {
+				pause.time += Date.now() - pause.start;
+				pause.start = 0;
+			}
 
 		},
 
@@ -105,11 +139,11 @@ define(
 
 		getBounds: function () {
 
-			var data = this.attr,
-				x = data.x,
-				y = data.y;
+			var attr = this.attr,
+				x = attr.x,
+				y = attr.y;
 
-			return [x - data.w05, y - data.h05, x + data.w05, y + data.h05, Date.now()];
+			return [x - attr.w05, y - attr.h05, x + attr.w05, y + attr.h05, attr.now = Date.now() - attr.pause.time];
 
 		},
 

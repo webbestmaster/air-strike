@@ -19,14 +19,13 @@ define([
 		var aircraft = this,
 			sprite;
 
+		aircraft.mainInitialize();
+
 		aircraft.mainBindTextures(aircraft.initialTexture);
 
 		sprite = new PIXI.Sprite(aircraft.textures.normal);
 		sprite.anchor.set(0.5, 0.5);
-
-		aircraft.attr = {
-			sprite: sprite
-		};
+		aircraft.set('sprite', sprite);
 
 		aircraft.setDefaultProperties(options);
 
@@ -40,8 +39,6 @@ define([
 
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
-		var now = Date.now();
-
 		return this.set({
 			w: 47,
 			h: 28,
@@ -50,8 +47,8 @@ define([
 			x: gameConfig.world.width / 2,
 			y: gameConfig.world.height / 2,
 			visible: true,
-			lastUpdate: now,
-			lastUpdateShooting: now,
+			//lastUpdate: options.lastUpdate,
+			lastUpdateShooting: options.lastUpdate,
 			fullSpeed: 150, // 50 px per sec
 			speed: {
 				x: 0,
@@ -68,8 +65,6 @@ define([
 	Aircraft.prototype.bindEventListeners = function () {
 
 		var obj = this;
-
-		mediator.installTo(obj);
 
 		obj.subscribe(deviceKeys.DOWN, obj.onDeviceMove);
 		obj.subscribe(deviceKeys.MOVE, obj.onDeviceMove);
@@ -127,13 +122,17 @@ define([
 
 	Aircraft.prototype.update = function (x0, y0, x1, y1, now) {
 
-		// NOTE: - attr.movieTarget.x and attr.movieTarget.y did not have a variable cause
-		// attr.movieTarget.x and attr.movieTarget.y were seldom called twice in this function
-
 		// detect is in camera or not - in not needed, cause this object belongs to player
-		this.updateByMoveTo(this.attr.movieTarget, now);
+		var aircraft = this,
+			attr = aircraft.attr;
 
-		this.updateShooting(now);
+		if (attr.isPause) {
+			return;
+		}
+
+		aircraft.updateByMoveTo(attr.movieTarget, now);
+
+		aircraft.updateShooting(now);
 
 	};
 
@@ -146,13 +145,13 @@ define([
 
 		if (dTime >= 300) {
 
-			options = {x: attr.x - attr.w05, y: attr.y, speed: {x: 0, y: -150}};
+			options = {x: attr.x - attr.w05, y: attr.y, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
-			options = {x: attr.x, y: attr.y - attr.h05, speed: {x: 0, y: -150}};
+			options = {x: attr.x, y: attr.y - attr.h05, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
-			options = {x: attr.x + attr.w05, y: attr.y, speed: {x: 0, y: -150}};
+			options = {x: attr.x + attr.w05, y: attr.y, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
 			attr.lastUpdateShooting = now;

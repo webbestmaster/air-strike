@@ -15,7 +15,9 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 
 		game.bindEventListeners();
 
-		game.publish(factoryKeys.events.CREATE, factoryKeys.objects.AIRCRAFT);
+		game.publish(factoryKeys.events.CREATE, factoryKeys.objects.AIRCRAFT, {
+			lastUpdate: camera.get('now')
+		});
 
 	}
 
@@ -27,6 +29,11 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 
 		game.subscribe(gameKeys.UPDATE, game.update);
 
+	};
+
+	GameModel.prototype.pause = function () {
+
+		this.publish(gameKeys.PAUSE);
 
 	};
 
