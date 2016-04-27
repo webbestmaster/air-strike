@@ -52,13 +52,16 @@ define(['GameObject'], function (GameObject) {
 
 		var missile = this;
 
+		missile.attr.frameCounter += 1;
+		if ( missile.attr.frameCounter % 4 === 0 ) {
+			missile.useNextTexture();
+		}
+
 		if (missile.attr.isPause) {
 			return;
 		}
 
 		missile.updateBySpeed(now);
-
-		missile.useNextTexture();
 
 		if ( missile.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1) ) {
 			return;

@@ -6,7 +6,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 	}
 
 	GameObject.prototype.mainInitialize = function () {
-		this.attr = { isPause: false };
+		this.attr = { isPause: false, frameCounter: 0 };
 		this.mainBindEventListeners();
 	};
 
