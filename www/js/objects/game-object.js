@@ -6,9 +6,106 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 	}
 
 	GameObject.prototype.mainInitialize = function () {
-		this.attr = { isPause: false, frameCounter: 0 };
+		this.attr = {isPause: false, frameCounter: 0};
+		this.tweens = {
+			instances: {},
+			keys: [],
+			keysLength: 0
+		};
+
+		/*
+
+		 this.tweens = {
+		 instances: {
+		 myTween1: TweenMax,
+		 myTween2: TweenMax,
+		 myTween3: TweenMax,
+		 myTween4: TweenMax
+		 },
+		 keys: ['myTween1', 'myTween2', 'myTween3', 'myTween4'],
+		 keysLength: 4
+		 };
+		 */
+
+
 		this.mainBindEventListeners();
 	};
+
+
+	GameObject.prototype.setTween = function (tweenId, obj, time, settings) {
+
+		var tweens = this.tweens;
+
+		if (tweens.instances[tweenId]) {
+			// kill tween if exist
+			tweens.instances[tweenId].kill();
+		} else {
+			tweens.keys[tweens.keysLength] = tweenId;
+			tweens.keysLength += 1;
+		}
+
+		tweens.instances[tweenId] = new TweenMax(obj, time, settings);
+
+	};
+
+	GameObject.prototype.stopTweens = function () {
+
+		var tweens = this.tweens,
+			instances = tweens.instances,
+			keys = tweens.keys,
+			keysLength = tweens.keysLength,
+			i = 0;
+
+		for (; i < keysLength; i += 1) {
+			instances[keys[i]].kill();
+		}
+
+	};
+
+	GameObject.prototype.pauseTweens = function () {
+
+		var tweens = this.tweens,
+			instances = tweens.instances,
+			keys = tweens.keys,
+			keysLength = tweens.keysLength,
+			i = 0;
+
+		for (; i < keysLength; i += 1) {
+			instances[keys[i]].pause();
+		}
+
+	};
+
+	GameObject.prototype.resumeTweens = function () {
+
+		var tweens = this.tweens,
+			instances = tweens.instances,
+			keys = tweens.keys,
+			keysLength = tweens.keysLength,
+			i = 0;
+
+		for (; i < keysLength; i += 1) {
+			instances[keys[i]].resume();
+		}
+
+	};
+
+/*
+	// still not used
+	GameObject.prototype.playTweens = function () {
+
+		var tweens = this.tweens,
+			instances = tweens.instances,
+			keys = tweens.keys,
+			keysLength = tweens.keysLength,
+			i = 0;
+
+		for (; i < keysLength; i += 1) {
+			instances[keys[i]].play();
+		}
+
+	};
+*/
 
 	GameObject.prototype.mainBindEventListeners = function () {
 		mediator.installTo(this);
@@ -17,17 +114,19 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 	};
 
 	GameObject.prototype.onPause = function () {
+		this.pauseTweens();
 		this.attr.isPause = true;
 	};
 
 	GameObject.prototype.onResume = function () {
+		this.resumeTweens();
 		this.attr.isPause = false;
 	};
 
 	GameObject.prototype.destroy = function () {
 
 		this.hide();
-		TweenMax.killTweensOf(this.attr);
+		this.stopTweens();
 		mediator.publish(factoryKeys.events.DESTROY, this);
 
 	};
@@ -58,51 +157,51 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 		}
 
 		return this;
-		
+
 	};
 
 	GameObject.prototype.get = function (key) {
 		return this.attr[key];
 	};
 
-/*
-	GameObject.prototype.mainDefaultProperties = {
-		visible: true,
-		x: 0,
-		y: 0,
-		sprite: null,
-		w: 0,
-		h: 0,
-		w05: 0, // w /2
-		h05: 0	// h / 2,
-	};
+	/*
+	 GameObject.prototype.mainDefaultProperties = {
+	 visible: true,
+	 x: 0,
+	 y: 0,
+	 sprite: null,
+	 w: 0,
+	 h: 0,
+	 w05: 0, // w /2
+	 h05: 0	// h / 2,
+	 };
 
-	GameObject.prototype.mainInitialize = function (cfg) {
-		
-		var obj = this,
-			mainDefaultProperties = this.mainDefaultProperties,
-			data = {
-				lastUpdate: Date.now(),
-				speed: {
-					x: 0,
-					y: 0
-				}
-			},
-			key;
+	 GameObject.prototype.mainInitialize = function (cfg) {
 
-		for (key in mainDefaultProperties) {
-			if (mainDefaultProperties.hasOwnProperty(key)) {
-				data[key] = cfg.hasOwnProperty(key) ? cfg[key] : mainDefaultProperties[key];
-			}
-		}
+	 var obj = this,
+	 mainDefaultProperties = this.mainDefaultProperties,
+	 data = {
+	 lastUpdate: Date.now(),
+	 speed: {
+	 x: 0,
+	 y: 0
+	 }
+	 },
+	 key;
 
-		data.w05 = data.w / 2;
-		data.h05 = data.h / 2;
+	 for (key in mainDefaultProperties) {
+	 if (mainDefaultProperties.hasOwnProperty(key)) {
+	 data[key] = cfg.hasOwnProperty(key) ? cfg[key] : mainDefaultProperties[key];
+	 }
+	 }
 
-		obj.attr = data;
+	 data.w05 = data.w / 2;
+	 data.h05 = data.h / 2;
 
-	};
-*/
+	 obj.attr = data;
+
+	 };
+	 */
 
 	GameObject.prototype.isInRectangle = function (cameraX0, cameraY0, cameraX1, cameraY1) {
 
@@ -118,7 +217,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	GameObject.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, time) {
 
-		if ( this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1) ) {
+		if (this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1)) {
 			return;
 		}
 
@@ -157,22 +256,22 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	};
 
-/*	// not used yet
-	Bullet.prototype.getBounds = function () {
+	/*	// not used yet
+	 Bullet.prototype.getBounds = function () {
 
-			var data = this.attr,
-				x = data.x,
-				y = data.y;
+	 var data = this.attr,
+	 x = data.x,
+	 y = data.y;
 
-			return {
-				x0: x - data.w05,
-				y0: y - data.h05,
-				x1: x + data.w05,
-				y1: y + data.h05
-			}
+	 return {
+	 x0: x - data.w05,
+	 y0: y - data.h05,
+	 x1: x + data.w05,
+	 y1: y + data.h05
+	 }
 
-		};
-	*/
+	 };
+	 */
 
 	GameObject.prototype.updateBySpeed = function (now) {
 

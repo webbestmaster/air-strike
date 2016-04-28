@@ -17,6 +17,8 @@ define(['GameObject'], function (GameObject) {
 
 		missile.updateBounds();
 
+		// this.addTween('moveTween', TweenMax.to(this.attr, 1, {x: this.attr.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut}));
+
 	}
 
 	JuniorMissile.prototype = Object.create(GameObject.prototype);
@@ -46,21 +48,7 @@ define(['GameObject'], function (GameObject) {
 			}
 		}).set(options || {});
 
-		TweenMax.to(this.attr, 1, {x: this.attr.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut});
-
-/*
-		var rr = TweenMax.to(this.attr, 1, {x: this.attr.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut});
-		this.tweens = {
-			instances: {
-				myTween1: TweenMax,
-				myTween2: TweenMax,
-				myTween3: TweenMax,
-				myTween4: TweenMax
-			},
-			keys: ['myTween1', 'myTween2', 'myTween3', 'myTween4'],
-			keysLength: 4
-		};
-*/
+		this.setTween('moveTween', this.attr, 1, {x: this.attr.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut});
 
 		return this;
 

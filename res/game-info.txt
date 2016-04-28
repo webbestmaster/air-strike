@@ -1,3 +1,6 @@
+original game name is Su-30
+
+
 game camera
     default
         // like iPhone4 in portrait mode

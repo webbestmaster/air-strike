@@ -28,18 +28,20 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 		mediator.installTo(game);
 
 		game.subscribe(gameKeys.UPDATE, game.update);
-		game.subscribe(gameKeys.PAUSE, game.pause);
-		game.subscribe(gameKeys.RESUME, game.resume);
+		// game.subscribe(gameKeys.PAUSE, game.pause);
+		// game.subscribe(gameKeys.RESUME, game.resume);
 
 	};
 
+/*
 	GameModel.prototype.pause = function () {
-		TweenMax.pauseAll();
+		// TweenMax.pauseAll();
 	};
 
 	GameModel.prototype.resume = function () {
-		TweenMax.resumeAll();
+		// TweenMax.resumeAll();
 	};
+*/
 
 	GameModel.prototype.update = function () {
 
