@@ -20,9 +20,10 @@ define(function () {
 						return (arg && typeof arg === 'object') ? JSON.stringify(arg) : String(arg);
 					}).join(' ');
 
-				xhr.open('POST', '/log/', false);
+				xhr.open('POST', ' - log: ' + args, false);
 
-				xhr.send(args);
+				// xhr.send(args);
+				xhr.send();
 
 			}
 
