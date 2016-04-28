@@ -5,14 +5,16 @@ define([
 	'camera',
 	'cameraKeys',
 	'deviceKeys',
-	'factoryKeys'
+	'factoryKeys',
+	'gameKeys'
 ], function (GameObject,
 			 gameConfig,
 			 mediator,
 			 camera,
 			 cameraKeys,
 			 deviceKeys,
-			 factoryKeys) {
+			 factoryKeys,
+			 gameKeys) {
 
 	function Aircraft(options) {
 
@@ -47,6 +49,7 @@ define([
 			x: gameConfig.world.width / 2,
 			y: gameConfig.world.height / 2,
 			visible: true,
+			layer: gameKeys.VIEW_LAYER_MAJOR_OBJECT,
 			//lastUpdate: options.lastUpdate,
 			lastUpdateShooting: options.lastUpdate,
 			fullSpeed: 150, // 50 px per sec
@@ -143,7 +146,7 @@ define([
 			dTime = now - attr.lastUpdateShooting,
 			options;
 
-		if (dTime >= 300) {
+		if (dTime >= 0) {
 
 			options = {x: attr.x - attr.w05, y: attr.y, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);

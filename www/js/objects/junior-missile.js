@@ -1,4 +1,4 @@
-define(['GameObject'], function (GameObject) {
+define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 
 	function JuniorMissile(options) {
 
@@ -40,6 +40,7 @@ define(['GameObject'], function (GameObject) {
 			x: 320.00,
 			y: 300.00,
 			visible: true,
+			layer: gameKeys.VIEW_LAYER_MINOR_OBJECT,
 			//lastUpdate: options.lastUpdate,
 			fullSpeed: 0, // 50 px per sec
 			speed: {

@@ -87,7 +87,10 @@ define([
 			index = lifeMap.length;
 			lifeMap[index] = objectKeys.ALIVE;
 			objects[index] = neededObject = new constructorMap[type](options);
-			this.publish(gameKeys.APPEND_SPRITE, neededObject.attr.sprite);
+			this.publish(gameKeys.APPEND_SPRITE, {
+				sprite: neededObject.attr.sprite,
+				layer: neededObject.attr.layer
+			});
 			neededObject.attr.factoryKey = type;
 		}
 
