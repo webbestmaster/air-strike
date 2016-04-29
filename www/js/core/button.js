@@ -25,6 +25,8 @@ define(['DisplayObject', 'device'],
 
 			button.parentView = view;
 
+			button.mainInitialize();
+
 		}
 
 		/*
@@ -133,6 +135,8 @@ define(['DisplayObject', 'device'],
 			}
 
 			button.parentView.stage.removeChild(button.sprite);
+
+			button.mainDestroy();
 
 			console.log('button destroy'); // remove
 
