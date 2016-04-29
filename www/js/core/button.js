@@ -1,5 +1,5 @@
-define(['DisplayObject', 'device'],
-	function (DisplayObject, device) {
+define(['DisplayObject', 'device', 'deviceKeys'],
+	function (DisplayObject, device, deviceKeys) {
 
 		function Button(data) { // parentStage: stage, texturesPrefix: prefix, events: { 'name' : fn } or { 'name' : 'string' }
 
@@ -19,6 +19,7 @@ define(['DisplayObject', 'device'],
 			button.textureStatesInitialize(data.textureName);
 
 			button.enable();
+			// button.disable();
 
 			// TODO: implement it!!!
 			// button.bindEventListeners();
@@ -46,43 +47,140 @@ define(['DisplayObject', 'device'],
 
 			// add textures
 			button.textures = {
-				normal: PIXI.Texture.fromFrame(textureName + '.png'),
+				normal: PIXI.Texture.fromFrame(textureName + '-normal.png'),
 				hover: PIXI.Texture.fromFrame(textureName + '-hover.png'),
 				active: PIXI.Texture.fromFrame(textureName + '-active.png'),
 				disable: PIXI.Texture.fromFrame(textureName + '-disable.png')
 			};
 
-			button.on('down', function () {
-				if (!button.sprite.interactive) {
-					return;
-				}
-				if (button.sprite.texture === button.textures.active) {
-					return;
-				}
-				button.sprite.texture = button.textures.active;
-			});
+			// mobile part
+			button.subscribe(deviceKeys.DOWNS, button.onDowns);
+			// button.subscribe(deviceKeys.MOVES, button.onMoves);
+			button.subscribe(deviceKeys.UPS, button.onUps);
 
-/*
-			button.on('move', function () {
-				if (!button.sprite.interactive) {
-					return;
-				}
-				if (button.sprite.texture === button.textures.hover) {
-					return;
-				}
+			// desktop part
+
+			button.on('mouseover', button.onMouseOver, button);
+
+			button.on('mouseout', button.onMouseOut, button);
+
+		};
+
+		Button.prototype.checkAction = function (events) {
+
+			// don't ask me how
+			// this is just magic
+			var button = this,
+				sprite,
+				i,
+				len = events.length,
+				eventArr,
+				width05,
+				height05,
+				x0,
+				y0,
+				x1,
+				y1,
+				pointX,
+				pointY;
+
+			if (!len) { // if len === 0, it means 2 or 1 finger to 0 finger
+				return false;
+			}
+
+			sprite = button.sprite;
+			i = 0;
+			eventArr = events.events;
+			width05 = sprite.width / 2;
+			height05 = sprite.height / 2;
+			x0 = sprite.x - width05;
+			y0 = sprite.y - height05;
+			x1 = sprite.x + width05;
+			y1 = sprite.y + height05;
+
+			for (; i < len; i += 1) {
+				pointX = eventArr[i].x;
+				pointY = eventArr[i].y;
+				(x0 < pointX && x1 > pointX && y0 < pointY && y1 > pointY) && (len = 0); // exit from loop
+			}
+
+			return len === 0 && eventArr[i - 1];
+
+		};
+
+		Button.prototype.onMouseOver = function () {
+
+			var button = this;
+
+			if (!button.attr.isEnable) {
+				return;
+			}
+			if (button.sprite.texture !== button.textures.hover) {
 				button.sprite.texture = button.textures.hover;
-			});
-*/
+			}
 
-			button.on('up', function () {
-				if (!button.sprite.interactive) {
-					return;
-				}
-				if (button.sprite.texture === button.textures.normal) {
-					return;
-				}
+		};
+
+		Button.prototype.onMouseOut = function () {
+
+			var button = this;
+
+			if (!button.attr.isEnable) {
+				return;
+			}
+
+			if (button.sprite.texture !== button.textures.normal) {
 				button.sprite.texture = button.textures.normal;
-			});
+			}
+
+		};
+
+		Button.prototype.onDowns = function (events) {
+
+			var button = this;
+
+			if (!button.attr.isEnable) {
+				return;
+			}
+
+			if ( button.checkAction(events) && button.sprite.texture !== button.textures.active) {
+				button.sprite.texture = button.textures.active;
+			}
+
+		};
+
+		Button.prototype.onMoves = function (events) {
+
+			var button = this;
+
+			if (!button.attr.isEnable) {
+				return;
+			}
+
+			if (button.checkAction(events)) {
+				if (button.sprite.texture !== button.textures.active) {
+					button.sprite.texture = button.textures.active;
+				}
+			} else {
+				if (button.sprite.texture !== button.textures.normal) {
+					button.sprite.texture = button.textures.normal;
+				}
+			}
+		};
+
+		Button.prototype.onUps = function (events) {
+
+			var button = this;
+
+			if (!button.attr.isEnable) {
+				return;
+			}
+
+			if ( button.checkAction(events) || button.sprite.texture === button.textures.normal) {
+				return;
+			}
+
+			button.sprite.texture = button.textures.normal;
 
 		};
 
@@ -134,8 +232,12 @@ define(['DisplayObject', 'device'],
 
 		};
 
-		Button.prototype.on = function (type, fn) {
-			this.sprite.on(this.eventMap[type], fn);
+		Button.prototype.on = function (type, fn, context) {
+			if (context) {
+				this.sprite.on(this.eventMap[type], fn, context);
+			} else {
+				this.sprite.on(this.eventMap[type], fn);
+			}
 		};
 
 		Button.prototype.off = function (typeArg, fn) {
@@ -162,13 +264,15 @@ define(['DisplayObject', 'device'],
 		};
 
 		Button.prototype.enable = function () {
-			this.sprite.texture = this.textures.normal;
+			this.attr.isEnable = true;
 			this.sprite.interactive = true;
+			this.sprite.texture = this.textures.normal;
 		};
 
 		Button.prototype.disable = function () {
-			this.sprite.texture = this.textures.disable;
+			this.attr.isEnable = false;
 			this.sprite.interactive = false;
+			this.sprite.texture = this.textures.disable;
 		};
 
 		Button.prototype.destroy = function () {

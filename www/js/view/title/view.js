@@ -59,7 +59,7 @@ define(
 				});
 
 				button.createTextNode(buttonData.text, {
-					font: camera.remToPixel(3, 'px') + ' quake',
+					font: camera.remToPixel(1, 'px') + ' quake',
 					fill: '#FFF',
 					align: 'center',
 					wordWrap: true,

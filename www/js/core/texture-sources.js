@@ -7,7 +7,7 @@ define(function () {
 		'src/objects/bullet.json',
 		'src/objects/aircraft.json',
 		'src/objects/junior-missile.json',
-		'src/button.png'
+		'src/button.json'
 	]
 
 });

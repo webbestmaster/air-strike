@@ -10,21 +10,26 @@ define(
 
 		var win = window,
 			doc = win.document,
-			docElem = doc.documentElement,
-			device = {
+			docElem = doc.documentElement;
+
+			return {
 
 				eventTypes: {
 					click: ['click', 'tap'],
 					down: ['mousedown', 'touchstart'],
 					move: ['mousemove', 'touchmove'],
-					up: ['mouseup', 'touchend']
+					up: ['mouseup', 'touchend'],
+					mouseover: ['mouseover'], 	// were added for PIXI desktop event
+					mouseout: ['mouseout'] 		// were added for PIXI desktop event
 				},
 
 				events: {
 					click: '',
 					down: '',
 					move: '',
-					up: ''
+					up: '',
+					mouseover: '',
+					mouseout: ''
 				},
 
 				mapEventType: {
@@ -35,7 +40,9 @@ define(
 					mousemove: 'move',
 					touchmove: 'move',
 					mouseup: 'up',
-					touchend: 'up'
+					touchend: 'up',
+					mouseover: 'mouseover',
+					mouseout: 'mouseout'
 				},
 
 				attr: {
@@ -64,8 +71,6 @@ define(
 					_pinchIsActive: false
 
 				},
-
-				mediator: mediator,
 
 				initialize: function () {
 
@@ -102,8 +107,11 @@ define(
 
 				bindEventListeners: function () {
 
-					var events = device.events,
+					var device = this,
+						events = device.events,
 						body = doc.body;
+
+					mediator.installTo(device);
 
 					win.addEventListener('resize', this.onResize.bind(this), false);
 
@@ -276,8 +284,8 @@ define(
 						attr._pinchIsActive = false;
 					}
 
-					device.mediator.publish(deviceKeys.DOWN, startEventXY);
-					// device.mediator.publish(deviceKeys.DOWNS, events.events);
+					device.publish(deviceKeys.DOWN, startEventXY);
+					device.publish(deviceKeys.DOWNS, events);
 
 				},
 
@@ -320,14 +328,14 @@ define(
 						attr._pointDataY = y;
 					}
 
-					device.mediator.publish(deviceKeys.MOVE, {
+					device.publish(deviceKeys.MOVE, {
 						x: currentEventXY.x,
 						y: currentEventXY.y,
 						dx: dx,
 						dy: dy
 					});
 
-					// device.mediator.publish(deviceKeys.MOVES, events.events);
+					device.publish(deviceKeys.MOVES, events);
 
 					attr._logMoving.push({
 						x: currentEventXY.x,
@@ -347,18 +355,8 @@ define(
 						isTouch = attr.isTouch,
 						pinchIsActive = attr._pinchIsActive;
 
-					// try to detect double click
-					// and auto trigger event
-
-
-					device.mediator.publish(deviceKeys.UP);
-					// if (eventsArrLength) {
-						// device.mediator.publish(deviceKeys.UP, device.getAverageXY(eventsArr));
-						// device.mediator.publish(deviceKeys.UPS, eventsArr);
-					// } else {
-						// device.mediator.publish(deviceKeys.UP, null);
-						// device.mediator.publish(deviceKeys.UPS, null);
-					// }
+					device.publish(deviceKeys.UP);
+					device.publish(deviceKeys.UPS, events);
 
 					if (!eventsArrLength && isTouch && pinchIsActive) { // 2 fingers -> 0 finger
 						attr._pinchIsActive = false;
@@ -402,7 +400,7 @@ define(
 						return;
 					}
 
-					device.mediator.publish(deviceKeys.DBL_TAP, lastDown);
+					device.publish(deviceKeys.DBL_TAP, lastDown);
 
 				},
 
@@ -420,7 +418,7 @@ define(
 					attr.orientation = orientation;
 					attr.viewPortSize = spaceSize;
 
-					device.mediator.publish(deviceKeys.RESIZE, {
+					device.publish(deviceKeys.RESIZE, {
 						width: width,
 						height: height,
 						orientation: orientation
@@ -471,8 +469,6 @@ define(
 				}
 
 			};
-
-		return device;
 
 	}
 );
