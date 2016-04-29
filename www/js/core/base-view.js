@@ -22,7 +22,7 @@ define(
 
 		BaseView.prototype = Object.create(DisplayObject.prototype);
 
-		BaseView.prototype.initialize = function (data) {
+		BaseView.prototype.mainInitialize = function (data) {
 
 			var view = this;
 

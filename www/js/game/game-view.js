@@ -1,12 +1,12 @@
 define(
-	['BaseView', 'mediator', 'GameModel', 'gameKeys'],
-	function (BaseView, mediator, GameModel, gameKeys) {
+	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button'],
+	function (BaseView, mediator, GameModel, gameKeys, Button) {
 
 		function GameView() {
 
 			var view = this;
 
-			view.initialize({
+			view.mainInitialize({
 				bg: 'bg-game'
 			});
 
@@ -15,6 +15,8 @@ define(
 			view.bindEventListeners();
 
 			view.createLayeredStages();
+
+			view.createButtons();
 
 		}
 
@@ -58,6 +60,15 @@ define(
 			new GameView();
 			new GameModel();
 		});
+
+		GameView.prototype.createButtons = function () {
+
+			// create pause button
+
+			var pauseButton = new Button(this);
+			
+
+		};
 
 		return GameView;
 

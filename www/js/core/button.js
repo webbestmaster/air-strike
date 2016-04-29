@@ -1,31 +1,27 @@
 define(['DisplayObject', 'device'],
 	function (DisplayObject, device) {
 
-		function Button(view) {
+		function Button(data) { // parentStage: stage, texturesPrefix: prefix, events: { 'name' : fn } or { 'name' : 'string' }
 
 			var button = this,
-				sprite = new PIXI.Sprite.fromImage('src/button.png');
+				sprite = new PIXI.Sprite();
 
 			button.sprite = sprite;
+			button.setAnchor(0.5, 0.5);
+
+			button.mainInitialize();
+
+
+			button.stage = data.stage;
+
+			data.stage.addChild(sprite);
+
+			button.textureStatesInitialize(data.textureName);
 
 			button.enable();
 
-			button.setAnchor(0.5, 0.5);
-			// button.setPosition(200, 100);
-			// button.setSize(-1, 100);
-
-			// button.createTextNode();
-			// // button.setText('I am The Text');
-			// button.setTextStyles({
-			// 	font : '50px monospace',
-			// 	fill : '#FFF'
-			// });
-
-			view.stage.addChild(sprite);
-
-			button.parentView = view;
-
-			button.mainInitialize();
+			// TODO: implement it!!!
+			// button.bindEventListeners();
 
 		}
 
@@ -38,6 +34,57 @@ define(['DisplayObject', 'device'],
 		Button.prototype = Object.create(DisplayObject.prototype);
 
 		Button.prototype.eventMap = device.events;
+
+		// Button.prototype.texturesPostfix = ['normal', 'hover', 'active', 'disable'];
+
+		Button.prototype.textureStatesInitialize = function (textureName) {
+
+
+			// Refactor this and add events logic for desctop
+
+			var button = this;
+
+			// add textures
+			button.textures = {
+				normal: PIXI.Texture.fromFrame(textureName + '.png'),
+				hover: PIXI.Texture.fromFrame(textureName + '-hover.png'),
+				active: PIXI.Texture.fromFrame(textureName + '-active.png'),
+				disable: PIXI.Texture.fromFrame(textureName + '-disable.png')
+			};
+
+			button.on('down', function () {
+				if (!button.sprite.interactive) {
+					return;
+				}
+				if (button.sprite.texture === button.textures.active) {
+					return;
+				}
+				button.sprite.texture = button.textures.active;
+			});
+
+/*
+			button.on('move', function () {
+				if (!button.sprite.interactive) {
+					return;
+				}
+				if (button.sprite.texture === button.textures.hover) {
+					return;
+				}
+				button.sprite.texture = button.textures.hover;
+			});
+*/
+
+			button.on('up', function () {
+				if (!button.sprite.interactive) {
+					return;
+				}
+				if (button.sprite.texture === button.textures.normal) {
+					return;
+				}
+				button.sprite.texture = button.textures.normal;
+			});
+
+		};
 
 		Button.prototype.setText = function (text) {
 			this.textNode.text = text;
@@ -115,10 +162,12 @@ define(['DisplayObject', 'device'],
 		};
 
 		Button.prototype.enable = function () {
+			this.sprite.texture = this.textures.normal;
 			this.sprite.interactive = true;
 		};
 
 		Button.prototype.disable = function () {
+			this.sprite.texture = this.textures.disable;
 			this.sprite.interactive = false;
 		};
 
@@ -134,7 +183,7 @@ define(['DisplayObject', 'device'],
 				button.sprite.removeChild(button.textNode);
 			}
 
-			button.parentView.stage.removeChild(button.sprite);
+			button.stage.removeChild(button.sprite);
 
 			button.mainDestroy();
 

@@ -6,7 +6,7 @@ define(
 
 			var view = this;
 
-			view.initialize({
+			view.mainInitialize({
 				bg: 'bg-setting'
 			});
 

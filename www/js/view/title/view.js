@@ -35,7 +35,7 @@ define(
 
 			var view = this;
 
-			view.initialize({
+			view.mainInitialize({
 				bg: 'bg-title'
 			});
 
@@ -53,7 +53,10 @@ define(
 
 			buttonMap.forEach(function (buttonData, index) {
 
-				var button = new Button(view);
+				var button = new Button({
+					stage: view.stage,
+					textureName: 'button'
+				});
 
 				button.createTextNode(buttonData.text, {
 					font: camera.remToPixel(3, 'px') + ' quake',
@@ -78,6 +81,7 @@ define(
 					delay: index / 3
 				}, 0, camera.remToPixel(buttonData.offset.top));
 
+/*
 				button.on('click', function () {
 					view.buttons.forEach(function (button) {
 						button.off();
@@ -86,6 +90,7 @@ define(
 					mediator.publish('show:GameView');
 					// button.destroy();
 				});
+*/
 				//
 				// // setTimeout(function () {
 				// // 	button.destroy();
