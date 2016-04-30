@@ -41,8 +41,6 @@ define(
 
 			var camera = this;
 
-			camera.detectRemSize();
-
 			camera.bindEventListeners();
 
 			camera.adjust({
@@ -173,6 +171,8 @@ define(
 			cameraData.dw = width;
 			cameraData.dh = height;
 
+			camera.detectRemSize();
+
 			camera.publish(cameraKeys.BOUNDS_UPDATED, cameraData);
 
 		},
@@ -195,11 +195,7 @@ define(
 
 		},
 
-		remToPixel: function (rem, postfix) {
-
-			if (postfix) {
-				return this.attr.remSize * rem + postfix;
-			}
+		remToPixel: function (rem) {
 
 			return this.attr.remSize * rem;
 

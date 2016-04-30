@@ -18,17 +18,14 @@ define(
 			var button = new Button(view);
 
 			button.createTextNode('I am the text on the button', {
-				font: camera.remToPixel(1, 'px') + ' quake',
+				font: camera.remToPixel(1) + 'px quake',
 				fill: '#FFF',
 				align: 'center',
 				wordWrap: true,
 				wordWrapWidth: button.sprite.width * 0.8
 			});
 
-
-
 			button.moveTo(5, 4);
-
 
 			button.on('click', function () {
 				mediator.publish('show:TitleView');
@@ -40,9 +37,6 @@ define(
 			// }, 3000);
 
 			view.buttons.push(button);
-
-
-
 
 		}
 

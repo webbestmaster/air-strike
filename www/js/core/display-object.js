@@ -1,5 +1,5 @@
-define(['device', 'mediator', 'deviceKeys'],
-	function (device, mediator, deviceKeys) {
+define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys'],
+	function (device, mediator, deviceKeys, camera, cameraKeys) {
 
 		// "abstracted class"
 		function DisplayObject() {
@@ -27,7 +27,7 @@ define(['device', 'mediator', 'deviceKeys'],
 
 			mediator.installTo(obj);
 
-			obj.subscribe(deviceKeys.RESIZE, obj.onMainResize);
+			obj.subscribe(cameraKeys.BOUNDS_UPDATED, obj.onMainResize);
 
 		};
 
@@ -52,7 +52,8 @@ define(['device', 'mediator', 'deviceKeys'],
 
 			TweenMax.killTweensOf(obj.sprite);
 
-			obj.moveTo.apply(obj, obj.get('moveTo'));
+			obj.moveTo.apply(obj, obj.attr.moveTo);
+			obj.setSize.apply(obj, obj.attr.setSize);
 
 		};
 
@@ -79,10 +80,18 @@ define(['device', 'mediator', 'deviceKeys'],
 			return this.attr[key];
 		};
 
-		DisplayObject.prototype.setSize = function (width, height) {
+		DisplayObject.prototype.setSize = function (width, height, unit) {
 
-			var sprite = this.sprite,
+			var obj = this,
+				sprite = obj.sprite,
 				q;
+
+			obj.set('setSize', [width, height, unit]);
+
+			if (unit === cameraKeys.REM) {
+				width = width === -1 ? -1 : camera.remToPixel(width);
+				height = height === -1 ? -1 : camera.remToPixel(height);
+			}
 
 			if (width === -1) {
 				q = sprite.height / height;
@@ -110,23 +119,41 @@ define(['device', 'mediator', 'deviceKeys'],
 			this.sprite.anchor.y = y;
 		};
 
-		DisplayObject.prototype.moveTo = function (windowPoint, objectPoint, leftOffset, topOffset) {
+		DisplayObject.prototype.moveTo = function (windowPoint, objectPoint, leftOffset, topOffset, unit) {
+
+			leftOffset = leftOffset || 0;
+			topOffset = topOffset || 0;
 
 			var obj = this,
 				xy1 = device.getCoordinatesOfPoint(windowPoint),
 				xy2 = obj.getCoordinatesOfPoint(objectPoint);
 
-			obj.set('moveTo', [windowPoint, objectPoint, leftOffset, topOffset]);
+			obj.set('moveTo', [windowPoint, objectPoint, leftOffset, topOffset, unit]);
 
-			obj.sprite.x += xy1.x - xy2.x + (leftOffset || 0);
-			obj.sprite.y += xy1.y - xy2.y + (topOffset || 0);
+			if (unit === cameraKeys.REM) {
+				leftOffset = camera.remToPixel(leftOffset);
+				topOffset = camera.remToPixel(topOffset);
+			}
+
+			obj.sprite.x += xy1.x - xy2.x + leftOffset;
+			obj.sprite.y += xy1.y - xy2.y + topOffset;
 
 		};
 
-		DisplayObject.prototype.moveToAnimate = function (windowPoint, objectPoint, options, leftOffset, topOffset) {
+		DisplayObject.prototype.moveToAnimate = function (windowPoint, objectPoint, options, leftOffset, topOffset, unit) {
+
+			leftOffset = leftOffset || 0;
+			topOffset = topOffset || 0;
 
 			if (typeof options === 'number') {
 				options = {time: options};
+			}
+
+			this.set('moveTo', [windowPoint, objectPoint, leftOffset, topOffset, unit]);
+
+			if (unit === cameraKeys.REM) {
+				leftOffset = camera.remToPixel(leftOffset);
+				topOffset = camera.remToPixel(topOffset);
 			}
 
 			var obj = this,
@@ -134,14 +161,12 @@ define(['device', 'mediator', 'deviceKeys'],
 				xy1 = device.getCoordinatesOfPoint(windowPoint),
 				xy2 = obj.getCoordinatesOfPoint(objectPoint),
 				cfg = {
-					x: sprite.x - xy2.x + xy1.x + (leftOffset || 0),
-					y: sprite.y - xy2.y + xy1.y + (topOffset || 0),
+					x: sprite.x - xy2.x + xy1.x + leftOffset,
+					y: sprite.y - xy2.y + xy1.y + topOffset,
 					delay: options.delay || 0,
 					onComplete: options.onComplete,
 					ease: options.ease || Back.easeOut
 				};
-
-			obj.set('moveTo', [windowPoint, objectPoint, leftOffset, topOffset]);
 
 			TweenMax.killTweensOf(sprite);
 			TweenMax.to(sprite, options.time, cfg);
