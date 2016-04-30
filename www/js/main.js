@@ -23,11 +23,13 @@ requirejs.config({
 		textureSources: 'core/texture-sources',
 		DisplayObject: 'core/display-object',
 		BaseView: 'core/base-view',
-		BaseViewEvents: 'core/base-view-events',
+		BaseViewKeys: 'core/base-view-keys',
 		Button: 'core/button',
 		loader: 'core/loader',
 		camera: 'core/camera',
 		cameraKeys: 'core/camera-keys',
+		uiManager: 'core/ui-manager',
+		uiManagerKeys: 'core/ui-manager-keys',
 		// views
 		TitleView: 'view/title/view',
 		SettingView: 'view/setting/view',
@@ -61,7 +63,8 @@ define(
 		'device',
 		'loader',
 		'renderer',
-		'camera'
+		'camera',
+		'uiManager'
 		//'gameObjectHelper'
 	],
 	function (libLoad,
@@ -70,13 +73,15 @@ define(
 			  device,
 			  loader,
 			  renderer,
-			  camera
+			  camera,
+			  uiManager
 			  //gameObjectHelper
 				) {
 
 		device.initialize();
 		// gameObjectHelper.initialize();
 		camera.initialize();
+		uiManager.initialize();
 
 		loader
 			.load()

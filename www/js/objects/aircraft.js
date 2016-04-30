@@ -69,9 +69,9 @@ define([
 
 		var obj = this;
 
-		obj.subscribe(deviceKeys.DOWN, obj.onDeviceMove);
-		obj.subscribe(deviceKeys.MOVE, obj.onDeviceMove);
-		obj.subscribe(deviceKeys.UP, obj.onDeviceUp);
+		obj.subscribe(deviceKeys.DOWNS, obj.onDeviceMove);
+		obj.subscribe(deviceKeys.MOVES, obj.onDeviceMove);
+		obj.subscribe(deviceKeys.UPS, obj.onDeviceUp);
 
 	};
 
@@ -82,18 +82,25 @@ define([
 		 this.attr.y += (data.dy / gameObjectHelper.attr.qY);
 		 */
 
-		var aircraft = this,
-			aircraftData = aircraft.attr,
-			xy1 = camera.toGameCoordinates(data),
-			x1 = xy1.x,
-			y1 = xy1.y,
-			dx = x1 - aircraftData.x,
-			dy = y1 - aircraftData.y,
-			angleRadians = Math.atan2(dy, dx),
-			sin = Math.sin(angleRadians),
-			cos = Math.cos(angleRadians),
-			fullSpeed = aircraftData.fullSpeed,
-			speed = aircraftData.speed;
+		var aircraft, aircraftData, xy1, x1, y1, dx, dy, angleRadians, sin, cos, fullSpeed, speed;
+
+		xy1 = camera.toGameCoordinatesAverage(data);
+
+		if (xy1 === null) {
+			return;
+		}
+
+		aircraft = this;
+		aircraftData = aircraft.attr;
+		x1 = xy1.x;
+		y1 = xy1.y;
+		dx = x1 - aircraftData.x;
+		dy = y1 - aircraftData.y;
+		angleRadians = Math.atan2(dy, dx);
+		sin = Math.sin(angleRadians);
+		cos = Math.cos(angleRadians);
+		fullSpeed = aircraftData.fullSpeed;
+		speed = aircraftData.speed;
 
 		speed.x = cos * fullSpeed;
 		speed.y = sin * fullSpeed;

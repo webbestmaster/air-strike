@@ -1,6 +1,6 @@
 define(
-	['device', 'mediator', 'deviceKeys', 'gameConfig', 'cameraKeys', 'gameKeys'],
-	function (device, mediator, deviceKeys, gameConfig, cameraKeys, gameKeys) {
+	['device', 'mediator', 'deviceKeys', 'gameConfig', 'cameraKeys', 'gameKeys', 'uiManager'],
+	function (device, mediator, deviceKeys, gameConfig, cameraKeys, gameKeys, uiManager) {
 
 	// WARNING  camera use game coordinates only
 
@@ -215,13 +215,42 @@ define(
 
 		},
 
-		toGameCoordinates: function (xy) {
+		toGameCoordinatesAverage: function (data) {
 
-			var attr = this.attr;
+			var camera = this,
+				length = data.length,
+				events = data.events,
+				eventItem,
+				newArray = [],
+				i = 0,
+				sumX = 0,
+				sumY = 0,
+				newArrayLength = 0,
+				attr = camera.attr;
+
+			for (; i < length; i += 1) {
+				eventItem = events[i];
+				if (!uiManager.isInUI(eventItem.x, eventItem.y)) {
+					newArray[newArrayLength] = eventItem;
+					newArrayLength += 1;
+				}
+			}
+
+			if (!newArrayLength) {
+				return null;
+			}
+
+			for (i = 0; i < newArrayLength; i += 1) {
+				sumX += newArray[i].x;
+				sumY += newArray[i].y;
+			}
+
+			sumX /= newArrayLength;
+			sumY /= newArrayLength;
 
 			return {
-				x: xy.x / attr.dw * attr.w + attr.x - attr.w05,
-				y: xy.y / attr.dh * attr.h + attr.y - attr.h05
+				x: sumX / attr.dw * attr.w + attr.x - attr.w05,
+				y: sumY / attr.dh * attr.h + attr.y - attr.h05
 			}
 
 		}

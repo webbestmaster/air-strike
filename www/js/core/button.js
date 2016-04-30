@@ -24,6 +24,8 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 			// TODO: implement it!!!
 			// button.bindEventListeners();
 
+			button.linkToUIManager();
+
 		}
 
 		/*
@@ -36,12 +38,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 
 		Button.prototype.eventMap = device.events;
 
-		// Button.prototype.texturesPostfix = ['normal', 'hover', 'active', 'disable'];
-
 		Button.prototype.textureStatesInitialize = function (textureName) {
-
-
-			// Refactor this and add events logic for desctop
 
 			var button = this;
 

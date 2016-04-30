@@ -6,7 +6,7 @@ define(
 		'device',
 		'TweenMax',
 		'deviceKeys',
-		'BaseViewEvents'
+		'BaseViewKeys'
 	],
 	function (DisplayObject,
 			  mediator,
@@ -14,7 +14,7 @@ define(
 			  device,
 			  TweenMax,
 			  deviceKeys,
-			  BaseViewEvents) {
+			  BaseViewKeys) {
 
 		function BaseView() {
 
@@ -30,7 +30,7 @@ define(
 
 			view.buttons = [];
 
-			mediator.publish(BaseViewEvents.HIDE);
+			mediator.publish(BaseViewKeys.HIDE);
 
 			view.bindMainEventListeners();
 
@@ -46,7 +46,7 @@ define(
 
 			mediator.installTo(view);
 
-			view.subscribe(BaseViewEvents.HIDE, view.mainHide);
+			view.subscribe(BaseViewKeys.HIDE, view.mainHide);
 
 		};
 
