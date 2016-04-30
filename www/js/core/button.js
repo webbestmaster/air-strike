@@ -66,10 +66,6 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 				button.on('mouseout', button.onMouseOut, button);
 			}
 
-			button.on('click', function () {
-				alert('I am work!!!');
-			});
-
 		};
 
 		Button.prototype.checkAction = function (events) {
@@ -156,7 +152,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 				return;
 			}
 
-			if ( button.sprite.texture !== button.textures.hover) {
+			if (button.sprite.texture !== button.textures.hover) {
 				button.sprite.texture = button.textures.hover;
 			}
 
@@ -170,7 +166,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 				return;
 			}
 
-			if ( button.checkAction(events) && button.sprite.texture !== button.textures.active) {
+			if (button.checkAction(events) && button.sprite.texture !== button.textures.active) {
 				button.sprite.texture = button.textures.active;
 			}
 
@@ -184,7 +180,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 				return;
 			}
 
-			if ( button.checkAction(events) && button.sprite.texture !== button.textures.active) {
+			if (button.checkAction(events) && button.sprite.texture !== button.textures.active) {
 				button.sprite.texture = button.textures.active;
 			}
 
@@ -217,7 +213,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 				return;
 			}
 
-			if ( button.checkAction(events) || button.sprite.texture === button.textures.normal) {
+			if (button.checkAction(events) || button.sprite.texture === button.textures.normal) {
 				return;
 			}
 

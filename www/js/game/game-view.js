@@ -1,6 +1,6 @@
 define(
-	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button'],
-	function (BaseView, mediator, GameModel, gameKeys, Button) {
+	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera'],
+	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera) {
 
 		function GameView() {
 
@@ -63,10 +63,29 @@ define(
 
 		GameView.prototype.createButtons = function () {
 
-			// create pause button
+			var view = this,
+				button = new Button({
+					stage: view.stages[gameKeys.VIEW_LAYER_UI],
+					textureName: 'button'
+				});
 
-			var pauseButton = new Button(this);
-			
+			button.createTextNode('pause', {
+				font: camera.remToPixel(1) + 'px quake',
+				fill: '#FFF',
+				align: 'center',
+				wordWrap: true,
+				wordWrapWidth: button.sprite.width * 0.8
+			});
+
+			button.setSize(-1, 2.8, cameraKeys.REM);
+
+			// debugger
+			button.moveTo(4, 6, 0, 0, cameraKeys.REM);
+			button.moveToAnimate(5, 5, 4, 0, 0, cameraKeys.REM);
+
+			button.on('click', function () {
+
+			});
 
 		};
 

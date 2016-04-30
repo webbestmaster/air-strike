@@ -81,7 +81,7 @@ define(
 					delay: index / 3
 				}, 0, buttonData.offset.top, cameraKeys.REM);
 
-/*
+
 				button.on('click', function () {
 					view.buttons.forEach(function (button) {
 						button.off();
@@ -90,7 +90,7 @@ define(
 					mediator.publish('show:GameView');
 					// button.destroy();
 				});
-*/
+
 				//
 				// // setTimeout(function () {
 				// // 	button.destroy();
