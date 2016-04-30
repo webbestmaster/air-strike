@@ -69,6 +69,8 @@ define(
 					textureName: 'button'
 				});
 
+			view.buttons.push(button);
+
 			button.createTextNode('pause', {
 				font: camera.remToPixel(1) + 'px quake',
 				fill: '#FFF',

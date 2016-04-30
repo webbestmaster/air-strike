@@ -322,6 +322,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 
 			if (button.textNode) {
 				button.sprite.removeChild(button.textNode);
+				button.textNode = null;
 			}
 
 			button.stage.removeChild(button.sprite);

@@ -39,10 +39,8 @@ define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys'],
 
 			mediator.uninstallFrom(obj);
 
-			obj.attr.moveTo.fn = '';
-			obj.attr.moveTo.args = [];
-
 			obj.attr.moveTo = null;
+			obj.attr.setSize = null;
 
 		};
 
