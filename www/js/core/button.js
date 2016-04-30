@@ -53,16 +53,22 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 				disable: PIXI.Texture.fromFrame(textureName + '-disable.png')
 			};
 
-			// mobile part
-			button.subscribe(deviceKeys.DOWNS, button.onDowns);
-			// button.subscribe(deviceKeys.MOVES, button.onMoves);
-			button.subscribe(deviceKeys.UPS, button.onUps);
+			if (device.attr.isTouch) {
+				// mobile part
+				button.subscribe(deviceKeys.DOWNS, button.onDowns);
+				button.subscribe(deviceKeys.MOVES, button.onMoves);
+				button.subscribe(deviceKeys.UPS, button.onUps);
+			} else {
+				// desktop part
+				button.subscribe(deviceKeys.DOWNS, button.onMouseDown);
+				button.on('up', button.onMouseUp, button);
+				button.on('mouseover', button.onMouseOver, button);
+				button.on('mouseout', button.onMouseOut, button);
+			}
 
-			// desktop part
-
-			button.on('mouseover', button.onMouseOver, button);
-
-			button.on('mouseout', button.onMouseOut, button);
+			button.on('click', function () {
+				alert('I am work!!!');
+			});
 
 		};
 
@@ -115,8 +121,15 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 			if (!button.attr.isEnable) {
 				return;
 			}
-			if (button.sprite.texture !== button.textures.hover) {
-				button.sprite.texture = button.textures.hover;
+
+			if (device.attr.actionIsActive) {
+				if (button.sprite.texture !== button.textures.active) {
+					button.sprite.texture = button.textures.active;
+				}
+			} else {
+				if (button.sprite.texture !== button.textures.hover) {
+					button.sprite.texture = button.textures.hover;
+				}
 			}
 
 		};
@@ -135,7 +148,35 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 
 		};
 
+		Button.prototype.onMouseUp = function () {
+
+			var button = this;
+
+			if (!button.attr.isEnable) {
+				return;
+			}
+
+			if ( button.sprite.texture !== button.textures.hover) {
+				button.sprite.texture = button.textures.hover;
+			}
+
+		};
+
 		Button.prototype.onDowns = function (events) {
+
+			var button = this;
+
+			if (!button.attr.isEnable) {
+				return;
+			}
+
+			if ( button.checkAction(events) && button.sprite.texture !== button.textures.active) {
+				button.sprite.texture = button.textures.active;
+			}
+
+		};
+
+		Button.prototype.onMouseDown = function (events) {
 
 			var button = this;
 

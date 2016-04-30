@@ -67,8 +67,8 @@ define(
 						y: 0.0
 					},
 
-					_actionIsActive: false,
-					_pinchIsActive: false
+					actionIsActive: false,
+					pinchIsActive: false
 
 				},
 
@@ -122,7 +122,7 @@ define(
 					body.addEventListener(events.up, this.onUp.bind(this), false);
 
 					/*
-					 device.on('change:_actionIsActive', function (self, actionIsActive) {
+					 device.on('change:actionIsActive', function (self, actionIsActive) {
 					 self.publish('deviceEvent:isActive', actionIsActive, self.attr._logMoving.getLast()());
 					 });
 					 */
@@ -274,14 +274,14 @@ define(
 
 					device.logDown(events);
 
-					attr._actionIsActive = true;
+					attr.actionIsActive = true;
 
 					// detect start zooming
 					if (events.length === 2) {
-						attr._pinchIsActive = true;
+						attr.pinchIsActive = true;
 						attr._pinchStartEvents = events.events;
 					} else {
-						attr._pinchIsActive = false;
+						attr.pinchIsActive = false;
 					}
 
 					device.publish(deviceKeys.DOWN, startEventXY);
@@ -291,7 +291,7 @@ define(
 
 				onMove: function (e) {
 
-					if (!this.attr._actionIsActive) {
+					if (!this.attr.actionIsActive) {
 						return false;
 					}
 
@@ -317,7 +317,7 @@ define(
 					currentPointData.x = x;
 					currentPointData.y = y;
 
-					if (attr._pinchIsActive) { // zooming
+					if (attr.pinchIsActive) { // zooming
 						pinchData = device.getPinchData(events.events);
 						scale = pinchData.scale;
 						attr._pointDataX = x * scale;
@@ -352,28 +352,27 @@ define(
 						events = device.getEvents(e),
 						eventsArr = events.events,
 						eventsArrLength = eventsArr.length,
-						isTouch = attr.isTouch,
-						pinchIsActive = attr._pinchIsActive;
+						isTouch = attr.isTouch;
 
 					device.publish(deviceKeys.UP);
 					device.publish(deviceKeys.UPS, events);
 
-					if (!eventsArrLength && isTouch && pinchIsActive) { // 2 fingers -> 0 finger
-						attr._pinchIsActive = false;
-						attr._actionIsActive = false;
+					if (!eventsArrLength && isTouch && attr.pinchIsActive) { // 2 fingers -> 0 finger
+						attr.pinchIsActive = false;
+						attr.actionIsActive = false;
 						device.checkDblTap();
 						return;
 					}
 
 					if (!eventsArrLength || !isTouch) { // if is not touch device - stop moving
-						attr._actionIsActive = false;
+						attr.actionIsActive = false;
 						device.checkDblTap();
 						attr._logMoving.fill(0);
 						return;
 					}
 
 					if (eventsArrLength === 1 && isTouch) { // 2 fingers -> 1 finger
-						attr._pinchIsActive = false;
+						attr.pinchIsActive = false;
 						device.onDown(e);
 					}
 
