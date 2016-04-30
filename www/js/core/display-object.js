@@ -48,10 +48,11 @@ define(['device', 'mediator', 'deviceKeys'],
 
 		DisplayObject.prototype.onMainResize = function () {
 
-			var obj = this,
-				data = obj.get('moveTo');
+			var obj = this;
 
-			obj[data.fn].apply(obj, data.args);
+			TweenMax.killTweensOf(obj.sprite);
+
+			obj.moveTo.apply(obj, obj.get('moveTo'));
 
 		};
 
@@ -115,10 +116,7 @@ define(['device', 'mediator', 'deviceKeys'],
 				xy1 = device.getCoordinatesOfPoint(windowPoint),
 				xy2 = obj.getCoordinatesOfPoint(objectPoint);
 
-			obj.set('moveTo', {
-				fn: 'moveTo',
-				args: [windowPoint, objectPoint, leftOffset, topOffset]
-			});
+			obj.set('moveTo', [windowPoint, objectPoint, leftOffset, topOffset]);
 
 			obj.sprite.x += xy1.x - xy2.x + (leftOffset || 0);
 			obj.sprite.y += xy1.y - xy2.y + (topOffset || 0);
@@ -143,10 +141,7 @@ define(['device', 'mediator', 'deviceKeys'],
 					ease: options.ease || Back.easeOut
 				};
 
-			obj.set('moveTo', {
-				fn: 'moveToAnimate',
-				args: [windowPoint, objectPoint, options, leftOffset, topOffset]
-			});
+			obj.set('moveTo', [windowPoint, objectPoint, leftOffset, topOffset]);
 
 			TweenMax.killTweensOf(sprite);
 			TweenMax.to(sprite, options.time, cfg);
