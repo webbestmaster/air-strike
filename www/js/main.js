@@ -39,6 +39,7 @@ requirejs.config({
 		GameView: 'game/game-view',
 		gameKeys: 'game/game-keys',
 		gameConfig: 'game/game-config',
+		gameState: 'game/game-state',
 		Factory: 'factory/factory',
 		factoryKeys: 'factory/factory-keys',
 		objectKeys: 'factory/object-keys',
@@ -64,7 +65,8 @@ define(
 		'loader',
 		'renderer',
 		'camera',
-		'uiManager'
+		'uiManager',
+		'gameState'
 		//'gameObjectHelper'
 	],
 	function (libLoad,
@@ -74,7 +76,8 @@ define(
 			  loader,
 			  renderer,
 			  camera,
-			  uiManager
+			  uiManager,
+			  gameState
 			  //gameObjectHelper
 				) {
 
@@ -82,6 +85,8 @@ define(
 		// gameObjectHelper.initialize();
 		camera.initialize();
 		uiManager.initialize();
+
+		gameState.initialize();
 
 		loader
 			.load()
