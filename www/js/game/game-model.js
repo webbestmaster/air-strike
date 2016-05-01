@@ -28,6 +28,8 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 		mediator.installTo(game);
 
 		game.subscribe(gameKeys.UPDATE, game.update);
+		game.subscribe(gameKeys.DESTROY, game.destroy);
+
 		// game.subscribe(gameKeys.PAUSE, game.pause);
 		// game.subscribe(gameKeys.RESUME, game.resume);
 
@@ -45,18 +47,7 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 
 	GameModel.prototype.update = function () {
 
-/*
-		window.ttt = window.ttt || {};
-
-		window.ttt.curTime = Date.now();
-
-		console.log(window.ttt.curTime - window.ttt.prevTime);
-		window.ttt.prevTime = window.ttt.curTime;
-*/
-
-
-		var game = this,
-			factory = game.attr.factory,
+		var factory = this.attr.factory,
 			factoryData = factory.attr,
 			cameraBounds = camera.getBounds(),
 			lists = factoryData.lists,
@@ -76,26 +67,28 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 					/* alive object is here - begin */
 					/* use 'object' to work with object */
 					object.update.apply(object, cameraBounds);
-
 					if (object.attr.visible) {
 						camera.adjustSprite(object.attr);
 					}
-					
 					/* alive object is here - end */
 				}
 			}
 		}
 
+	};
 
 
+	GameModel.prototype.destroy = function () {
 
+		var game = this;
 
-		
+		this.attr = {};
 
+		game.unsubscribe();
 
+		mediator.uninstallFrom(game);
 
 	};
-	
 
 	return GameModel;
 

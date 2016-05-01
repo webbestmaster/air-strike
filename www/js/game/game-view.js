@@ -1,6 +1,6 @@
 define(
-	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera', 'gameState'],
-	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera, gameState) {
+	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera', 'gameState', 'BaseViewKeys'],
+	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera, gameState, BaseViewKeys) {
 
 		function GameView() {
 
@@ -56,18 +56,16 @@ define(
 			this.stages[data.layer].removeChild(data.sprite);
 		};
 
-		mediator.subscribe('show:GameView', function showGameView() {
-			new GameView();
-			new GameModel();
-		});
-
 		GameView.prototype.createButtons = function () {
 
 			var view = this,
-				button = new Button({
-					stage: view.stages[gameKeys.VIEW_LAYER_UI],
-					textureName: 'button'
-				});
+				button;
+
+			// create pause button
+			button = new Button({
+				stage: view.stages[gameKeys.VIEW_LAYER_UI],
+				textureName: 'button'
+			});
 
 			view.buttons.push(button);
 
@@ -81,13 +79,46 @@ define(
 
 			button.setSize(-1, 2.8, cameraKeys.REM);
 
-			// debugger
 			button.moveTo(3, 9, 0, 0, cameraKeys.REM);
 			button.moveToAnimate(3, 3, 0.5, 0, 0, cameraKeys.REM);
 
 			button.on('click', gameState.switchState, gameState);
 
+			// create exit button
+
+			button = new Button({
+				stage: view.stages[gameKeys.VIEW_LAYER_UI],
+				textureName: 'button'
+			});
+
+			view.buttons.push(button);
+
+			button.createTextNode('EXIT', {
+				font: camera.remToPixel(1) + 'px quake',
+				fill: '#FFF',
+				align: 'center',
+				wordWrap: true,
+				wordWrapWidth: button.sprite.width * 0.8
+			});
+
+			button.setSize(-1, 2.8, cameraKeys.REM);
+
+			button.moveTo(3, 9, 0, 0, cameraKeys.REM);
+			button.moveToAnimate(3, 3, 0.5, 0, 2.8, cameraKeys.REM);
+
+			button.on('click', function () {
+
+				mediator.publish(gameKeys.DESTROY);
+				mediator.publish('show:TitleView');
+
+			});
+
 		};
+
+		mediator.subscribe('show:GameView', function showGameView() {
+			new GameView();
+			new GameModel();
+		});
 
 		return GameView;
 

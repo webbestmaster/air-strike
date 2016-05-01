@@ -28,6 +28,12 @@ define(['mediator', 'gameKeys'], function (mediator, gameKeys) {
 				this.attr.state = gameKeys.RESUME;
 			});
 
+			gameState.subscribe(gameKeys.RESUME, function () {
+				this.attr.state = gameKeys.RESUME;
+			});
+
+			gameState.subscribe(gameKeys.DESTROY, gameState.reset);
+
 		},
 
 		reset: function () {

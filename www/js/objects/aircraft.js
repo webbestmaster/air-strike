@@ -153,7 +153,7 @@ define([
 			dTime = now - attr.lastUpdateShooting,
 			options;
 
-		if (dTime >= 0) {
+		if (dTime >= 300) {
 
 			options = {x: attr.x - attr.w05, y: attr.y, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);

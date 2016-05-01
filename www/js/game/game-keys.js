@@ -4,8 +4,8 @@ define(function () {
 		UPDATE: 'game:update',
 		PAUSE: 'game:pause',
 		RESUME: 'game:resume',
+		DESTROY: 'game:destroy',
 
-		
 		// view events
 		APPEND_SPRITE: 'game:append-sprite',
 		REMOVE_SPRITE: 'game:remove-sprite',

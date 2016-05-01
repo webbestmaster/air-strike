@@ -11,7 +11,6 @@ define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys', 'uiManagerKe
 			var obj = this;
 
 			obj.attr = {
-				isLinkedToUIManager: false,
 				moveTo: [],
 				setSize: []
 			};
@@ -34,16 +33,13 @@ define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys', 'uiManagerKe
 
 			var obj = this;
 
-			if (obj.attr.isLinkedToUIManager) {
-				obj.publish(uiManagerKeys.REMOVE_SPRITE, obj.sprite);
-			}
+			obj.publish(uiManagerKeys.REMOVE_SPRITE, obj.sprite);
 
 			obj.unsubscribe();
 
 			mediator.uninstallFrom(obj);
 
-			obj.attr.moveTo = null;
-			obj.attr.setSize = null;
+			obj.attr = {};
 
 		};
 
@@ -56,9 +52,7 @@ define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys', 'uiManagerKe
 			obj.moveTo.apply(obj, obj.attr.moveTo);
 			obj.setSize.apply(obj, obj.attr.setSize);
 
-			if (obj.attr.isLinkedToUIManager) {
-				mediator.publish(uiManagerKeys.UPDATE_SPRITE, obj.sprite);
-			}
+			mediator.publish(uiManagerKeys.UPDATE_SPRITE, obj.sprite);
 
 		};
 
@@ -66,8 +60,6 @@ define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys', 'uiManagerKe
 
 			var obj = this,
 				sprite = obj.sprite;
-
-			obj.attr.isLinkedToUIManager = true;
 
 			obj.publish(uiManagerKeys.APPEND_SPRITE, sprite);
 
@@ -187,9 +179,7 @@ define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys', 'uiManagerKe
 							options.onComplete();
 						}
 
-						if (obj.attr.isLinkedToUIManager) {
-							mediator.publish(uiManagerKeys.UPDATE_SPRITE, obj.sprite);
-						}
+						mediator.publish(uiManagerKeys.UPDATE_SPRITE, obj.sprite);
 
 					},
 					ease: options.ease || Back.easeOut

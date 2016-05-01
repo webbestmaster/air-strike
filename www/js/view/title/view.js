@@ -77,8 +77,8 @@ define(
 				// });
 				// this
 				button.moveToAnimate(5, 5, {
-					time: 2,
-					delay: index / 3
+					time: 1,
+					delay: index / 5
 				}, 0, buttonData.offset.top, cameraKeys.REM);
 
 

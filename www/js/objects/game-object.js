@@ -131,6 +131,26 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	};
 
+	GameObject.prototype.fullDestroy = function () {
+
+		var obj = this,
+			attr = obj.attr,
+			sprite = attr.sprite;
+		
+		obj.stopTweens();
+		TweenMax.killTweensOf(attr);
+		sprite.parent.removeChild(sprite);
+		TweenMax.killTweensOf(sprite);
+
+		obj.textures = null;
+
+		obj.unsubscribe();
+		mediator.uninstallFrom(obj);
+		obj.attr = null;
+		obj.tweens = null;
+
+	};
+
 	GameObject.prototype.hide = function () {
 		this.attr.visible = false;
 		this.attr.sprite.visible = false;

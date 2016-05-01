@@ -267,11 +267,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 		};
 
 		Button.prototype.on = function (type, fn, context) {
-			if (context) {
-				this.sprite.on(this.eventMap[type], fn, context);
-			} else {
-				this.sprite.on(this.eventMap[type], fn);
-			}
+			this.sprite.on(this.eventMap[type], fn, context || this);
 		};
 
 		Button.prototype.off = function (typeArg, fn) {

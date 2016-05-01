@@ -36,6 +36,7 @@ define([
 
 		factory.subscribe(factoryKeys.events.CREATE, factory.getObject);
 		factory.subscribe(factoryKeys.events.DESTROY, factory.destroyObject);
+		factory.subscribe(gameKeys.DESTROY, factory.destroy);
 
 	};
 
@@ -104,6 +105,33 @@ define([
 		this.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
 
 		return neededObject;
+
+	};
+
+	Factory.prototype.destroy = function () {
+
+		var factory = this,
+			factoryData = factory.attr,
+			lists = factoryData.lists,
+			list,
+			types = factoryData.types,
+			iiTypes = 0, lenTypes = factoryData.length,
+			iiObjects, lenObjects,
+			objects, lifeMap;
+
+		for (; iiTypes < lenTypes; iiTypes += 1) {
+			list = lists[types[iiTypes]];
+			objects = list.objects;
+			lifeMap = list.lifeMap;
+			for (iiObjects = 0, lenObjects = list.length; iiObjects < lenObjects; iiObjects += 1) {
+				objects[iiObjects].fullDestroy();
+			}
+		}
+
+		factory.attr = {};
+
+		factory.unsubscribe();
+		mediator.uninstallFrom(factory);
 
 	};
 
