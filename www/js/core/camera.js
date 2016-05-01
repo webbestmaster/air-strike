@@ -221,7 +221,6 @@ define(
 				length = data.length,
 				events = data.events,
 				eventItem,
-				newArray = [],
 				i = 0,
 				sumX = 0,
 				sumY = 0,
@@ -231,18 +230,14 @@ define(
 			for (; i < length; i += 1) {
 				eventItem = events[i];
 				if (!uiManager.isInUI(eventItem.x, eventItem.y)) {
-					newArray[newArrayLength] = eventItem;
 					newArrayLength += 1;
+					sumX += eventItem.x;
+					sumY += eventItem.y;
 				}
 			}
 
 			if (!newArrayLength) {
 				return null;
-			}
-
-			for (i = 0; i < newArrayLength; i += 1) {
-				sumX += newArray[i].x;
-				sumY += newArray[i].y;
 			}
 
 			sumX /= newArrayLength;
