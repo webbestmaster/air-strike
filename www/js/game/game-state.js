@@ -36,6 +36,21 @@ define(['mediator', 'gameKeys'], function (mediator, gameKeys) {
 				state: gameKeys.RESUME
 			};
 
+		},
+
+		switchState: function () {
+
+			var gameState = this,
+				state = gameState.attr.state;
+
+			if (state === gameKeys.PAUSE) {
+				gameState.publish(gameKeys.RESUME);
+			}
+
+			if (state === gameKeys.RESUME) {
+				gameState.publish(gameKeys.PAUSE);
+			}
+
 		}
 
 	}

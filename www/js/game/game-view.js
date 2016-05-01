@@ -1,6 +1,6 @@
 define(
-	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera'],
-	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera) {
+	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera', 'gameState'],
+	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera, gameState) {
 
 		function GameView() {
 
@@ -82,12 +82,10 @@ define(
 			button.setSize(-1, 2.8, cameraKeys.REM);
 
 			// debugger
-			button.moveTo(4, 6, 0, 0, cameraKeys.REM);
-			button.moveToAnimate(5, 5, 4, 0, 0, cameraKeys.REM);
+			button.moveTo(3, 9, 0, 0, cameraKeys.REM);
+			button.moveToAnimate(3, 3, 0.5, 0, 0, cameraKeys.REM);
 
-			button.on('click', function () {
-
-			});
+			button.on('click', gameState.switchState, gameState);
 
 		};
 
