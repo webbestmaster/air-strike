@@ -60,17 +60,17 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 			factoryData = factory.attr,
 			cameraBounds = camera.getBounds(),
 			lists = factoryData.lists,
+			list,
 			types = factoryData.types,
-			type,
-			iiTypes, lenTypes,
+			iiTypes = 0, lenTypes = factoryData.length,
 			iiObjects, lenObjects,
 			objects, lifeMap, object;
 
-		for (iiTypes = 0, lenTypes = types.length; iiTypes < lenTypes; iiTypes += 1) {
-			type = types[iiTypes];
-			objects = lists[type].objects;
-			lifeMap = lists[type].lifeMap;
-			for (iiObjects = 0, lenObjects = lifeMap.length; iiObjects < lenObjects; iiObjects += 1) {
+		for (; iiTypes < lenTypes; iiTypes += 1) {
+			list = lists[types[iiTypes]];
+			objects = list.objects;
+			lifeMap = list.lifeMap;
+			for (iiObjects = 0, lenObjects = list.length; iiObjects < lenObjects; iiObjects += 1) {
 				if (lifeMap[iiObjects] === objectKeys.ALIVE) {
 					object = objects[iiObjects];
 					/* alive object is here - begin */

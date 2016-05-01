@@ -18,7 +18,8 @@ define([
 
 		factory.attr = {
 			lists: {},
-			types: []
+			types: [],
+			length: 0
 		};
 
 		factory.initialize();
@@ -51,19 +52,24 @@ define([
 
 		// create lists for arrays
 		// create list of types
+
+
 		var factory = this,
-			types = factory.attr.types,
-			lists = factory.attr.lists,
+			attr = factory.attr,
+			types = attr.types,
+			lists = attr.lists,
 			factoryObjectKeys = factoryKeys.objects,
 			key, type;
 
 		for (key in factoryObjectKeys) {
 			if (factoryObjectKeys.hasOwnProperty(key)) {
 				type = factoryObjectKeys[key];
-				types.push(type);
+				types[attr.length] = type;
+				attr.length += 1;
 				lists[type] = {
 					objects: [],
-					lifeMap: []
+					lifeMap: [],
+					length: 0
 				}
 			}
 		}
@@ -84,13 +90,14 @@ define([
 			neededObject = objects[index].setDefaultProperties(options);
 			neededObject.show();
 		} else {
-			index = lifeMap.length;
+			index = lists.length;
 			lifeMap[index] = objectKeys.ALIVE;
 			objects[index] = neededObject = new constructorMap[type](options);
 			this.publish(gameKeys.APPEND_SPRITE, {
 				sprite: neededObject.attr.sprite,
 				layer: neededObject.attr.layer
 			});
+			lists.length += 1;
 			neededObject.attr.factoryKey = type;
 		}
 
