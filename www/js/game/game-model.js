@@ -62,7 +62,7 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 
 		var factory = this.attr.factory,
 			factoryData = factory.attr,
-			cameraBounds = camera.getBounds(),
+			cameraBounds = camera.update().getBounds(),
 			lists = factoryData.lists,
 			list,
 			types = factoryData.types,

@@ -35,6 +35,8 @@ define([
 
 		aircraft.bindEventListeners();
 
+		aircraft.publish(cameraKeys.FOLLOW_TO, aircraft.attr);
+
 	}
 
 	Aircraft.prototype = Object.create(GameObject.prototype);

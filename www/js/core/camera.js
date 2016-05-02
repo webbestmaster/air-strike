@@ -37,6 +37,11 @@ define(
 			// bounds: [0.0, 0.0, 0.0, 0.0, 0.0],
 		},
 
+		follow: {
+			list: [],
+			length: 0
+		},
+
 		initialize: function () {
 
 			var camera = this;
@@ -70,6 +75,22 @@ define(
 			camera.subscribe(gameKeys.PAUSE, camera.onPause);
 			camera.subscribe(gameKeys.RESUME, camera.onResume);
 
+			camera.subscribe(gameKeys.DESTROY, camera.onDestroy);
+			camera.subscribe(cameraKeys.FOLLOW_TO, camera.followTo);
+
+		},
+
+		onDestroy: function () {
+
+			var camera = this;
+
+			camera.attr.pause = {
+				start: 0,
+				time: 0
+			};
+
+			camera.unFollowAll();
+
 		},
 
 		onPause: function () {
@@ -97,43 +118,85 @@ define(
 
 		},
 
-/*
-		moveTo: function (x, y) {
+		followTo: function (obj) {
 
-			// FIXME: detect edge position of camera relative from game's world
-			this.attr.x = x;
-			this.attr.y = y;
+			var camera = this,
+				followData = camera.follow;
 
-		},
+			followData.list[followData.length] = obj;
 
-		followToObj: function (obj) {
-
-
+			followData.length += 1;
 
 		},
 
-		followToArray: function (arr) {
+		unFollowAll: function () {
 
+			var camera = this,
+				followData = camera.follow;
 
-
-		},
-
-		detectBorders: function (minX, minY, maxX, maxY) {
-
-			// detect max and min camera's position
+			followData.list = [];
+			followData.length = 0;
 
 		},
-*/
 
-/*
+
+		/*
+				moveTo: function (x, y) {
+
+					// FIXME: detect edge position of camera relative from game's world
+					this.attr.x = x;
+					this.attr.y = y;
+
+				},
+
+				followToObj: function (obj) {
+
+
+
+				},
+
+				followToArray: function (arr) {
+
+
+
+				},
+
+				detectBorders: function (minX, minY, maxX, maxY) {
+
+					// detect max and min camera's position
+
+				},
+		*/
+
+
 		update: function () {
 
-			// update camera's max/min X/Y
-			// save result and return it
-			// for this game Camera's X parameter has relative ship from Player's object
+			var camera = this,
+				follow = camera.follow,
+				length = follow.length,
+				list = follow.list,
+				i = 0,
+				x = 0,
+				y = 0;
 
+			// if (!length) {
+			// 	return camera;
+			// }
+
+			for (;i < length; i += 1) {
+				x += list[i].x;
+				y += list[i].y;
+			}
+
+			x /= length;
+			y /= length;
+
+			camera.attr.x = x;
+			camera.attr.y = y;
+
+			return camera;
+			
 		},
-*/
 
 		getBounds: function () {
 
