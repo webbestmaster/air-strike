@@ -72,21 +72,6 @@ define(
 
 		};
 
-		BaseView.prototype.mainHideAnimation = function () {
-
-			TweenMax
-				.to(
-					this.stage,
-					0.5,
-					{
-						alpha: 0,
-						onComplete: this.mainRemove.bind(this)
-						// ease: Back.easeOut
-					}
-				);
-
-		};
-
 		BaseView.prototype.mainShowAnimation = function () {
 
 			this.stage.alpha = 0;
@@ -94,13 +79,28 @@ define(
 			TweenMax
 				.to(
 					this.stage,
-					0.5,
+					baseViewKeys.SHOW_ANIMATION_TIME,
 					{
 						alpha: 1
 						// onComplete: function () {
-							// view.mainRemove();
+						// view.mainRemove();
 						// },
 						// ease: l
+					}
+				);
+
+		};
+
+		BaseView.prototype.mainHideAnimation = function () {
+
+			TweenMax
+				.to(
+					this.stage,
+					baseViewKeys.HIDE_ANIMATION_TIME,
+					{
+						alpha: 0,
+						onComplete: this.mainRemove.bind(this)
+						// ease: Back.easeOut
 					}
 				);
 
