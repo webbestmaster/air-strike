@@ -1,4 +1,4 @@
-define(['mediator', 'uiManagerKeys', 'BaseViewKeys'], function (mediator, uiManagerKeys, BaseViewKeys) {
+define(['mediator', 'uiManagerKeys', 'baseViewKeys'], function (mediator, uiManagerKeys, baseViewKeys) {
 	
 	return {
 
@@ -25,7 +25,7 @@ define(['mediator', 'uiManagerKeys', 'BaseViewKeys'], function (mediator, uiMana
 			uiManager.subscribe(uiManagerKeys.APPEND_SPRITE, uiManager.appendSprite);
 			uiManager.subscribe(uiManagerKeys.REMOVE_SPRITE, uiManager.removeSprite);
 			uiManager.subscribe(uiManagerKeys.UPDATE_SPRITE, uiManager.updateSprite);
-			uiManager.subscribe(BaseViewKeys.HIDE, uiManager.reset);
+			uiManager.subscribe(baseViewKeys.HIDE, uiManager.reset);
 			// uiManager.subscribe(uiManagerKeys.UPDATE, uiManager.update);
 
 		},

@@ -23,7 +23,7 @@ requirejs.config({
 		textureSources: 'core/texture-sources',
 		DisplayObject: 'core/display-object',
 		BaseView: 'core/base-view',
-		BaseViewKeys: 'core/base-view-keys',
+		baseViewKeys: 'core/base-view-keys',
 		Button: 'core/button',
 		loader: 'core/loader',
 		camera: 'core/camera',

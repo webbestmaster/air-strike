@@ -6,7 +6,7 @@ define(
 		'device',
 		'TweenMax',
 		'deviceKeys',
-		'BaseViewKeys'
+		'baseViewKeys'
 	],
 	function (DisplayObject,
 			  mediator,
@@ -14,7 +14,7 @@ define(
 			  device,
 			  TweenMax,
 			  deviceKeys,
-			  BaseViewKeys) {
+			  baseViewKeys) {
 
 		function BaseView() {
 
@@ -30,7 +30,7 @@ define(
 
 			view.buttons = [];
 
-			mediator.publish(BaseViewKeys.HIDE);
+			mediator.publish(baseViewKeys.HIDE);
 
 			view.bindMainEventListeners();
 
@@ -46,7 +46,7 @@ define(
 
 			mediator.installTo(view);
 
-			view.subscribe(BaseViewKeys.HIDE, view.mainHide);
+			view.subscribe(baseViewKeys.HIDE, view.mainHide);
 
 		};
 
@@ -60,9 +60,15 @@ define(
 
 		BaseView.prototype.mainHide = function () {
 
-			this.unsubscribe();
-			mediator.uninstallFrom(this);
-			this.mainHideAnimation();
+			var view = this;
+
+			view.buttons.forEach(function (button) {
+				button.off();
+			});
+
+			view.unsubscribe();
+			mediator.uninstallFrom(view);
+			view.mainHideAnimation();
 
 		};
 
@@ -71,7 +77,7 @@ define(
 			TweenMax
 				.to(
 					this.stage,
-					2,
+					0.5,
 					{
 						alpha: 0,
 						onComplete: this.mainRemove.bind(this)
@@ -88,7 +94,7 @@ define(
 			TweenMax
 				.to(
 					this.stage,
-					2,
+					0.5,
 					{
 						alpha: 1
 						// onComplete: function () {

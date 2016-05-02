@@ -1,6 +1,6 @@
 define(
-	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera', 'gameState', 'BaseViewKeys'],
-	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera, gameState, BaseViewKeys) {
+	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera', 'gameState', 'baseViewKeys'],
+	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera, gameState, baseViewKeys) {
 
 		function GameView() {
 

@@ -83,9 +83,6 @@ define(
 
 
 				button.on('click', function () {
-					view.buttons.forEach(function (button) {
-						button.off();
-					});
 					// mediator.publish('show:SettingView');
 					mediator.publish('show:GameView');
 					// button.destroy();
