@@ -33,13 +33,20 @@ define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys', 'uiManagerKe
 
 			var obj = this;
 
-			obj.publish(uiManagerKeys.REMOVE_SPRITE, obj.sprite);
-
 			obj.unsubscribe();
+			
+			TweenMax.killTweensOf(obj.attr);
+			TweenMax.killTweensOf(obj.sprite);
+
+			obj.textures = null;
+
+			mediator.publish(uiManagerKeys.REMOVE_SPRITE, obj.sprite);
+
+			obj.sprite.destroy();
 
 			mediator.uninstallFrom(obj);
 
-			obj.attr = {};
+			obj.attr = null;
 
 		};
 

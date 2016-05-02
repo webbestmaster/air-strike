@@ -93,13 +93,15 @@ define(
 
 		BaseView.prototype.mainHideAnimation = function () {
 
+			var view = this;
+
 			TweenMax
 				.to(
-					this.stage,
+					view.stage,
 					baseViewKeys.HIDE_ANIMATION_TIME,
 					{
 						alpha: 0,
-						onComplete: this.mainRemove.bind(this)
+						onComplete: view.mainRemove.bind(view)
 						// ease: Back.easeOut
 					}
 				);
@@ -112,6 +114,7 @@ define(
 
 			if (view.bgSprite) {
 				view.stage.removeChild(view.bgSprite);
+				view.bgSprite.destroy();
 				view.bgSprite = null;
 			}
 
@@ -119,9 +122,35 @@ define(
 				button.destroy();
 			});
 
-			mediator.publish(rendererKeys.REMOVE, this.stage);
+			TweenMax.killTweensOf(view.attr);
+			TweenMax.killTweensOf(view.stage);
 
-			console.log('view is hidden'); // remove
+			view.destroyStages();
+
+			view.stage.destroy();
+
+			mediator.publish(rendererKeys.REMOVE, view.stage);
+
+			// console.log('view is hidden'); // remove
+
+		};
+
+		BaseView.prototype.destroyStages = function () {
+
+			var view = this,
+				stages = view.stages,
+				mainStage = view.stage,
+				key,
+				stage;
+
+			for (key in stages) {
+				if (stages.hasOwnProperty(key)) {
+					stage = stages[key];
+					mainStage.removeChild(stage);
+					stage.destroy();
+					// console.log('sadads');
+				}
+			}
 
 		};
 

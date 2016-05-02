@@ -45,6 +45,7 @@ define(
 
 			view.subscribe(gameKeys.APPEND_SPRITE, view.appendSprite);
 			view.subscribe(gameKeys.REMOVE_SPRITE, view.removeSprite);
+			// view.subscribe(gameKeys.DESTROY, view.destroyStages);
 
 		};
 
@@ -118,6 +119,15 @@ define(
 		mediator.subscribe('show:GameView', function showGameView() {
 			new GameView();
 			new GameModel();
+
+			setTimeout(function () {
+
+				mediator.publish(gameKeys.DESTROY);
+				mediator.publish('show:TitleView');
+
+
+			}, 1e3);
+
 		});
 
 		return GameView;

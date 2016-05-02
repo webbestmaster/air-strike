@@ -309,12 +309,11 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 
 			var button = this;
 
-			button.disable();
-
 			button.off();
 
 			if (button.textNode) {
 				button.sprite.removeChild(button.textNode);
+				button.textNode.destroy();
 				button.textNode = null;
 			}
 
@@ -322,7 +321,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 
 			button.mainDestroy();
 
-			console.log('button destroy'); // remove
+			//console.log('button destroy'); // remove
 
 		};
 
