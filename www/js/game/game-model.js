@@ -1,4 +1,4 @@
-define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'], function (Factory, factoryKeys, camera, mediator, gameKeys, objectKeys) {
+define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys', 'gameConfig'], function (Factory, factoryKeys, camera, mediator, gameKeys, objectKeys, gameConfig) {
 
 	function GameModel() {
 
@@ -22,12 +22,12 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 
 
 		var i, j;
-		for (i = 0; i < 10; i += 1) {
-			for (j = 0; j < 10; j += 1) {
+		for (i = 1; i < 10; i += 1) {
+			for (j = 1; j < 10; j += 1) {
 				game.publish(factoryKeys.events.CREATE, factoryKeys.objects.CROSS, {
 					lastUpdate: camera.get('now'),
-					x: i * 80,
-					y: j * 80
+					x: i * gameConfig.world.width / 10,
+					y: j * gameConfig.world.height / 10
 				});
 			}
 		}

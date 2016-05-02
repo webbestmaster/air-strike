@@ -55,6 +55,10 @@ define([
 			//lastUpdate: options.lastUpdate,
 			lastUpdateShooting: options.lastUpdate,
 			fullSpeed: 150, // 50 px per sec
+			minX: 47 / 2,
+			minY: 28 / 2,
+			maxX: gameConfig.world.width - 47 / 2,
+			maxY: gameConfig.world.height - 28 / 2,
 			speed: {
 				x: 0,
 				y: 0
@@ -144,10 +148,36 @@ define([
 
 		aircraft.updateByMoveTo(attr.movieTarget, now);
 
+		aircraft.adjustEdge();
+		
 		aircraft.updateShooting(now);
 
 	};
 
+	Aircraft.prototype.adjustEdge = function () {
+
+		var aircraft = this,
+			attr = aircraft.attr,
+			x = attr.x,
+			y = attr.y;
+
+		if (x > attr.maxX) {
+			x = attr.maxX;
+		} else if (x < attr.minX) {
+			x = attr.minX;
+		}
+
+		if (y > attr.maxY) {
+			y = attr.maxY;
+		} else if (y < attr.minY) {
+			y = attr.minY;
+		}
+
+		attr.x = x;
+		attr.y = y;
+
+	};
+	
 	Aircraft.prototype.updateShooting = function (now) {
 
 		var aircraft = this,

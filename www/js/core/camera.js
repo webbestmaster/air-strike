@@ -31,6 +31,10 @@ define(
 				// stop: 0,
 				time: 0
 			},
+			minX: 0,
+			minY: 0,
+			maxX: 0,
+			maxY: 0,
 			remSize: 20,
 			dw: 0, 	//device width
 			dh: 0 	//device height
@@ -172,6 +176,7 @@ define(
 		update: function () {
 
 			var camera = this,
+				attr = camera.attr,
 				follow = camera.follow,
 				length = follow.length,
 				list = follow.list,
@@ -190,6 +195,18 @@ define(
 
 			x /= length;
 			y /= length;
+
+			if (x > attr.maxX) {
+				x = attr.maxX;
+			} else if (x < attr.minX) {
+				x = attr.minX;
+			}
+
+			if (y > attr.maxY) {
+				y = attr.maxY;
+			} else if (y < attr.minY) {
+				y = attr.minY;
+			}
 
 			camera.attr.x = x;
 			camera.attr.y = y;
@@ -234,9 +251,38 @@ define(
 			cameraData.dw = width;
 			cameraData.dh = height;
 
+			camera.detectEdgePositions();
+
 			camera.detectRemSize();
 
 			camera.publish(cameraKeys.BOUNDS_UPDATED, cameraData);
+
+		},
+
+		detectEdgePositions: function () {
+
+			var camera = this,
+				attr = camera.attr,
+				maxX, maxY, minX, minY;
+
+			minX = attr.w05;
+			minY = attr.h05;
+
+			maxX = gameConfig.world.width - attr.w05;
+			maxY = gameConfig.world.height - attr.h05;
+
+			if (minX >= maxX) {
+				maxX = minX = gameConfig.world.width / 2;
+			}
+
+			if (minY >= maxY) {
+				maxY = minY = gameConfig.world.height / 2;
+			}
+
+			attr.maxX = maxX;
+			attr.maxY = maxY;
+			attr.minX = minX;
+			attr.minY = minY;
 
 		},
 
