@@ -237,12 +237,10 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	GameObject.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, time) {
 
-		if (this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1)) {
-			return;
-		}
+		this.attr.visible = this.attr.sprite.visible = this.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1);
 
-		this.attr.visible = this.attr.sprite.visible = false;
 		// console.log('add destroy here');
+
 	};
 
 	GameObject.prototype.updateBounds = function () {

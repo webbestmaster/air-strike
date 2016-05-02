@@ -108,14 +108,6 @@ define(
 
 		mediator.subscribe('show:TitleView', function showTitleView() {
 			new TitleView();
-
-			setTimeout(function () {
-
-				mediator.publish('show:GameView');
-
-
-			}, 1e3);
-
 		});
 
 		return TitleView;

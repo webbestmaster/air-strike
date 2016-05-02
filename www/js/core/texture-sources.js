@@ -7,6 +7,7 @@ define(function () {
 		'src/objects/bullet.json',
 		'src/objects/aircraft.json',
 		'src/objects/junior-missile.json',
+		'src/objects/cross.json',
 		'src/button.json'
 	]
 

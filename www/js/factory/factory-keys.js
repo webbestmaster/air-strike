@@ -4,7 +4,8 @@ define(function () {
 		objects: {
 			BULLET: 'factory:Bullet',
 			AIRCRAFT: 'factory:Aircraft',
-			JUNIOR_MISSILE: 'factory:JuniorMissile'
+			JUNIOR_MISSILE: 'factory:JuniorMissile',
+			CROSS: 'factory:Cross'
 		},
 		events: {
 			CREATE: 'factory:create',

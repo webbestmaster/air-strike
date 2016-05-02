@@ -50,7 +50,8 @@ requirejs.config({
 		// gameObjectHelper: 'objects/game-object-helper',
 		Aircraft: 'objects/aircraft',
 		Bullet: 'objects/bullet',
-		JuniorMissile: 'objects/junior-missile'
+		JuniorMissile: 'objects/junior-missile',
+		Cross: 'objects/cross'
 
 	}
 

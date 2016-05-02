@@ -20,6 +20,18 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 			lastUpdate: camera.get('now')
 		});
 
+
+		var i, j;
+		for (i = 0; i < 10; i += 1) {
+			for (j = 0; j < 10; j += 1) {
+				game.publish(factoryKeys.events.CREATE, factoryKeys.objects.CROSS, {
+					lastUpdate: camera.get('now'),
+					x: i * 80,
+					y: j * 80
+				});
+			}
+		}
+
 	}
 
 	GameModel.prototype.bindEventListeners = function () {

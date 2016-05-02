@@ -119,15 +119,6 @@ define(
 		mediator.subscribe('show:GameView', function showGameView() {
 			new GameView();
 			new GameModel();
-
-			setTimeout(function () {
-
-				mediator.publish(gameKeys.DESTROY);
-				mediator.publish('show:TitleView');
-
-
-			}, 1e3);
-
 		});
 
 		return GameView;
