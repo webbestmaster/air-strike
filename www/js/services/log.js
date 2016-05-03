@@ -38,6 +38,8 @@ define(function () {
 
 	window.onerror = function (errorMsg, url, lineNumber) {
 
+		alert(JSON.stringify(arguments));
+
 		log.apply(null, arguments);
 
 		if (gOldOnError) {
