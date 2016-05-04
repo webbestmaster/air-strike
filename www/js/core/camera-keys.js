@@ -1,6 +1,7 @@
 define(function () {
 
 	return {
+		CHANGE_XY: 'camera:change-xy',
 		BOUNDS_UPDATED: 'camera:bounds-updated',
 		ADJUST_SPRITE: 'camera:adjust-sprite',
 		FOLLOW_TO: 'camera:follow-to',

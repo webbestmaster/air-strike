@@ -7,7 +7,7 @@ define(
 			var view = this;
 
 			view.mainInitialize({
-				bg: 'bg-game'
+				// bg: 'bg-game'
 			});
 
 			view.mainShow();

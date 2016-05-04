@@ -182,7 +182,9 @@ define(
 				list = follow.list,
 				i = 0,
 				x = 0,
-				y = 0;
+				y = 0,
+				dx,
+				dy;
 
 			// if (!length) {
 			// 	return camera;
@@ -208,8 +210,17 @@ define(
 				y = attr.minY;
 			}
 
-			camera.attr.x = x;
-			camera.attr.y = y;
+			dx = x - attr.x;
+			dy = y - attr.y;
+
+			if (dx || dy) {
+				attr.x = x;
+				attr.y = y;
+				camera.publish(cameraKeys.CHANGE_XY, {
+					dx: dx,
+					dy: dy
+				});
+			}
 
 			return camera;
 			

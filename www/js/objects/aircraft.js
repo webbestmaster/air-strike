@@ -73,11 +73,25 @@ define([
 
 	Aircraft.prototype.bindEventListeners = function () {
 
-		var obj = this;
+		var aircraft = this;
 
-		obj.subscribe(deviceKeys.DOWNS, obj.onDeviceMove);
-		obj.subscribe(deviceKeys.MOVES, obj.onDeviceMove);
-		obj.subscribe(deviceKeys.UPS, obj.onDeviceUp);
+		aircraft.subscribe(deviceKeys.DOWNS, aircraft.onDeviceMove);
+		aircraft.subscribe(deviceKeys.MOVES, aircraft.onDeviceMove);
+		aircraft.subscribe(deviceKeys.UPS, aircraft.onDeviceUp);
+		aircraft.subscribe(cameraKeys.CHANGE_XY, aircraft.onCameraChangeXY);
+
+	};
+
+	Aircraft.prototype.onCameraChangeXY = function (dxdy) {
+
+		var aircraft = this,
+			attr = aircraft.attr,
+			speed = aircraft.attr.speed;
+
+		if (speed.x || speed.y) { // detect aircraft is moving
+			attr.movieTarget.x += dxdy.dx;
+			attr.movieTarget.y += dxdy.dy;
+		}
 
 	};
 
