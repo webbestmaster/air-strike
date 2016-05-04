@@ -1,7 +1,7 @@
 добавить на карту несколько статичных объектов что бы можно было по ним ориентироваться - сделано
 сделать что бы камера летела за самолётом - включить функция отслеживания - сделано
 
-сделать камере кроевые положения - за которые бы она не выходила
+сделать камере кроевые положения - за которые бы она не выходила - сделано
 
 aircraft should not across a game world - сделано
 
@@ -9,6 +9,46 @@ aircraft should not across a game world - сделано
 
 добавить кнопку паузы / анпаузы - сделано
 добавить кнопку "назад" - и плюс к ней прикрутить функционал по дестрою всех игроных объектов - сделано
+
+текстуры - все их можно хранить в дж ес файлах и добавлять вот таким образом
+
+можно и нужно юзать ShoeBox от него конечно не такой крутой выхлоп как от texture packera но нужные опции есть и он бесплатный и кросплатформенный
+
+var texture = PIXI.Texture.fromImage('src/sprites.png'); -- тут кроме картинки можно ещё указывать опции
+PIXI.Texture.addTextureToCache(texture, 'cross'); -- опции можно посмотреть по ссылке ниже
+sprite = new PIXI.Sprite.fromFrame('cross'); -- новый спрайт из фрейма
+https://pixijs.github.io/docs/PIXI.Texture.html
+
+
+new PIXI.Texture(baseTexture, frame, crop, trim, rotate)
+
+core/textures/Texture.js, line 28
+A texture stores the information that represents an image or part of an image. It cannot be added to the display list directly. Instead use it as the texture for a Sprite. If no frame is provided then the whole image is used.
+
+You can directly create a texture from an image and then reuse it multiple times like this :
+
+var texture = PIXI.Texture.fromImage('assets/image.png');
+var sprite1 = new PIXI.Sprite(texture);
+var sprite2 = new PIXI.Sprite(texture);
+Name	Type	Description
+baseTexture	PIXI.BaseTexture
+The base texture source to create the texture from
+frame	PIXI.Rectangle	optional
+The rectangle frame of the texture to show
+crop	PIXI.Rectangle	optional
+The area of original texture
+trim	PIXI.Rectangle	optional
+Trimmed texture rectangle
+rotate	boolean	optional
+indicates whether the texture should be rotated by 90 degrees ( used by texture packer )
+
+------ окончание про текстуры
+
+
+
+
+
+
 
 добавить уровень карту
     - так придётся добавить слой для ландшафта
