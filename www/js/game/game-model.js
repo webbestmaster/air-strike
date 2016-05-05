@@ -26,8 +26,10 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 			for (j = 1; j < 10; j += 1) {
 				game.publish(factoryKeys.events.CREATE, factoryKeys.objects.CROSS, {
 					lastUpdate: camera.get('now'),
-					x: i * gameConfig.world.width / 10,
-					y: j * gameConfig.world.height / 10
+					pos: {
+						x: i * gameConfig.world.width / 10,
+						y: j * gameConfig.world.height / 10
+					}
 				});
 			}
 		}

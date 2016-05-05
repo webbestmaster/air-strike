@@ -25,7 +25,7 @@ define([
 
 		aircraft.mainBindTextures(aircraft.initialTexture);
 
-		sprite = new PIXI.Sprite(aircraft.textures.normal);
+		sprite = new PIXI.Sprite(aircraft.textures.normal_0);
 		sprite.anchor.set(0.5, 0.5);
 		aircraft.set('sprite', sprite);
 
@@ -48,8 +48,10 @@ define([
 			h: 28,
 			w05: 0, // w /2
 			h05: 0,	// h / 2,
-			x: gameConfig.world.width / 2,
-			y: gameConfig.world.height / 2,
+			pos: {
+				x: gameConfig.world.width / 2,
+				y: gameConfig.world.height / 2
+			},
 			visible: true,
 			layer: gameKeys.VIEW_LAYER_MAJOR_OBJECT,
 			//lastUpdate: options.lastUpdate,
@@ -61,8 +63,11 @@ define([
 			maxY: gameConfig.world.height - 28 / 2,
 			speed: {
 				x: 0,
-				y: 0
+				y: 0,
+				prevX: 0,
+				prevY: 0
 			},
+			spriteIndex: 0,
 			movieTarget: {
 				x: 0,
 				y: 0
@@ -114,8 +119,8 @@ define([
 		aircraftData = aircraft.attr;
 		x1 = xy1.x;
 		y1 = xy1.y;
-		dx = x1 - aircraftData.x;
-		dy = y1 - aircraftData.y;
+		dx = x1 - aircraftData.pos.x;
+		dy = y1 - aircraftData.pos.y;
 		angleRadians = Math.atan2(dy, dx);
 		sin = Math.sin(angleRadians);
 		cos = Math.cos(angleRadians);
@@ -145,9 +150,9 @@ define([
 	};
 
 	Aircraft.prototype.initialTexture = {
-		rotate_1: 'aircraft-rotate-1.png',
-		rotate_2: 'aircraft-rotate-2.png',
-		normal: 'aircraft.png'
+		normal_1: 'aircraft-rotate-1.png',
+		normal_2: 'aircraft-rotate-2.png',
+		normal_0: 'aircraft.png'
 	};
 
 	Aircraft.prototype.update = function (x0, y0, x1, y1, now) {
@@ -162,9 +167,37 @@ define([
 
 		aircraft.updateByMoveTo(attr.movieTarget, now);
 
+		aircraft.updateSpriteState();
+
 		aircraft.adjustEdge();
-		
+
 		aircraft.updateShooting(now);
+
+	};
+
+	Aircraft.prototype.updateSpriteState = function () {
+
+
+		return;
+
+		var aircraft = this,
+			attr = aircraft.attr,
+			speed = attr.speed,
+			prevSpeedX = speed.prevX,
+			curSpeedX = speed.x;
+
+		attr.sprite.texture = aircraft.textures['normal_' + (attr.spriteIndex | 0)];
+
+		if ( (prevSpeedX > 0 && curSpeedX > 0) ||
+			(prevSpeedX < 0 && curSpeedX < 0) ||
+			(prevSpeedX === 0 && curSpeedX === 0) ) {
+			console.log('no change for speed x');
+			return;
+		}
+
+		aircraft.setTween('spriteState', attr, 4, {spriteIndex: 2});
+
+		speed.prevX = curSpeedX;
 
 	};
 
@@ -172,8 +205,8 @@ define([
 
 		var aircraft = this,
 			attr = aircraft.attr,
-			x = attr.x,
-			y = attr.y;
+			x = attr.pos.x,
+			y = attr.pos.y;
 
 		if (x > attr.maxX) {
 			x = attr.maxX;
@@ -187,11 +220,11 @@ define([
 			y = attr.minY;
 		}
 
-		attr.x = x;
-		attr.y = y;
+		attr.pos.x = x;
+		attr.pos.y = y;
 
 	};
-	
+
 	Aircraft.prototype.updateShooting = function (now) {
 
 		var aircraft = this,
@@ -201,13 +234,13 @@ define([
 
 		if (dTime >= 300) {
 
-			options = {x: attr.x - attr.w05, y: attr.y, speed: {x: 0, y: -150}, lastUpdate: now};
+			options = {pos:{ x: attr.pos.x - attr.w05, y: attr.pos.y}, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
-			options = {x: attr.x, y: attr.y - attr.h05, speed: {x: 0, y: -150}, lastUpdate: now};
+			options = {pos:{x: attr.pos.x, y: attr.pos.y - attr.h05}, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
-			options = {x: attr.x + attr.w05, y: attr.y, speed: {x: 0, y: -150}, lastUpdate: now};
+			options = {pos:{x: attr.pos.x + attr.w05, y: attr.pos.y}, speed: {x: 0, y: -150}, lastUpdate: now};
 			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
 			attr.lastUpdateShooting = now;

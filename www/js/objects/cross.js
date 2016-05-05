@@ -26,8 +26,10 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 			h: 16,
 			w05: 0, // w /2
 			h05: 0,	// h / 2,
-			x: 0,
-			y: 0,
+			pos: {
+				x: 0,
+				y: 0
+			},
 			visible: true,
 			layer: gameKeys.VIEW_LAYER_MINOR_OBJECT,
 			//lastUpdate: options.lastUpdate,

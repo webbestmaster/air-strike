@@ -37,8 +37,10 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 			h: 36,
 			w05: 0, // w /2
 			h05: 0,	// h / 2,
-			x: 320.00,
-			y: 300.00,
+			pos: {
+				x: 320.00,
+				y: 300.00
+			},
 			visible: true,
 			layer: gameKeys.VIEW_LAYER_MINOR_OBJECT,
 			//lastUpdate: options.lastUpdate,
@@ -49,7 +51,7 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 			}
 		}).set(options || {});
 
-		this.setTween('moveTween', this.attr, 1, {x: this.attr.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut});
+		this.setTween('moveTween', this.attr.pos, 1, {x: this.attr.pos.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut});
 
 		return this;
 

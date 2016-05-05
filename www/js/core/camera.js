@@ -52,6 +52,8 @@ define(
 
 			camera.bindEventListeners();
 
+			// camera.detectPixelRatio();
+
 			camera.adjust({
 				width: device.attr.width,
 				height: device.attr.height
@@ -84,6 +86,12 @@ define(
 
 		},
 
+/*
+		detectPixelRatio: function () {
+			this.set('pixelRatio', window.devicePixelRatio || 1);
+		},
+*/
+		
 		onDestroy: function () {
 
 			var camera = this;
@@ -191,8 +199,8 @@ define(
 			// }
 
 			for (;i < length; i += 1) {
-				x += list[i].x;
-				y += list[i].y;
+				x += list[i].pos.x;
+				y += list[i].pos.y;
 			}
 
 			x /= length;
@@ -327,8 +335,8 @@ define(
 				sprite = objData.sprite;
 
 			// sprite pos
-			sprite.position.x = ((objData.x - cameraData.x) + cameraData.w05) / cameraData.w * cameraData.dw;
-			sprite.position.y = ((objData.y - cameraData.y) + cameraData.h05) / cameraData.h * cameraData.dh;
+			sprite.position.x = ((objData.pos.x - cameraData.x) + cameraData.w05) / cameraData.w * cameraData.dw;
+			sprite.position.y = ((objData.pos.y - cameraData.y) + cameraData.h05) / cameraData.h * cameraData.dh;
 
 			sprite.width = objData.w * cameraData.q;
 			sprite.height = objData.h * cameraData.q;

@@ -48,6 +48,27 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	};
 
+	GameObject.prototype.stopTweenFor = function (tweenId, cfg) {
+
+		var tweens = this.tweens;
+
+		if (tweens.instances[tweenId]) {
+			// kill tween if exist
+			tweens.instances[tweenId].kill(cfg);
+		}
+
+	};
+
+	GameObject.prototype.stopTween = function (tweenId) {
+
+		var tweens = this.tweens;
+		if (tweens.instances[tweenId]) {
+			// kill tween if exist
+			tweens.instances[tweenId].kill();
+		}
+
+	};
+
 	GameObject.prototype.stopTweens = function () {
 
 		var tweens = this.tweens,
@@ -138,9 +159,9 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 			sprite = attr.sprite;
 		
 		obj.stopTweens();
-		TweenMax.killTweensOf(attr);
+		TweenMax.killTweensOf(attr.pos);
 		sprite.parent.removeChild(sprite);
-		TweenMax.killTweensOf(sprite);
+		// TweenMax.killTweensOf(sprite);
 
 		obj.textures = null;
 
@@ -228,10 +249,10 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 		// count position relative camera
 		var objData = this.attr;
 
-		return objData.x + objData.w05 > cameraX0 &&
-			objData.y + objData.h05 > cameraY0 &&
-			objData.x - objData.w05 < cameraX1 &&
-			objData.y - objData.h05 < cameraY1;
+		return objData.pos.x + objData.w05 > cameraX0 &&
+			objData.pos.y + objData.h05 > cameraY0 &&
+			objData.pos.x - objData.w05 < cameraX1 &&
+			objData.pos.y - objData.h05 < cameraY1;
 
 	};
 
@@ -296,8 +317,8 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 		var attr = this.attr,
 			dTime = (now - attr.lastUpdate) / 1000;
 
-		attr.x += attr.speed.x * dTime;
-		attr.y += attr.speed.y * dTime;
+		attr.pos.x += attr.speed.x * dTime;
+		attr.pos.y += attr.speed.y * dTime;
 
 		attr.lastUpdate = now;
 
@@ -307,7 +328,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 		var attr = this.attr;
 
-		attr.x += attr.speed.x * (now - attr.lastUpdate) / 1000;
+		attr.pos.x += attr.speed.x * (now - attr.lastUpdate) / 1000;
 
 		attr.lastUpdate = now;
 
@@ -317,7 +338,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 		var attr = this.attr;
 
-		attr.y += attr.speed.y * (now - attr.lastUpdate) / 1000;
+		attr.pos.y += attr.speed.y * (now - attr.lastUpdate) / 1000;
 
 		attr.lastUpdate = now;
 
@@ -330,18 +351,18 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 			dx = attr.speed.x * dTime,
 			dy = attr.speed.y * dTime;
 
-		if (Math.abs(attr.x - xy.x) <= Math.abs(dx)) {
-			attr.x = xy.x;
+		if (Math.abs(attr.pos.x - xy.x) <= Math.abs(dx)) {
+			attr.pos.x = xy.x;
 			attr.speed.x = 0;
 		} else {
-			attr.x += dx;
+			attr.pos.x += dx;
 		}
 
 		if (Math.abs(attr.y - xy.y) <= Math.abs(dy)) {
-			attr.y = xy.y;
+			attr.pos.y = xy.y;
 			attr.speed.y = 0;
 		} else {
-			attr.y += dy;
+			attr.pos.y += dy;
 		}
 
 		attr.lastUpdate = now;
