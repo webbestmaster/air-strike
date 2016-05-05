@@ -23,8 +23,10 @@ define(
 			w05: 0,
 			h05: 0,
 			q: 1,
-			x: gameConfig.world.width / 2, // center camera is here // half of word size
-			y: gameConfig.world.height / 2, // center camera is here
+			pos: {
+				x: gameConfig.world.width / 2, // center camera is here // half of word size
+				y: gameConfig.world.height / 2 // center camera is here
+			},
 			now: Date.now(),
 			pause: {
 				start: 0,
@@ -218,12 +220,12 @@ define(
 				y = attr.minY;
 			}
 
-			dx = x - attr.x;
-			dy = y - attr.y;
+			dx = x - attr.pos.x;
+			dy = y - attr.pos.y;
 
 			if (dx || dy) {
-				attr.x = x;
-				attr.y = y;
+				attr.pos.x = x;
+				attr.pos.y = y;
 				camera.publish(cameraKeys.CHANGE_XY, {
 					dx: dx,
 					dy: dy
@@ -237,8 +239,8 @@ define(
 		getBounds: function () {
 
 			var attr = this.attr,
-				x = attr.x,
-				y = attr.y;
+				x = attr.pos.x,
+				y = attr.pos.y;
 
 			return [x - attr.w05, y - attr.h05, x + attr.w05, y + attr.h05, attr.now = Date.now() - attr.pause.time];
 
@@ -335,8 +337,8 @@ define(
 				sprite = objData.sprite;
 
 			// sprite pos
-			sprite.position.x = ((objData.pos.x - cameraData.x) + cameraData.w05) / cameraData.w * cameraData.dw;
-			sprite.position.y = ((objData.pos.y - cameraData.y) + cameraData.h05) / cameraData.h * cameraData.dh;
+			sprite.position.x = ((objData.pos.x - cameraData.pos.x) + cameraData.w05) / cameraData.w * cameraData.dw;
+			sprite.position.y = ((objData.pos.y - cameraData.pos.y) + cameraData.h05) / cameraData.h * cameraData.dh;
 
 			sprite.width = objData.w * cameraData.q;
 			sprite.height = objData.h * cameraData.q;
@@ -372,8 +374,8 @@ define(
 			sumY /= newArrayLength;
 
 			return {
-				x: sumX / attr.dw * attr.w + attr.x - attr.w05,
-				y: sumY / attr.dh * attr.h + attr.y - attr.h05
+				x: sumX / attr.dw * attr.w + attr.pos.x - attr.w05,
+				y: sumY / attr.dh * attr.h + attr.pos.y - attr.h05
 			}
 
 		}

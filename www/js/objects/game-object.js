@@ -48,6 +48,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	};
 
+/*
 	GameObject.prototype.stopTweenFor = function (tweenId, cfg) {
 
 		var tweens = this.tweens;
@@ -68,6 +69,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 		}
 
 	};
+*/
 
 	GameObject.prototype.stopTweens = function () {
 
@@ -159,7 +161,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 			sprite = attr.sprite;
 		
 		obj.stopTweens();
-		TweenMax.killTweensOf(attr.pos);
+		// TweenMax.killTweensOf(attr.pos);
 		sprite.parent.removeChild(sprite);
 		// TweenMax.killTweensOf(sprite);
 
@@ -358,7 +360,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 			attr.pos.x += dx;
 		}
 
-		if (Math.abs(attr.y - xy.y) <= Math.abs(dy)) {
+		if (Math.abs(attr.pos.y - xy.y) <= Math.abs(dy)) {
 			attr.pos.y = xy.y;
 			attr.speed.y = 0;
 		} else {
