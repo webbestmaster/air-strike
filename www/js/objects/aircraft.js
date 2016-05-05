@@ -25,7 +25,7 @@ define([
 
 		aircraft.mainBindTextures(aircraft.initialTexture);
 
-		sprite = new PIXI.Sprite(aircraft.textures.normal_0);
+		sprite = new PIXI.Sprite(aircraft.textures.normal);
 		sprite.anchor.set(0.5, 0.5);
 		aircraft.set('sprite', sprite);
 
@@ -67,7 +67,15 @@ define([
 				prevX: 0,
 				prevY: 0
 			},
-			spriteIndex: 0,
+			animationData: {
+				turn: {
+					curIndex: 0,
+					lastIndex: 0,
+					prefix: 'turn-',
+					time: 1,
+					count: 3
+				}
+			},
 			movieTarget: {
 				x: 0,
 				y: 0
@@ -150,9 +158,9 @@ define([
 	};
 
 	Aircraft.prototype.initialTexture = {
-		normal_1: 'aircraft-rotate-1.png',
-		normal_2: 'aircraft-rotate-2.png',
-		normal_0: 'aircraft.png'
+		'turn-0': 'aircraft-rotate-1.png',
+		'turn-1': 'aircraft-rotate-2.png',
+		'normal': 'aircraft.png'
 	};
 
 	Aircraft.prototype.update = function (x0, y0, x1, y1, now) {
@@ -167,7 +175,7 @@ define([
 
 		aircraft.updateByMoveTo(attr.movieTarget, now);
 
-		aircraft.updateSpriteState();
+		aircraft.updateAnimationIndex();
 
 		aircraft.adjustEdge();
 
@@ -175,18 +183,72 @@ define([
 
 	};
 
-	Aircraft.prototype.updateSpriteState = function () {
-
-
-		return;
+	Aircraft.prototype.updateAnimationIndex = function () {
 
 		var aircraft = this,
 			attr = aircraft.attr,
 			speed = attr.speed,
 			prevSpeedX = speed.prevX,
-			curSpeedX = speed.x;
+			curSpeedX = speed.x
+/*
+			turnAnimationData = attr.animationData.turn,
+			time = turnAnimationData.time,
+			count = turnAnimationData.count,
+			prefix = turnAnimationData.prefix,
+			index = turnAnimationData.index
+*/
+			;
 
-		attr.sprite.texture = aircraft.textures['normal_' + (attr.spriteIndex | 0)];
+		if ( prevSpeedX !== 0 && curSpeedX === 0 ) { // <=> prevSpeedX && !curSpeedX
+
+			// todo: turn to normal state
+
+
+
+			// console.log('normal');
+
+			speed.prevX = curSpeedX;
+			return;
+		}
+
+		if ( prevSpeedX >= 0 && curSpeedX < 0 ) {
+
+			// todo: turn to left side
+
+
+
+			// console.log('<');
+
+			speed.prevX = curSpeedX;
+			return;
+		}
+
+		if ( prevSpeedX <= 0 && curSpeedX > 0 ) {
+
+			// todo: turn to rght side
+
+			// console.log('>');
+
+			speed.prevX = curSpeedX;
+			return;
+		}
+
+
+
+
+
+		return;
+
+
+
+		if ( (prevSpeedX > 0 && curSpeedX > 0) ||
+			(prevSpeedX < 0 && curSpeedX < 0) ) {
+
+
+
+		}
+
+
 
 		if ( (prevSpeedX > 0 && curSpeedX > 0) ||
 			(prevSpeedX < 0 && curSpeedX < 0) ||
@@ -195,9 +257,31 @@ define([
 			return;
 		}
 
-		aircraft.setTween('spriteState', attr, 4, {spriteIndex: 2});
+
+
+		if (curSpeedX === 0) {
+			attr.sprite.scale.x = 1;
+			aircraft.setTween('spriteState', attr.spritesData, animationTime * attr.spritesData.spriteIndex / spritesCount, {spriteIndex: 0});
+		}
+
+		if (curSpeedX > 0) {
+			attr.sprite.scale.x = 1;
+		}
+
+		if (curSpeedX < 0) {
+			attr.sprite.scale.x = -1;
+		}
+
+
+
+
+
+		aircraft.setTween('spriteState', attr.spritesData, 1, {spriteIndex: spritesCount});
+
+
 
 		speed.prevX = curSpeedX;
+
 
 	};
 
