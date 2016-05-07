@@ -72,8 +72,8 @@ define([
 					index: 0,
 					lastRoundIndex: 0,
 					prefix: 'turn-',
-					time: 1,
-					count: 2
+					time: 0.3,
+					count: 6
 				}
 			},
 			movieTarget: {
@@ -158,9 +158,13 @@ define([
 	};
 
 	Aircraft.prototype.initialTexture = {
-		'turn-1': 'aircraft-rotate-1.png',
-		'turn-2': 'aircraft-rotate-2.png',
-		'normal': 'aircraft.png'
+		'turn-1': 'aircraft-1.png',
+		'turn-2': 'aircraft-2.png',
+		'turn-3': 'aircraft-3.png',
+		'turn-4': 'aircraft-4.png',
+		'turn-5': 'aircraft-5.png',
+		'turn-6': 'aircraft-6.png',
+		'normal': 'aircraft-0.png'
 	};
 
 	Aircraft.prototype.update = function (x0, y0, x1, y1, now) {
@@ -207,6 +211,7 @@ define([
 				aircraft.attr.sprite.texture = aircraft.textures.normal;
 			}
 			turnAnimationData.lastRoundIndex = roundIndex;
+			aircraft.updateBounds();
 		}
 
 		if ( prevSpeedX !== 0 && curSpeedX === 0 ) { // <=> prevSpeedX && !curSpeedX

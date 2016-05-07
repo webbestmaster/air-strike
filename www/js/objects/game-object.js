@@ -48,28 +48,28 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	};
 
-/*
-	GameObject.prototype.stopTweenFor = function (tweenId, cfg) {
+	/*
+	 GameObject.prototype.stopTweenFor = function (tweenId, cfg) {
 
-		var tweens = this.tweens;
+	 var tweens = this.tweens;
 
-		if (tweens.instances[tweenId]) {
-			// kill tween if exist
-			tweens.instances[tweenId].kill(cfg);
-		}
+	 if (tweens.instances[tweenId]) {
+	 // kill tween if exist
+	 tweens.instances[tweenId].kill(cfg);
+	 }
 
-	};
+	 };
 
-	GameObject.prototype.stopTween = function (tweenId) {
+	 GameObject.prototype.stopTween = function (tweenId) {
 
-		var tweens = this.tweens;
-		if (tweens.instances[tweenId]) {
-			// kill tween if exist
-			tweens.instances[tweenId].kill();
-		}
+	 var tweens = this.tweens;
+	 if (tweens.instances[tweenId]) {
+	 // kill tween if exist
+	 tweens.instances[tweenId].kill();
+	 }
 
-	};
-*/
+	 };
+	 */
 
 	GameObject.prototype.stopTweens = function () {
 
@@ -113,22 +113,22 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	};
 
-/*
-	// still not used
-	GameObject.prototype.playTweens = function () {
+	/*
+	 // still not used
+	 GameObject.prototype.playTweens = function () {
 
-		var tweens = this.tweens,
-			instances = tweens.instances,
-			keys = tweens.keys,
-			keysLength = tweens.keysLength,
-			i = 0;
+	 var tweens = this.tweens,
+	 instances = tweens.instances,
+	 keys = tweens.keys,
+	 keysLength = tweens.keysLength,
+	 i = 0;
 
-		for (; i < keysLength; i += 1) {
-			instances[keys[i]].play();
-		}
+	 for (; i < keysLength; i += 1) {
+	 instances[keys[i]].play();
+	 }
 
-	};
-*/
+	 };
+	 */
 
 	GameObject.prototype.mainBindEventListeners = function () {
 		mediator.installTo(this);
@@ -159,7 +159,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 		var obj = this,
 			attr = obj.attr,
 			sprite = attr.sprite;
-		
+
 		obj.stopTweens();
 		// TweenMax.killTweensOf(attr.pos);
 		sprite.parent.removeChild(sprite);
@@ -268,8 +268,14 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	GameObject.prototype.updateBounds = function () {
 
-		this.attr.w05 = this.attr.w / 2;
-		this.attr.h05 = this.attr.h / 2;
+		var attr = this.attr,
+			texture = attr.sprite.texture;
+
+		attr.w = texture.width;
+		attr.h = texture.height;
+
+		attr.w05 = attr.w / 2;
+		attr.h05 = attr.h / 2;
 
 	};
 
