@@ -1,10 +1,13 @@
-define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKeys'],
-	function (device, mediator, deviceKeys, _fpsMeter, gameKeys, rendererKeys) {
+define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKeys', 'camera'],
+	function (device, mediator, deviceKeys, _fpsMeter, gameKeys, rendererKeys, camera) {
 
 		return {
 
 			renderer: null,
 			stage: null,
+
+			pixelRatio: 1,
+			isWebGLSupport: false,
 
 			fpsMeter: new FPSMeter(), // remove
 
@@ -12,11 +15,45 @@ define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKey
 
 				var renderer = this;
 
+				renderer.detectResolution();
+
 				renderer.createRenderer();
 
 				renderer.bindEventListeners();
 
 				renderer.start();
+
+			},
+
+			detectPixelRatio: function () {
+
+				return this.pixelRatio = window.devicePixelRatio || 1;
+
+			},
+
+			detectWebGlSupport: function () {
+
+				var tempCanvas, isWebGLSupport;
+
+				tempCanvas = document.createElement('canvas');
+
+				try {
+					isWebGLSupport = !!(tempCanvas.getContext('webgl') || tempCanvas.getContext('experimental-webgl'));
+				} catch (e) {
+					isWebGLSupport = false;
+				}
+
+				return this.isWebGLSupport = isWebGLSupport;
+
+			},
+
+			detectResolution: function () {
+
+				var renderer = this,
+					pixelRatio = renderer.detectPixelRatio(),
+					isWebGLSupport = renderer.detectWebGlSupport();
+
+				return renderer.resolution = pixelRatio >= 2 && isWebGLSupport ? 2 : 1;
 
 			},
 
@@ -48,9 +85,9 @@ define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKey
 
 					pixiRenderer = PIXI.autoDetectRenderer(
 						deviceData.width,
-						deviceData.height
-						,{
-							// resolution: 2
+						deviceData.height,
+						{
+							resolution: renderer.resolution
 						}
 					);
 

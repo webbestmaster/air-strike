@@ -54,8 +54,6 @@ define(
 
 			camera.bindEventListeners();
 
-			// camera.detectPixelRatio();
-
 			camera.adjust({
 				width: device.attr.width,
 				height: device.attr.height
@@ -87,12 +85,6 @@ define(
 			camera.subscribe(cameraKeys.FOLLOW_TO, camera.followTo);
 
 		},
-
-/*
-		detectPixelRatio: function () {
-			this.set('pixelRatio', window.devicePixelRatio || 1);
-		},
-*/
 		
 		onDestroy: function () {
 
@@ -233,7 +225,7 @@ define(
 			}
 
 			return camera;
-			
+
 		},
 
 		getBounds: function () {
