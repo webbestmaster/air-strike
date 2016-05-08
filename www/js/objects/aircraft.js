@@ -41,6 +41,25 @@ define([
 
 	Aircraft.prototype = Object.create(GameObject.prototype);
 
+	Aircraft.prototype.setState = function (stateName, value) {
+
+		var aircraft = this,
+			attr = aircraft.attr,
+			state = attr.state;
+
+		// save prev value
+		attr.prevState[stateName] = state[stateName];
+		// set current value
+		state[stateName] = value;
+
+		aircraft.onChangeState(stateName, value);
+
+	};
+
+	Aircraft.prototype.onChangeState = function () {
+
+	};
+
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
 		return this.set({
@@ -79,7 +98,9 @@ define([
 			movieTarget: {
 				x: 0,
 				y: 0
-			}
+			},
+			state: {},
+			prevState: {}
 		}).set(options || {});
 
 	};

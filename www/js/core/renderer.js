@@ -9,6 +9,8 @@ define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKey
 			pixelRatio: 1,
 			isWebGLSupport: false,
 
+			resolution: 1,
+
 			fpsMeter: new FPSMeter(), // remove
 
 			initialize: function () {
