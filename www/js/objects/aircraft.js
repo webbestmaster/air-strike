@@ -6,7 +6,8 @@ define([
 	'cameraKeys',
 	'deviceKeys',
 	'factoryKeys',
-	'gameKeys'
+	'gameKeys',
+	'gameObjectKeys'
 ], function (GameObject,
 			 gameConfig,
 			 mediator,
@@ -14,7 +15,8 @@ define([
 			 cameraKeys,
 			 deviceKeys,
 			 factoryKeys,
-			 gameKeys) {
+			 gameKeys,
+			 gameObjectKeys) {
 
 	function Aircraft(options) {
 
@@ -37,35 +39,91 @@ define([
 
 		aircraft.publish(cameraKeys.FOLLOW_TO, aircraft.attr);
 
+
+		// for test only
+		setTimeout(function () {
+			aircraft.setState(gameObjectKeys.STATE.SHOOTING, true);
+		}, 5e3);
+		// for test only
+		setTimeout(function () {
+			aircraft.setState(gameObjectKeys.STATE.SHOOTING, false);
+		}, 10e3);
+
+		
+
 	}
 
 	Aircraft.prototype = Object.create(GameObject.prototype);
 
-	Aircraft.prototype.setState = function (stateName, value) {
+	Aircraft.prototype.setState = function (stateName, stateData) {
+
+		// TODO: merge this method with onChangeState
 
 		var aircraft = this,
 			attr = aircraft.attr,
 			state = attr.state;
 
 		// save prev value
-		attr.prevState[stateName] = state[stateName];
+		attr.prevState[stateName].data = state[stateName].data;
 		// set current value
-		state[stateName] = value;
+		state[stateName].data = stateData;
 
-		aircraft.onChangeState(stateName, value);
+		aircraft.onChangeState(stateName, stateData);
 
 	};
 
-	Aircraft.prototype.onChangeState = function () {
+	Aircraft.prototype.onChangeState = function (stateName, stateData) {
+
+		var aircraft = this,
+			attr = aircraft.attr,
+			state = attr.state[stateName],
+			prevState = attr.prevState[stateName],
+			STATE = gameObjectKeys.STATE;
+
+		switch (stateName) {
+			case STATE.SHOOTING:
+				// state.needRAFUpdate = true;
+				// state.data = stateData;
+				console.log('shooting update'); // remove
+				break;
+
+			case STATE.MOVING:
+
+
+				break;
+
+			default:
+				console.log(' - Unknown state - ', stateName); // remove
+
+		}
+
 
 	};
 
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
+		var state = {},
+			prevState = {},
+			stateList = this.stateList,
+			stateName,
+			i = 0,
+			len = stateList.length,
+			list = stateList.list;
+
+		for (; i < len; i += 1) {
+			stateName = list[i];
+			state[stateName] = {
+				data: null
+			};
+			prevState[stateName] = {
+				data: null
+			};
+		};
+
 		return this.set({
 			w: 47,
 			h: 28,
-			w05: 0, // w /2
+			w05: 0, // w / 2
 			h05: 0,	// h / 2,
 			pos: {
 				x: gameConfig.world.width / 2,
@@ -99,8 +157,8 @@ define([
 				x: 0,
 				y: 0
 			},
-			state: {},
-			prevState: {}
+			state: state,
+			prevState: prevState
 		}).set(options || {});
 
 	};
@@ -188,11 +246,20 @@ define([
 		'normal': 'aircraft-0.png'
 	};
 
+	Aircraft.prototype.stateList = {
+		list: [
+			gameObjectKeys.STATE.SHOOTING,
+			gameObjectKeys.STATE.MOVING
+		],
+		length: 2
+	};
+
 	Aircraft.prototype.update = function (x0, y0, x1, y1, now) {
 
 		// detect is in camera or not - in not needed, cause this object belongs to player
 		var aircraft = this,
-			attr = aircraft.attr;
+			attr = aircraft.attr,
+			STATE = gameObjectKeys.STATE;
 
 		if (attr.isPause) {
 			return;
@@ -204,7 +271,9 @@ define([
 
 		aircraft.adjustEdge();
 
-		aircraft.updateShooting(now);
+		if (attr.state[STATE.SHOOTING].data) {
+			aircraft.updateShooting(now);
+		}
 
 	};
 
