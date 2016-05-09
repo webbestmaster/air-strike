@@ -43,7 +43,7 @@ define([
 		// for test only
 		setTimeout(function () {
 			aircraft.setState(gameObjectKeys.STATE.SHOOTING, true);
-		}, 5e3);
+		}, 1e3);
 		// for test only
 		setTimeout(function () {
 			aircraft.setState(gameObjectKeys.STATE.SHOOTING, false);
@@ -89,6 +89,7 @@ define([
 
 			case STATE.MOVING:
 
+				console.log('moving update'); // remove
 
 				break;
 
@@ -118,7 +119,7 @@ define([
 			prevState[stateName] = {
 				data: null
 			};
-		};
+		}
 
 		return this.set({
 			w: 47,
@@ -220,6 +221,8 @@ define([
 		aircraftData.movieTarget.x = x1;
 		aircraftData.movieTarget.y = y1;
 
+		aircraft.setState(gameObjectKeys.STATE.MOVING, true);
+
 	};
 
 	Aircraft.prototype.onDeviceUp = function () {
@@ -233,6 +236,8 @@ define([
 
 		this.attr.speed.x = 0;
 		this.attr.speed.y = 0;
+
+		this.setState(gameObjectKeys.STATE.MOVING, false);
 
 	};
 
@@ -262,22 +267,28 @@ define([
 			STATE = gameObjectKeys.STATE;
 
 		if (attr.isPause) {
-			return;
+			return attr.lastUpdate = now; // no matter what was return
 		}
 
-		aircraft.updateByMoveTo(attr.movieTarget, now);
-
-		aircraft.updateAnimationIndex();
-
-		aircraft.adjustEdge();
+		if (attr.state[STATE.MOVING].data) {
+			aircraft.updateByMoveTo(attr.movieTarget, now);
+		}
 
 		if (attr.state[STATE.SHOOTING].data) {
 			aircraft.updateShooting(now);
 		}
 
+		aircraft.updateAnimationIndex();
+
+		aircraft.adjustEdge();
+
+		attr.lastUpdate = now;
+
 	};
 
 	Aircraft.prototype.updateAnimationIndex = function () {
+
+		// TODO: add logic to which sprite to show (relative from states) - here
 
 		var aircraft = this,
 			attr = aircraft.attr,
@@ -303,6 +314,8 @@ define([
 			turnAnimationData.lastRoundIndex = roundIndex;
 			aircraft.updateBounds();
 		}
+
+		// TODO: move below code to - setState - case: moving
 
 		if ( prevSpeedX !== 0 && curSpeedX === 0 ) { // <=> prevSpeedX && !curSpeedX
 			aircraft.setTween(

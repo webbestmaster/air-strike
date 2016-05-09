@@ -328,7 +328,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 		attr.pos.x += attr.speed.x * dTime;
 		attr.pos.y += attr.speed.y * dTime;
 
-		attr.lastUpdate = now;
+		// attr.lastUpdate = now;
 
 	};
 
@@ -338,7 +338,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 		attr.pos.x += attr.speed.x * (now - attr.lastUpdate) / 1000;
 
-		attr.lastUpdate = now;
+		// attr.lastUpdate = now;
 
 	};
 
@@ -348,7 +348,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 		attr.pos.y += attr.speed.y * (now - attr.lastUpdate) / 1000;
 
-		attr.lastUpdate = now;
+		// attr.lastUpdate = now;
 
 	};
 
@@ -373,7 +373,7 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 			attr.pos.y += dy;
 		}
 
-		attr.lastUpdate = now;
+		// attr.lastUpdate = now;
 
 	};
 

@@ -59,19 +59,24 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 
 	JuniorMissile.prototype.update = function (cameraX0, cameraY0, cameraX1, cameraY1, now) {
 
-		var missile = this;
+		var missile = this,
+			attr = missile.attr;
 
-		missile.attr.frameCounter += 1;
-		if (missile.attr.frameCounter % 4 === 0) {
+		attr.frameCounter += 1;
+		if (attr.frameCounter % 4 === 0) {
 			missile.useNextTexture();
 		}
 
 		if (missile.attr.isPause) {
-			return;
+			return attr.lastUpdate = now; // no matter what was return
 		}
 
 		missile.updateBySpeedY(now);
 
+
+		attr.lastUpdate = now;
+
+		// check for missile.destroy() only
 		if (missile.isInRectangle(cameraX0, cameraY0, cameraX1, cameraY1)) {
 			return;
 		}
