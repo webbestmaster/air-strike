@@ -13,7 +13,7 @@ define(['GameObject'], function (GameObject) {
 
 		bullet.setDefaultProperties(options);
 
-		bullet.updateBounds();
+		// bullet.updateBounds();
 
 	}
 
@@ -23,10 +23,10 @@ define(['GameObject'], function (GameObject) {
 	Bullet.prototype.setDefaultProperties = function (options) {
 
 		return this.set({
-			w: 146,
-			h: 50,
-			w05: 0, // w /2
-			h05: 0,	// h / 2,
+			// w: 146,
+			// h: 50,
+			// w05: 0, // w /2
+			// h05: 0,	// h / 2,
 			x: 320.00,
 			y: 300.00,
 			visible: true,

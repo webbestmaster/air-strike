@@ -15,7 +15,7 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 
 		missile.setDefaultProperties(options);
 
-		missile.updateBounds();
+		// missile.updateBounds();
 
 		// this.addTween('moveTween', TweenMax.to(this.attr, 1, {x: this.attr.x - 100, repeat: -1, yoyo: true, ease: Sine.easeInOut}));
 
@@ -34,10 +34,10 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 	JuniorMissile.prototype.setDefaultProperties = function (options) {
 
 		this.set({
-			w: 11,
-			h: 36,
-			w05: 0, // w /2
-			h05: 0,	// h / 2,
+			// w: 11,
+			// h: 36,
+			// w05: 0, // w /2
+			// h05: 0,	// h / 2,
 			pos: {
 				x: 320.00,
 				y: 300.00

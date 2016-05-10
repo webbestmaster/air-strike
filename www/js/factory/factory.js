@@ -102,6 +102,7 @@ define([
 			neededObject.attr.factoryKey = type;
 		}
 
+		neededObject.updateBounds();
 		this.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
 
 		return neededObject;

@@ -13,7 +13,7 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 
 		cross.setDefaultProperties(options);
 
-		cross.updateBounds();
+		// cross.updateBounds();
 
 	}
 
@@ -23,10 +23,10 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 	Cross.prototype.setDefaultProperties = function (options) {
 
 		this.set({
-			w: 16,
-			h: 16,
-			w05: 0, // w /2
-			h05: 0,	// h / 2,
+			//w: 16,
+			//h: 16,
+			// w05: 0, // w /2
+			// h05: 0,	// h / 2,
 			pos: {
 				x: 0,
 				y: 0

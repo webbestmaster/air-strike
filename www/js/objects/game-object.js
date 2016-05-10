@@ -1,4 +1,4 @@
-define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys, mediator) {
+define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryKeys, gameKeys, mediator, gameConfig) {
 
 	// abstract class
 	function GameObject() {
@@ -332,13 +332,20 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 	GameObject.prototype.updateBounds = function () {
 
 		var attr = this.attr,
-			texture = attr.sprite.texture;
+			texture = attr.sprite.texture,
+			width = texture.width,
+			height = texture.height,
+			width05 = width / 2,
+			height05 = width / 2;
 
-		attr.w = texture.width;
-		attr.h = texture.height;
+		attr.w = width;
+		attr.h = height;
 
-		attr.w05 = attr.w / 2;
-		attr.h05 = attr.h / 2;
+		attr.minX = attr.w05 = width05;
+		attr.minY = attr.h05 = height05;
+
+		attr.maxX = gameConfig.world.width - width05;
+		attr.maxY = gameConfig.world.height - height05;
 
 	};
 

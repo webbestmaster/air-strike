@@ -33,8 +33,6 @@ define([
 
 		aircraft.setDefaultProperties(options);
 
-		aircraft.updateBounds();
-
 		aircraft.bindEventListeners();
 
 		aircraft.publish(cameraKeys.FOLLOW_TO, aircraft.attr);
@@ -121,10 +119,13 @@ define([
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
 		return this.set({
-			w: 47,
-			h: 28,
+/*
+			// will update by .updateBounds()
+			w: 0,
+			h: 0,
 			w05: 0, // w / 2
 			h05: 0,	// h / 2,
+*/
 			pos: {
 				x: gameConfig.world.width / 2,
 				y: gameConfig.world.height / 2
@@ -134,10 +135,13 @@ define([
 			//lastUpdate: options.lastUpdate,
 			lastUpdateShooting: options.lastUpdate,
 			fullSpeed: 150, // 50 px per sec
-			minX: 47 / 2,
-			minY: 28 / 2,
-			maxX: gameConfig.world.width - 47 / 2,
-			maxY: gameConfig.world.height - 28 / 2,
+/*
+			// will update by .updateBounds()
+			minX: 0,
+			minY: 0,
+			maxX: 0,
+			maxY: 0,
+*/
 			speed: {
 				x: 0,
 				y: 0,
