@@ -21,6 +21,7 @@ define(
 		}
 
 		GameView.prototype = Object.create(BaseView.prototype);
+		GameView.prototype.constructor = GameView;
 
 		GameView.prototype.createLayeredStages = function () {
 

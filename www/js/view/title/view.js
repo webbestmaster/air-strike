@@ -46,6 +46,7 @@ define(
 		}
 
 		TitleView.prototype = Object.create(BaseView.prototype);
+		TitleView.prototype.constructor = TitleView;
 
 		TitleView.prototype.addButtons = function () {
 

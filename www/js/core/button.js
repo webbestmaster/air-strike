@@ -35,6 +35,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 		 */
 
 		Button.prototype = Object.create(DisplayObject.prototype);
+		Button.prototype.constructor = Button;
 
 		Button.prototype.eventMap = device.events;
 

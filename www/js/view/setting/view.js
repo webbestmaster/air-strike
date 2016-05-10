@@ -41,6 +41,7 @@ define(
 		}
 
 		SettingView.prototype = Object.create(BaseView.prototype);
+		SettingView.prototype.constructor = SettingView;
 
 		mediator.subscribe('show:SettingView', function showSettingView() {
 			new SettingView();

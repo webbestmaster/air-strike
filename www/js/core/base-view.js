@@ -21,6 +21,7 @@ define(
 		}
 
 		BaseView.prototype = Object.create(DisplayObject.prototype);
+		BaseView.prototype.constructor = BaseView;
 
 		BaseView.prototype.mainInitialize = function (data) {
 

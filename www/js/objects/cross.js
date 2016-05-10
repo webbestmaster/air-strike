@@ -18,6 +18,7 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 	}
 
 	Cross.prototype = Object.create(GameObject.prototype);
+	Cross.prototype.constructor = Cross;
 
 	Cross.prototype.setDefaultProperties = function (options) {
 

@@ -6,12 +6,20 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 	}
 
 	GameObject.prototype.mainInitialize = function () {
-		this.attr = {isPause: false, frameCounter: 0};
-		this.tweens = {
+
+		var obj = this;
+
+		obj.attr = {
+			isPause: false,
+			frameCounter: 0
+		};
+		obj.tweens = {
 			instances: {},
 			keys: [],
 			keysLength: 0
 		};
+
+		obj.setDefaultStates();
 
 		/*
 
@@ -27,10 +35,62 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 		 };
 		 */
 
+		obj.mainBindEventListeners();
 
-		this.mainBindEventListeners();
 	};
 
+	GameObject.prototype.setDefaultStates = function () {
+
+		var obj = this,
+			attr = obj.attr,
+			state = {},
+			prevState = {},
+			stateList = obj.stateList,
+			stateName,
+			i = 0,
+			len = stateList.length,
+			list = stateList.list;
+
+		for (; i < len; i += 1) {
+			stateName = list[i];
+			state[stateName] = {
+				data: null
+			};
+			prevState[stateName] = {
+				data: null
+			};
+		}
+
+		attr.state = state;
+		attr.prevState = prevState;
+
+	};
+
+	GameObject.prototype.stateList = {
+		list: [],
+		length: 0
+	};
+
+	GameObject.prototype.setState = function (stateName, stateData) {
+
+		var obj = this,
+			attr = obj.attr,
+			state = attr.state[stateName],
+			prevState = attr.prevState[stateName];
+
+		// save prev value
+		prevState.data = state.data;
+		// set current value
+		state.data = stateData;
+
+		obj.onChangeState(stateName, stateData);
+
+	};
+
+	GameObject.prototype.onChangeState = function (stateName, stateData) {
+		// just empty method for setState
+		// each class have to override this one
+	};
 
 	GameObject.prototype.setTween = function (tweenId, obj, time, settings) {
 
@@ -148,8 +208,11 @@ define(['factoryKeys', 'gameKeys', 'mediator'], function (factoryKeys, gameKeys,
 
 	GameObject.prototype.destroy = function () {
 
-		this.hide();
-		this.stopTweens();
+		var obj = this;
+
+		obj.hide();
+		obj.stopTweens();
+		obj.setDefaultStates();
 		mediator.publish(factoryKeys.events.DESTROY, this);
 
 	};

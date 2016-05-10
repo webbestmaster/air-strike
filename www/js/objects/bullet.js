@@ -18,6 +18,7 @@ define(['GameObject'], function (GameObject) {
 	}
 
 	Bullet.prototype = Object.create(GameObject.prototype);
+	Bullet.prototype.constructor = Bullet;
 
 	Bullet.prototype.setDefaultProperties = function (options) {
 

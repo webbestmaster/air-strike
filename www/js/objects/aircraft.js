@@ -49,28 +49,10 @@ define([
 			aircraft.setState(gameObjectKeys.STATE.SHOOTING, false);
 		}, 10e3);
 
-		
-
 	}
 
 	Aircraft.prototype = Object.create(GameObject.prototype);
-
-	Aircraft.prototype.setState = function (stateName, stateData) {
-
-		// TODO: merge this method with onChangeState if this method is slow
-
-		var aircraft = this,
-			attr = aircraft.attr,
-			state = attr.state;
-
-		// save prev value
-		attr.prevState[stateName].data = state[stateName].data;
-		// set current value
-		state[stateName].data = stateData;
-
-		aircraft.onChangeState(stateName, stateData);
-
-	};
+	Aircraft.prototype.constructor = Aircraft;
 
 	Aircraft.prototype.onChangeState = function (stateName, stateData) {
 
@@ -138,24 +120,6 @@ define([
 
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
-		var state = {},
-			prevState = {},
-			stateList = this.stateList,
-			stateName,
-			i = 0,
-			len = stateList.length,
-			list = stateList.list;
-
-		for (; i < len; i += 1) {
-			stateName = list[i];
-			state[stateName] = {
-				data: null
-			};
-			prevState[stateName] = {
-				data: null
-			};
-		}
-
 		return this.set({
 			w: 47,
 			h: 28,
@@ -193,9 +157,7 @@ define([
 			movieTarget: {
 				x: 0,
 				y: 0
-			},
-			state: state,
-			prevState: prevState
+			}
 		}).set(options || {});
 
 	};

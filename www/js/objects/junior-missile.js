@@ -22,6 +22,7 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 	}
 
 	JuniorMissile.prototype = Object.create(GameObject.prototype);
+	JuniorMissile.prototype.constructor = JuniorMissile;
 
 	JuniorMissile.prototype.initialTexture = [
 		'junior-missile-0.png',
