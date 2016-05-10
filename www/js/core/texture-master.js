@@ -6,7 +6,7 @@ define(['log', 'Deferred', 'textureSources'],
 	) {
 		return {
 
-			// TODO: get resolution from device
+			// TODO: get resolution from camera
 			// resolution: 1,
 
 			baseUrl: '', // relative from resolution

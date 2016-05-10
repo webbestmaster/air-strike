@@ -21,7 +21,7 @@ define(['DisplayObject', 'device', 'deviceKeys'],
 			button.enable();
 			// button.disable();
 
-			// TODO: implement it!!!
+			// TODO: implement it!!! - in current flow - bindEventListeners - is needless
 			// button.bindEventListeners();
 
 			button.linkToUIManager();

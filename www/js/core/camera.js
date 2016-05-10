@@ -150,6 +150,7 @@ define(
 				moveTo: function (x, y) {
 
 					// FIXME: detect edge position of camera relative from game's world
+					// in current flow - bindEventListeners - is needless
 					this.attr.x = x;
 					this.attr.y = y;
 
