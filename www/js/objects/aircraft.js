@@ -74,10 +74,21 @@ define([
 
 	Aircraft.prototype.onChangeState = function (stateName, stateData) {
 
+		// TODO: refactor me
+		// separate STATE.MOVING in other method
+
 		var aircraft = this,
 			attr = aircraft.attr,
+			speed = attr.speed,
+			prevSpeedX = speed.prevX,
+			curSpeedX = speed.x,
+
 			state = attr.state[stateName],
 			prevState = attr.prevState[stateName],
+			turnAnimationData = attr.animationData.turn,
+			time = turnAnimationData.time,
+			count = turnAnimationData.count,
+
 			STATE = gameObjectKeys.STATE;
 
 		switch (stateName) {
@@ -88,6 +99,40 @@ define([
 				break;
 
 			case STATE.MOVING:
+
+				if ( prevSpeedX !== 0 && curSpeedX === 0 ) { // <=> prevSpeedX && !curSpeedX
+					aircraft.setTween(
+						'turn',
+						turnAnimationData,
+						time,
+						{ index: 0 }
+					);
+					speed.prevX = curSpeedX;
+					return;
+				}
+
+				if ( prevSpeedX >= 0 && curSpeedX < 0 ) {
+					aircraft.setTween(
+						'turn',
+						turnAnimationData,
+						time,
+						{ index: -count }
+					);
+					speed.prevX = curSpeedX;
+					return;
+				}
+
+				if ( prevSpeedX <= 0 && curSpeedX > 0 ) {
+					aircraft.setTween(
+						'turn',
+						turnAnimationData,
+						time,
+						{ index: count }
+					);
+					speed.prevX = curSpeedX;
+					// return; // TODO: uncomment return in case adding code below
+				}
+
 
 				console.log('moving update'); // remove
 
@@ -278,7 +323,7 @@ define([
 			aircraft.updateShooting(now);
 		}
 
-		aircraft.updateAnimationIndex();
+		aircraft.updateSpriteByState();
 
 		aircraft.adjustEdge();
 
@@ -286,68 +331,28 @@ define([
 
 	};
 
-	Aircraft.prototype.updateAnimationIndex = function () {
-
-		// TODO: add logic to which sprite to show (relative from states) - here
+	Aircraft.prototype.updateSpriteByState = function () {
 
 		var aircraft = this,
 			attr = aircraft.attr,
-			speed = attr.speed,
-			prevSpeedX = speed.prevX,
-			curSpeedX = speed.x,
+			sprite = attr.sprite,
 			turnAnimationData = attr.animationData.turn,
-			time = turnAnimationData.time,
-			count = turnAnimationData.count,
-			index = turnAnimationData.index,
-			lastRoundIndex = turnAnimationData.lastRoundIndex,
-			roundIndex = Math.round(index);
+			roundIndex = Math.round(turnAnimationData.index);
 
-		if (roundIndex !== lastRoundIndex) {
+		// TODO: just note
+		// right now we have different sprites for turns only
+		// add other logic for sprites in this method
+		if (roundIndex !== turnAnimationData.lastRoundIndex) {
 			if (roundIndex) {
-				aircraft.attr.sprite.scale.x = roundIndex < 0 ? -1 : 1;
-				aircraft.attr.sprite.texture = aircraft.textures[turnAnimationData.prefix + Math.abs(roundIndex)];
+				sprite.scale.x = roundIndex < 0 ? -1 : 1;
+				sprite.texture = aircraft.textures[turnAnimationData.prefix + Math.abs(roundIndex)];
 			} else {
-				aircraft.attr.sprite.scale.x = 1;
+				sprite.scale.x = 1;
 				// if index near from 0
-				aircraft.attr.sprite.texture = aircraft.textures.normal;
+				sprite.texture = aircraft.textures.normal;
 			}
 			turnAnimationData.lastRoundIndex = roundIndex;
 			aircraft.updateBounds();
-		}
-
-		// TODO: move below code to - setState - case: moving
-
-		if ( prevSpeedX !== 0 && curSpeedX === 0 ) { // <=> prevSpeedX && !curSpeedX
-			aircraft.setTween(
-				'turn',
-				turnAnimationData,
-				time,
-				{ index: 0 }
-			);
-			speed.prevX = curSpeedX;
-			return;
-		}
-
-		if ( prevSpeedX >= 0 && curSpeedX < 0 ) {
-			aircraft.setTween(
-				'turn',
-				turnAnimationData,
-				time,
-				{ index: -count }
-			);
-			speed.prevX = curSpeedX;
-			return;
-		}
-
-		if ( prevSpeedX <= 0 && curSpeedX > 0 ) {
-			aircraft.setTween(
-				'turn',
-				turnAnimationData,
-				time,
-				{ index: count }
-			);
-			speed.prevX = curSpeedX;
-			// return; // TODO: uncomment return in case adding code below
 		}
 
 	};
