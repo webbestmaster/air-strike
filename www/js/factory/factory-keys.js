@@ -9,8 +9,11 @@ define(function () {
 		},
 		events: {
 			CREATE: 'factory:create',
-			DESTROY: 'factory:destroy'
+			DESTROY: 'factory:destroy',
+			GET_LIST_OF: 'factory:get-list-of',
+			GET_LAST_OF: 'factory:get-last-of'
 		}
+		// REQUIRE_ASSET_NAME: 'factory:require-asset-name'
 	}
 
 });

@@ -11,7 +11,9 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryK
 
 		obj.attr = {
 			isPause: false,
-			frameCounter: 0
+			frameCounter: 0,
+			teamId: 0,
+			ownerId: 0
 		};
 		obj.tweens = {
 			instances: {},
@@ -444,6 +446,24 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryK
 		}
 
 		// attr.lastUpdate = now;
+
+	};
+
+	GameObject.prototype.moveBy = function (data) {
+
+		var obj = this,
+			pos = obj.attr.pos;
+
+		if (data.time) {
+			obj.setTween('moveByTween', pos, data.time, {
+				x: pos.x + (data.x || 0),
+				y: pos.y + (data.y || 0)
+			});
+			return;
+		}
+
+		pos.x += data.x || 0;
+		pos.y += data.y || 0;
 
 	};
 

@@ -36,7 +36,37 @@ define([
 
 		factory.subscribe(factoryKeys.events.CREATE, factory.getObject);
 		factory.subscribe(factoryKeys.events.DESTROY, factory.destroyObject);
+		factory.subscribe(factoryKeys.events.GET_LIST_OF, factory.getListOf);
+		factory.subscribe(factoryKeys.events.GET_LAST_OF, factory.getLastOf);
 		factory.subscribe(gameKeys.DESTROY, factory.destroy);
+
+	};
+
+	Factory.prototype.getLastOf = function (data) {
+
+		var lists = this.attr.lists[data.type];
+		data.fn.call(data.ctx || null, lists.objects[lists.length - 1]);
+
+	};
+
+	Factory.prototype.getListOf = function (data) {
+
+		// TODO: add methods getListOfLive - for only live objects
+
+		var lists = this.attr.lists[data.type],
+			length = lists.length,
+			objects = lists.objects,
+			items = [],
+			i = 0;
+
+		for (; i < length; i += 1) {
+			items[i] = objects[i];
+		}
+
+		data.fn.call(data.ctx || null, {
+			items: items,
+			length: length
+		});
 
 	};
 

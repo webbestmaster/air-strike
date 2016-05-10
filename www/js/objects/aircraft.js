@@ -35,9 +35,6 @@ define([
 
 		aircraft.bindEventListeners();
 
-		aircraft.publish(cameraKeys.FOLLOW_TO, aircraft.attr);
-
-
 		// for test only
 		setTimeout(function () {
 			aircraft.setState(gameObjectKeys.STATE.SHOOTING, true);
@@ -174,6 +171,17 @@ define([
 		aircraft.subscribe(deviceKeys.MOVES, aircraft.onDeviceMove);
 		aircraft.subscribe(deviceKeys.UPS, aircraft.onDeviceUp);
 		aircraft.subscribe(cameraKeys.CHANGE_XY, aircraft.onCameraChangeXY);
+
+	};
+
+	Aircraft.prototype.unBindEventListeners = function () {
+
+		var aircraft = this;
+
+		aircraft.unsubscribe(deviceKeys.DOWNS);
+		aircraft.unsubscribe(deviceKeys.MOVES);
+		aircraft.unsubscribe(deviceKeys.UPS);
+		aircraft.unsubscribe(cameraKeys.CHANGE_XY);
 
 	};
 
@@ -346,18 +354,32 @@ define([
 		var aircraft = this,
 			attr = aircraft.attr,
 			dTime = now - attr.lastUpdateShooting,
-			options;
+			options = {
+				pos: {
+					x: attr.pos.x,
+					y: attr.pos.y - attr.h05
+				},
+				speed: {x: 0, y: -150},
+				lastUpdate: now,
+				teamId: attr.teamId,
+				ownerId: attr.ownerId
+			};
 
 		if (dTime >= 300) {
 
-			options = {pos:{ x: attr.pos.x - attr.w05, y: attr.pos.y}, speed: {x: 0, y: -150}, lastUpdate: now};
-			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
+			// center missile
+			aircraft.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
-			options = {pos:{x: attr.pos.x, y: attr.pos.y - attr.h05}, speed: {x: 0, y: -150}, lastUpdate: now};
-			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
+			// left missile
+			options = JSON.parse(JSON.stringify(options));
+			options.pos.x -= attr.w05;
+			options.pos.y += attr.h05;
+			aircraft.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
-			options = {pos:{x: attr.pos.x + attr.w05, y: attr.pos.y}, speed: {x: 0, y: -150}, lastUpdate: now};
-			this.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
+			// right missile
+			options = JSON.parse(JSON.stringify(options));
+			options.pos.x += attr.w;
+			aircraft.publish(factoryKeys.events.CREATE, factoryKeys.objects.JUNIOR_MISSILE, options);
 
 			attr.lastUpdateShooting = now;
 

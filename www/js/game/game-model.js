@@ -1,27 +1,87 @@
-define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys', 'gameConfig'], function (Factory, factoryKeys, camera, mediator, gameKeys, objectKeys, gameConfig) {
+define([
+	'Factory',
+	'factoryKeys',
+	'camera',
+	'mediator',
+	'gameKeys',
+	'objectKeys',
+	'gameConfig',
+	'cameraKeys'
+	// 'requireAsset'
+], function (Factory,
+			factoryKeys,
+			camera,
+			mediator,
+			gameKeys,
+			objectKeys,
+			gameConfig,
+			cameraKeys
+			// requireAsset
+			) {
 
 	function GameModel() {
 
-		var game = this;
+		var game = this,
+			factory = new Factory();
 
 		game.attr = {
-			factory: new Factory()
+			factory: factory
 		};
-
-		// var obj = game.attr.factory.getObject(factoryKeys.BULLET);
-		// var obj = game.attr.factory.getObject(factoryKeys.AIRCRAFT);
-
-		// console.log(game.attr.factory);
 
 		game.bindEventListeners();
 
-
+		// create first aircraft
 		game.publish(factoryKeys.events.CREATE, factoryKeys.objects.AIRCRAFT, {
 			lastUpdate: camera.get('now')
 		});
+		game.publish(factoryKeys.events.GET_LAST_OF, {
+			type: factoryKeys.objects.AIRCRAFT,
+			fn: function (aircraft) {
+				aircraft.set({
+					ownerId: 1,
+					teamId: 1
+				});
+				aircraft.publish(cameraKeys.FOLLOW_TO, aircraft.attr);
 
+			},
+			ctx: this
+		});
 
-		var i, j;
+		// create second aircraft
+		game.publish(factoryKeys.events.CREATE, factoryKeys.objects.AIRCRAFT, {
+			lastUpdate: camera.get('now')
+		});
+		game.publish(factoryKeys.events.GET_LAST_OF, {
+			type: factoryKeys.objects.AIRCRAFT,
+			fn: function (aircraft) {
+				aircraft.set({
+					ownerId: 2,
+					teamId: 2
+				});
+
+				aircraft.moveBy({
+					x: aircraft.attr.w,
+					time: 4
+				});
+
+				aircraft.get('sprite').tint = 0xFF0000;
+
+				aircraft.unBindEventListeners();
+				
+			},
+			ctx: this
+		});
+
+		game.createLandscapeMarks();
+
+	}
+
+	GameModel.prototype.createLandscapeMarks = function () {
+
+		var game = this,
+			i,
+			j;
+
 		for (i = 1; i < 10; i += 1) {
 			for (j = 1; j < 10; j += 1) {
 				game.publish(factoryKeys.events.CREATE, factoryKeys.objects.CROSS, {
@@ -34,7 +94,7 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 			}
 		}
 
-	}
+	};
 
 	GameModel.prototype.bindEventListeners = function () {
 
@@ -98,6 +158,8 @@ define(['Factory', 'factoryKeys', 'camera', 'mediator', 'gameKeys', 'objectKeys'
 		var game = this;
 
 		this.attr = {};
+
+		// requireAsset(factoryKeys.REQUIRE_ASSET_NAME, null);
 
 		game.unsubscribe();
 

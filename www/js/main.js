@@ -17,6 +17,7 @@ requirejs.config({
 		device: 'services/device',
 		deviceKeys: 'services/device-keys',
 		// core
+		// requireAsset: 'services/require-asset',
 		renderer: 'core/renderer',
 		rendererKeys: 'core/renderer-keys',
 		textureMaster: 'core/texture-master',
