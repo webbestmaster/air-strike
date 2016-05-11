@@ -329,10 +329,10 @@ define(
 			var cameraData = this.attr,
 				sprite = objData.sprite,
 				position = sprite.position,
-				newPositionX = (objData.pos.x - cameraData.pos.x + cameraData.w05) / cameraData.w * cameraData.dw,
-				newPositionY = (objData.pos.y - cameraData.pos.y + cameraData.h05) / cameraData.h * cameraData.dh,
-				newWidth = sprite.texture.width * cameraData.q,
-				newHeight = sprite.texture.height * cameraData.q;
+				newPositionX = (objData.pos.x - cameraData.pos.x + cameraData.w05) / cameraData.w * cameraData.dw | 0,
+				newPositionY = (objData.pos.y - cameraData.pos.y + cameraData.h05) / cameraData.h * cameraData.dh | 0,
+				newWidth = sprite.texture.width * cameraData.q | 0,
+				newHeight = sprite.texture.height * cameraData.q | 0;
 
 			if (position.x !== newPositionX) {
 				position.x = newPositionX;
