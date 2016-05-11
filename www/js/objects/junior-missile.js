@@ -68,12 +68,11 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 			missile.useNextTexture();
 		}
 
-		if (missile.attr.isPause) {
-			return attr.lastUpdate = now; // no matter what was return
+		if (attr.isPause) {
+			return; //attr.lastUpdate = now; // no matter what was return
 		}
 
 		missile.updateBySpeedY(now);
-
 
 		attr.lastUpdate = now;
 

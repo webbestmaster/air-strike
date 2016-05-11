@@ -277,7 +277,7 @@ define([
 			STATE = gameObjectKeys.STATE;
 
 		if (attr.isPause) {
-			return attr.lastUpdate = now; // no matter what was return
+			return; // attr.lastUpdate = now; // no matter what was return
 		}
 
 		if (attr.state[STATE.MOVING].data) {
