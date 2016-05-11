@@ -327,14 +327,28 @@ define(
 		adjustSprite: function (objData) {
 
 			var cameraData = this.attr,
-				sprite = objData.sprite;
+				sprite = objData.sprite,
+				position = sprite.position,
+				newPositionX = (objData.pos.x - cameraData.pos.x + cameraData.w05) / cameraData.w * cameraData.dw,
+				newPositionY = (objData.pos.y - cameraData.pos.y + cameraData.h05) / cameraData.h * cameraData.dh,
+				newWidth = sprite.texture.width * cameraData.q,
+				newHeight = sprite.texture.height * cameraData.q;
 
-			// sprite pos
-			sprite.position.x = ((objData.pos.x - cameraData.pos.x) + cameraData.w05) / cameraData.w * cameraData.dw;
-			sprite.position.y = ((objData.pos.y - cameraData.pos.y) + cameraData.h05) / cameraData.h * cameraData.dh;
+			if (position.x !== newPositionX) {
+				position.x = newPositionX;
+			}
 
-			sprite.width = objData.w * cameraData.q;
-			sprite.height = objData.h * cameraData.q;
+			if (position.y !== newPositionY) {
+				position.y = newPositionY;
+			}
+
+			if (sprite.width !== newWidth) {
+				sprite.width = newWidth;
+			}
+
+			if (sprite.height !== newHeight) {
+				sprite.height = newHeight;
+			}
 
 		},
 
