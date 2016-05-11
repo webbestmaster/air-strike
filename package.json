@@ -7,7 +7,9 @@
     "type": "git"
   },
   "scripts": {
-    "server": "lite-server"
+    "server": "lite-server",
+    "server-dist": "lite-server -c bs-dist-config.json"
+
   },
   "devDependencies": {
     "gulp": "^3.9.0",

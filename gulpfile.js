@@ -45,53 +45,64 @@ gulp.task('js-watch', function () {
 gulp.task('collect-js', function () {
 
 	return gulp
-		.src('')
+		.src('js')
 		.pipe(rjs({
 			name: 'main',
 			baseUrl: './www/js/',
 			out: 'main.js',
 			// copy paths from main.js
 			paths: {
+				// init service
 				log: 'services/log',
 				mediator: 'services/mediator',
 				// init libs
 				Deferred: 'lib/deferred',
 				fontLoader: 'lib/font-loader',
 				PIXI: 'lib/pixi',
-				EasePack: 'lib/EasePack',
-				TweenLite: 'lib/TweenLite',
+				//EasePack: 'lib/EasePack',
+				TweenMax: 'lib/TweenMax',
 				FPSMeter: 'lib/fpsmeter',
 				// init service
 				device: 'services/device',
-				deviceEvents: 'services/device-events',
+				deviceKeys: 'services/device-keys',
 				// core
+				// requireAsset: 'services/require-asset',
 				renderer: 'core/renderer',
 				rendererKeys: 'core/renderer-keys',
 				textureMaster: 'core/texture-master',
 				textureSources: 'core/texture-sources',
 				DisplayObject: 'core/display-object',
 				BaseView: 'core/base-view',
-				BaseViewEvents: 'core/base-view-events',
+				baseViewKeys: 'core/base-view-keys',
 				Button: 'core/button',
 				loader: 'core/loader',
 				camera: 'core/camera',
+				cameraKeys: 'core/camera-keys',
+				uiManager: 'core/ui-manager',
+				uiManagerKeys: 'core/ui-manager-keys',
 				// views
 				TitleView: 'view/title/view',
 				SettingView: 'view/setting/view',
 
-
-
 				// game
-				GameModel: 'game/model',
-				GameView: 'game/view',
+				GameModel: 'game/game-model',
+				GameView: 'game/game-view',
 				gameKeys: 'game/game-keys',
+				gameConfig: 'game/game-config',
+				gameState: 'game/game-state',
 				Factory: 'factory/factory',
 				factoryKeys: 'factory/factory-keys',
 				objectKeys: 'factory/object-keys',
 				constructorMap: 'factory/constructor-map',
 
 				// game objects
-				Bullet: 'objects/bullet'
+				GameObject: 'objects/game-object',
+				gameObjectKeys: 'objects/game-object-keys',
+				// gameObjectHelper: 'objects/game-object-helper',
+				Aircraft: 'objects/aircraft',
+				Bullet: 'objects/bullet',
+				JuniorMissile: 'objects/junior-missile',
+				Cross: 'objects/cross'
 			}
 		}))
 		.pipe(gulp.dest('./dist/www/js/'));
@@ -101,13 +112,27 @@ gulp.task('collect-js', function () {
 gulp.task('uglify-js', ['collect-js'], function () {
 	return gulp.src('./dist/www/js/main.js')
 		.pipe(uglify())
-		.pipe(gulp.dest('./dist/www/js'));
+		.pipe(gulp.dest('./dist/www/js/'));
 });
 
 // copy data
 gulp.task('copy-assets', function () {
+
+	// folders
 	['src', 'font'].forEach(function (dir) {
 		return gulp.src('./www/' + dir + '/**/*')
 			.pipe(gulp.dest('./dist/www/' + dir));
 	});
+
+	// files
+	['favicon.ico', 'js/require.js'].forEach(function (pathToFile) {
+
+		// remove file's name from the path
+		var pathToFileFolders = pathToFile.indexOf('/') === -1 ? '' :  pathToFile.replace(/\/[^\/]+?$/, '');
+
+		return gulp.src('./www/' + pathToFile)
+			.pipe(gulp.dest('./dist/www/' + pathToFileFolders));
+
+	});
+
 });
