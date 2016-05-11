@@ -30,6 +30,7 @@ define([
 		sprite = new PIXI.Sprite(aircraft.textures.normal);
 		sprite.anchor.set(0.5, 0.5);
 		aircraft.set('sprite', sprite);
+		aircraft.set('angle', Math.PI / 4);
 
 		aircraft.setDefaultProperties(options);
 

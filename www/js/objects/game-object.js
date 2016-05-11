@@ -1,4 +1,4 @@
-define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryKeys, gameKeys, mediator, gameConfig) {
+define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys'], function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys) {
 
 	// abstract class
 	function GameObject() {
@@ -194,9 +194,41 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryK
 	 */
 
 	GameObject.prototype.mainBindEventListeners = function () {
-		mediator.installTo(this);
-		this.subscribe(gameKeys.PAUSE, this.onPause);
-		this.subscribe(gameKeys.RESUME, this.onResume);
+		var obj = this;
+		mediator.installTo(obj);
+		obj.subscribe(gameKeys.PAUSE, obj.onPause);
+		obj.subscribe(gameKeys.RESUME, obj.onResume);
+		obj.subscribe(gameObjectKeys.DEBUG.SHOW, obj.debugShow);
+		obj.subscribe(gameObjectKeys.DEBUG.HIDE, obj.debugHide);
+	};
+
+	GameObject.prototype.debugShow = function () {
+
+		var obj = this,
+			points = obj.getPointCoordinates().map(function (point) {
+				return {
+					x: (point.x + camera.attr.w05 - camera.attr.pos.x) * camera.attr.q,
+					y: (point.y + camera.attr.h05 - camera.attr.pos.y) * camera.attr.q
+				}
+			}),
+			graphics = new PIXI.Graphics();
+
+		graphics.beginFill(0xFFFFFF, 1);
+		// graphics.lineStyle(3, 0xffd900, 1);
+		graphics.moveTo(points[3].x, points[3].y);
+		points.forEach(function (point) {
+			graphics.lineTo(point.x, point.y);
+		});
+		graphics.endFill();
+		obj.publish(gameKeys.APPEND_SPRITE, {
+			sprite: graphics,
+			layer: obj.attr.layer
+		});
+
+	};
+
+	GameObject.prototype.debugHide = function () {
+
 	};
 
 	GameObject.prototype.onPause = function () {
@@ -339,7 +371,7 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryK
 			width = texture.width,
 			height = texture.height,
 			width05 = width / 2,
-			height05 = width / 2;
+			height05 = height / 2;
 
 		attr.w = width;
 		attr.h = height;
@@ -349,6 +381,41 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryK
 
 		attr.maxX = gameConfig.world.width - width05;
 		attr.maxY = gameConfig.world.height - height05;
+
+	};
+
+	GameObject.prototype.getPointCoordinates = function () {
+
+		// TODO: optimize it - cache sins and cos'
+
+		var attr = this.attr,
+			x = attr.pos.x,
+			y = attr.pos.y,
+			width05 = attr.w05,
+			height05 = attr.h05,
+			pi = Math.PI,
+			pi05 = pi / 2,
+			lineSize = Math.sqrt(width05 * width05 + height05 * height05),
+			ltAngle = Math.atan2(-height05, -width05) + attr.angle || 0; // lt - Left Top angle
+
+		return [
+			{
+				x: Math.cos(pi05 - ltAngle) * lineSize + x,
+				y: Math.sin(pi05 - ltAngle) * lineSize + y
+			},
+			{
+				x: Math.cos(ltAngle) * lineSize + x,
+				y: Math.sin(ltAngle) * lineSize + y
+			},
+			{
+				x: Math.cos(-pi05 - ltAngle) * lineSize + x,
+				y: Math.sin(-pi05 - ltAngle) * lineSize + y
+			},
+			{
+				x: Math.cos(pi + ltAngle) * lineSize + x,
+				y: Math.sin(pi + ltAngle) * lineSize + y
+			}
+		];
 
 	};
 

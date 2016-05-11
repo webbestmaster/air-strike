@@ -10,6 +10,7 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 		sprite = new PIXI.Sprite.fromFrame('cross');
 		sprite.anchor.set(0.5, 0.5);
 		cross.set('sprite', sprite);
+		cross.set('angle', Math.PI / 4);
 
 		cross.setDefaultProperties(options);
 
