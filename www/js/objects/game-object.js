@@ -13,7 +13,8 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig'], function (factoryK
 			isPause: false,
 			frameCounter: 0,
 			teamId: 0,
-			ownerId: 0
+			ownerId: 0,
+			angle: 0
 		};
 		obj.tweens = {
 			instances: {},
