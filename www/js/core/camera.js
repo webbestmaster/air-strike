@@ -330,6 +330,7 @@ define(
 				sprite = objData.sprite,
 				position = sprite.position,
 				rotation = objData.rotation,
+				//scale = objData.scale,
 				newPositionX = (objData.pos.x - cameraData.pos.x + cameraData.w05) / cameraData.w * cameraData.dw | 0,
 				newPositionY = (objData.pos.y - cameraData.pos.y + cameraData.h05) / cameraData.h * cameraData.dh | 0,
 				newWidth = sprite.texture.width * cameraData.q | 0,
@@ -354,6 +355,16 @@ define(
 			if (sprite.rotation !== rotation) {
 				sprite.rotation = rotation;
 			}
+
+/*
+			if (sprite.scale.x !== scale.x) {
+				sprite.scale.x = scale.x;
+			}
+
+			if (sprite.scale.y !== scale.y) {
+				sprite.scale.y = scale.y;
+			}
+*/
 
 		},
 

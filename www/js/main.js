@@ -10,6 +10,7 @@ requirejs.config({
 		Deferred: 'lib/deferred',
 		fontLoader: 'lib/font-loader',
 		PIXI: 'lib/pixi',
+		util: 'lib/util',
 		//EasePack: 'lib/EasePack',
 		TweenMax: 'lib/TweenMax',
 		FPSMeter: 'lib/fpsmeter',

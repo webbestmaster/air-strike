@@ -3,7 +3,8 @@ define(
 		//'EasePack',
 		'TweenMax',
 		'PIXI',
-		'FPSMeter'
+		'FPSMeter',
+		'util'
 	],
 	function () {}
 );

@@ -1,4 +1,4 @@
-define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys'], function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys) {
+define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys', 'util'], function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys, util) {
 
 	// abstract class
 	function GameObject() {
@@ -14,7 +14,11 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 			frameCounter: 0,
 			ownerId: gameObjectKeys.IDS.NEUTRAL.ownerId,
 			teamId: gameObjectKeys.IDS.NEUTRAL.teamId,
-			rotation: 0
+			rotation: 0,
+			scale: {
+				x: 1,
+				y: 1
+			}
 		};
 		obj.tweens = {
 			instances: {},
@@ -282,19 +286,25 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 		this.attr.sprite.visible = true;
 	};
 
-	GameObject.prototype.set = function (keyOrObject, value) {
-
-		var key;
+	GameObject.prototype.set = function (keyOrObject, valueOrIsDeep, isDeep) {
 
 		if (typeof keyOrObject === 'string') {
-			this.attr[keyOrObject] = value;
+			if (isDeep) {
+				// used - key, value
+				util.deepExtend(valueOrIsDeep, this.attr[keyOrObject] = this.attr[keyOrObject] || {});
+			} else {
+				// used - key, value, true
+				this.attr[keyOrObject] = valueOrIsDeep;
+			}
 			return this;
 		}
 
-		for (key in keyOrObject) {
-			if (keyOrObject.hasOwnProperty(key)) {
-				this.attr[key] = keyOrObject[key];
-			}
+		// keyOrObject = object
+		// valueOrIsDeep = isDeep
+		if (valueOrIsDeep) {
+			util.deepExtend(keyOrObject, this.attr);
+		} else {
+			util.extend(keyOrObject, this.attr);
 		}
 
 		return this;

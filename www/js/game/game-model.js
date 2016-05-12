@@ -45,6 +45,9 @@ define([
 				});
 				aircraft.publish(cameraKeys.FOLLOW_TO, aircraft.attr);
 
+				// aircraft.set('rotation', Math.PI);
+				// aircraft.set('scale', {x: -1}, true);
+
 			},
 			ctx: this
 		});

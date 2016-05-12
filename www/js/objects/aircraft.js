@@ -30,8 +30,7 @@ define([
 		sprite = new PIXI.Sprite(aircraft.textures.normal);
 		sprite.anchor.set(0.5, 0.5);
 		aircraft.set('sprite', sprite);
-		// sprite.rotation = Math.PI / 8;
-		// aircraft.set('rotation', Math.PI / 8);
+		// aircraft.set('rotation', Math.PI);
 
 		aircraft.setDefaultProperties(options);
 
