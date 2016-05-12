@@ -14,7 +14,7 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 			frameCounter: 0,
 			teamId: 0,
 			ownerId: 0,
-			angle: 0
+			rotation: 0
 		};
 		obj.tweens = {
 			instances: {},
@@ -393,29 +393,37 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 			y = attr.pos.y,
 			width05 = attr.w05,
 			height05 = attr.h05,
-			pi = Math.PI,
-			pi05 = pi / 2,
 			lineSize = Math.sqrt(width05 * width05 + height05 * height05),
-			ltAngle = Math.atan2(-height05, -width05) + attr.angle || 0; // lt - Left Top angle
+			rotation = attr.rotation,
+			list = [
+				{
+					x: x - width05,
+					y: y - height05
+				},
+				{
+					x: x + width05,
+					y: y - height05
+				},
+				{
+					x: x + width05,
+					y: y + height05
+				},
+				{
+					x: x - width05,
+					y: y + height05
+				}
+			];
 
-		return [
-			{
-				x: Math.cos(pi05 - ltAngle) * lineSize + x,
-				y: Math.sin(pi05 - ltAngle) * lineSize + y
-			},
-			{
-				x: Math.cos(ltAngle) * lineSize + x,
-				y: Math.sin(ltAngle) * lineSize + y
-			},
-			{
-				x: Math.cos(-pi05 - ltAngle) * lineSize + x,
-				y: Math.sin(-pi05 - ltAngle) * lineSize + y
-			},
-			{
-				x: Math.cos(pi + ltAngle) * lineSize + x,
-				y: Math.sin(pi + ltAngle) * lineSize + y
+		return list.map(function (xy) {
+
+			var defaultRotation = Math.atan2(y - xy.y, x - xy.x);
+
+			return {
+				x: x + Math.cos(defaultRotation + rotation) * lineSize,
+				y: y + Math.sin(defaultRotation + rotation) * lineSize
 			}
-		];
+
+		});
 
 	};
 
