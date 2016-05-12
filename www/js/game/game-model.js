@@ -6,7 +6,8 @@ define([
 	'gameKeys',
 	'objectKeys',
 	'gameConfig',
-	'cameraKeys'
+	'cameraKeys',
+	'gameObjectKeys'
 	// 'requireAsset'
 ], function (Factory,
 			factoryKeys,
@@ -15,7 +16,8 @@ define([
 			gameKeys,
 			objectKeys,
 			gameConfig,
-			cameraKeys
+			cameraKeys,
+		 	gameObjectKeys
 			// requireAsset
 			) {
 
@@ -38,8 +40,8 @@ define([
 			type: factoryKeys.objects.AIRCRAFT,
 			fn: function (aircraft) {
 				aircraft.set({
-					ownerId: 1,
-					teamId: 1
+					ownerId: gameObjectKeys.IDS.PLAYER[0].ownerId,
+					teamId: gameObjectKeys.IDS.PLAYER[0].teamId
 				});
 				aircraft.publish(cameraKeys.FOLLOW_TO, aircraft.attr);
 
@@ -55,8 +57,8 @@ define([
 			type: factoryKeys.objects.AIRCRAFT,
 			fn: function (aircraft) {
 				aircraft.set({
-					ownerId: 2,
-					teamId: 2
+					ownerId: gameObjectKeys.IDS.ENEMY.ownerId,
+					teamId: gameObjectKeys.IDS.ENEMY.teamId
 				});
 
 				aircraft.moveBy({

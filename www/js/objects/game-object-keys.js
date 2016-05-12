@@ -1,5 +1,7 @@
 define(function () {
 
+	var playersTeamId = 'ids:player:teamId:0';
+
 	return {
 
 		STATE: {
@@ -9,6 +11,27 @@ define(function () {
 		DEBUG: {
 			SHOW: 'game-object:debug:show',
 			HIDE: 'game-object:debug:hide'
+		},
+
+		IDS: {
+			PLAYER: [
+				{
+					ownerId: 'ids:player:0:ownerId:0',
+					teamId: playersTeamId
+				},
+				{
+					ownerId: 'ids:player:1:ownerId:1',
+					teamId: playersTeamId
+				}
+			],
+			NEUTRAL: {
+				ownerId: 'ids:neutral:ownerId',
+				teamId: 'ids:neutral:teamId'
+			},
+			ENEMY: {
+				ownerId: 'ids:enemy:ownerId',
+				teamId: 'ids:enemy:teamId'
+			}
 		}
 
 	}

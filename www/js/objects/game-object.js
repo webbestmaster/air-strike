@@ -12,8 +12,8 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 		obj.attr = {
 			isPause: false,
 			frameCounter: 0,
-			teamId: 0,
-			ownerId: 0,
+			ownerId: gameObjectKeys.IDS.NEUTRAL.ownerId,
+			teamId: gameObjectKeys.IDS.NEUTRAL.teamId,
 			rotation: 0
 		};
 		obj.tweens = {
