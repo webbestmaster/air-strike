@@ -12,6 +12,7 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 		sprite = new PIXI.Sprite(missile.textures[0]);
 		sprite.anchor.set(0.5, 0.5);
 		missile.set('sprite', sprite);
+		// missile.set('rotation', Math.PI / 4);
 
 		missile.setDefaultProperties(options);
 
