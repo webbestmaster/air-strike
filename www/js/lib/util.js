@@ -14,14 +14,18 @@ define(function () {
 
 		deepExtend: function (from, to) {
 
-			var key, obj;
+			var key, fromObj;
 
 			for (key in from) {
-				obj = from[key];
-				if (obj && typeof obj === 'object') {
-					this.deepExtend(obj, to[key] = to[key] || {});
+				fromObj = from[key];
+				if (fromObj && typeof fromObj === 'object') {
+					if (to[key]) {
+						this.deepExtend(obj, to[key]);
+					} else {
+						this.deepExtend(obj, to[key] = {});
+					}
 				} else {
-					to[key] = obj;
+					to[key] = fromObj;
 				}
 			}
 
