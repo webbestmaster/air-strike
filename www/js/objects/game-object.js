@@ -15,6 +15,8 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 			ownerId: gameObjectKeys.IDS.NEUTRAL.ownerId,
 			teamId: gameObjectKeys.IDS.NEUTRAL.teamId,
 			rotation: 0,
+			diagonal: 0,
+			diagonal05: 0,
 			scale: {
 				x: 1,
 				y: 1
@@ -391,6 +393,26 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 
 		attr.maxX = gameConfig.world.width - width05;
 		attr.maxY = gameConfig.world.height - height05;
+
+		// create square for collisions
+		attr.diagonal = Math.sqrt(width * width + height * height);
+		attr.diagonal05 = attr.diagonal / 2;
+
+	};
+
+	GameObject.prototype.getMaxSquare = function () {
+
+		var attr = this.attr,
+			diagonal05 = attr.diagonal05,
+			x = attr.pos.x,
+			y = attr.pos.y;
+
+		return {
+			minX: x - diagonal05,
+			minY: y - diagonal05,
+			maxX: x + diagonal05,
+			maxY: y + diagonal05
+		};
 
 	};
 
