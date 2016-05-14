@@ -19,7 +19,8 @@ define([
 		factory.attr = {
 			lists: {},
 			types: [],
-			length: 0
+			length: 0,
+			idCounter: 0
 		};
 
 		factory.initialize();
@@ -124,6 +125,7 @@ define([
 			index = lists.length;
 			lifeMap[index] = objectKeys.ALIVE;
 			objects[index] = neededObject = new constructorMap[type](options);
+			neededObject.attr.id = (this.attr.idCounter += 1);
 			this.publish(gameKeys.APPEND_SPRITE, {
 				sprite: neededObject.attr.sprite,
 				layer: neededObject.attr.layer
@@ -133,6 +135,7 @@ define([
 		}
 
 		neededObject.updateBounds();
+		this.publish(factoryKeys.events.OBJECT_CREATED, neededObject);
 		this.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
 
 		return neededObject;

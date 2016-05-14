@@ -7,7 +7,8 @@ define([
 	'objectKeys',
 	'gameConfig',
 	'cameraKeys',
-	'gameObjectKeys'
+	'gameObjectKeys',
+	'CollisionManager'
 	// 'requireAsset'
 ], function (Factory,
 			factoryKeys,
@@ -17,17 +18,20 @@ define([
 			objectKeys,
 			gameConfig,
 			cameraKeys,
-		 	gameObjectKeys
+		 	gameObjectKeys,
+		 	CollisionManager
 			// requireAsset
 			) {
 
 	function GameModel() {
 
 		var game = this,
-			factory = new Factory();
+			factory = new Factory(),
+			collisionManager = new CollisionManager();
 
 		game.attr = {
-			factory: factory
+			factory: factory,
+			collisionManager: collisionManager
 		};
 
 		game.bindEventListeners();

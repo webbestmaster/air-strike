@@ -33,7 +33,7 @@ requirejs.config({
 		uiManager: 'core/ui-manager',
 		uiManagerKeys: 'core/ui-manager-keys',
 		CollisionManager: 'core/collision-manager',
-		CollisionManagerKeys: 'core/collision-manager-keys',
+		collisionManagerKeys: 'core/collision-manager-keys',
 		// views
 		TitleView: 'view/title/view',
 		SettingView: 'view/setting/view',

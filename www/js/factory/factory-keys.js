@@ -8,6 +8,7 @@ define(function () {
 			CROSS: 'factory:Cross'
 		},
 		events: {
+			OBJECT_CREATED: 'factory:object-created',
 			CREATE: 'factory:create',
 			DESTROY: 'factory:destroy',
 			GET_LIST_OF: 'factory:get-list-of',

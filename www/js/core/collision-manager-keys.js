@@ -1,5 +1,5 @@
 define({
 	
-	
-	
+	XY_DIVIDER: ','
+
 });
