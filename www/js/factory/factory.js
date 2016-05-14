@@ -111,7 +111,9 @@ define([
 	Factory.prototype.getObject = function (type, options) {
 
 		// try to find object in saved array
-		var lists = this.attr.lists[type],
+		var factory = this,
+			attr = factory.attr,
+			lists = attr.lists[type],
 			lifeMap = lists.lifeMap,
 			objects = lists.objects,
 			index = lifeMap.indexOf(objectKeys.DEAD),
@@ -125,18 +127,18 @@ define([
 			index = lists.length;
 			lifeMap[index] = objectKeys.ALIVE;
 			objects[index] = neededObject = new constructorMap[type](options);
-			neededObject.attr.id = (this.attr.idCounter += 1);
-			this.publish(gameKeys.APPEND_SPRITE, {
+			neededObject.attr.id = (attr.idCounter += 1);
+			factory.publish(gameKeys.APPEND_SPRITE, {
 				sprite: neededObject.attr.sprite,
 				layer: neededObject.attr.layer
 			});
 			lists.length += 1;
 			neededObject.attr.factoryKey = type;
+			factory.publish(factoryKeys.events.OBJECT_CREATED, neededObject);
 		}
 
 		neededObject.updateBounds();
-		this.publish(factoryKeys.events.OBJECT_CREATED, neededObject);
-		this.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
+		factory.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
 
 		return neededObject;
 

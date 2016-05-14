@@ -131,7 +131,9 @@ define([
 
 	GameModel.prototype.update = function () {
 
-		var factory = this.attr.factory,
+		var attr = this.attr,
+			factory = attr.factory,
+			collisionManager = attr.collisionManager,
 			factoryData = factory.attr,
 			cameraBounds = camera.update().getBounds(),
 			lists = factoryData.lists,
@@ -153,14 +155,19 @@ define([
 					object.update.apply(object, cameraBounds);
 					if (object.attr.visible) {
 						camera.adjustSprite(object.attr);
+						collisionManager.updatePlace(object);
 						// TODO: add update for collisionManager
 					} else {
+						collisionManager.removePlace(object);
 						// TODO: remove from collisionManager
 					}
 					/* alive object is here - end */
 				}
 			}
 		}
+		
+		
+		//TODO: do collision detection
 
 	};
 

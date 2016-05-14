@@ -400,6 +400,7 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 
 	};
 
+/*
 	GameObject.prototype.getMaxSquare = function () {
 
 		var attr = this.attr,
@@ -415,6 +416,7 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 		};
 
 	};
+*/
 
 	GameObject.prototype.getPointCoordinates = function () {
 
