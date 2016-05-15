@@ -70,10 +70,6 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 
 	CollisionManager.prototype.pushObject = function (object) {
 
-		if (!object.attr.useCollision) {
-			return;
-		}
-
 		var collisionManager = this,
 			attr = collisionManager.attr,
 			grid = attr.grid,

@@ -120,29 +120,34 @@ define([
 			lifeMap = lists.lifeMap,
 			objects = lists.objects,
 			index = lifeMap.indexOf(objectKeys.DEAD),
-			neededObject;
+			neededObject,
+			objectAttr;
 
 		if (index !== -1) {
 			lifeMap[index] = objectKeys.ALIVE;
 			neededObject = objects[index].setDefaultProperties(options);
 			neededObject.show();
+			objectAttr = neededObject.attr;
 		} else {
 			index = lists.length;
 			lifeMap[index] = objectKeys.ALIVE;
 			objects[index] = neededObject = new constructorMap[type](options);
-			neededObject.attr.id = (attr.idCounter += 1);
+			objectAttr = neededObject.attr;
+			objectAttr.id = (attr.idCounter += 1);
 			factory.publish(gameKeys.APPEND_SPRITE, {
-				sprite: neededObject.attr.sprite,
-				layer: neededObject.attr.layer
+				sprite: objectAttr.sprite,
+				layer: objectAttr.layer
 			});
 			lists.length += 1;
-			neededObject.attr.factoryKey = type;
+			objectAttr.factoryKey = type;
 			factory.publish(factoryKeys.events.OBJECT_CREATED, neededObject);
 		}
 
 		neededObject.updateBounds();
-		factory.publish(collisionManagerKeys.PUSH_OBJECT, neededObject);
-		factory.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
+		if (objectAttr.useCollision) {
+			factory.publish(collisionManagerKeys.PUSH_OBJECT, neededObject);
+		}
+		factory.publish(cameraKeys.ADJUST_SPRITE, objectAttr);
 
 		return neededObject;
 
