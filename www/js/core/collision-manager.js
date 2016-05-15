@@ -13,6 +13,25 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 	}
 
 
+	CollisionManager.prototype.helperMethod_showFull = function () {
+
+		var grid = this.attr.grid,
+			neededCells = [],
+			key;
+
+		for (key in grid) {
+			if (grid[key].length) {
+				neededCells.push({
+					key: key,
+					f: grid[key]
+				});
+			}
+		}
+
+		console.log(JSON.parse(JSON.stringify(neededCells)));
+
+	};
+
 	CollisionManager.prototype.bindEventListeners = function () {
 
 		var collisionManager = this;
@@ -54,16 +73,33 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 		}
 
 		var collisionManager = this,
+			attr = collisionManager.attr,
+			grid = attr.grid,
 			maxPlace = collisionManager.getMaxPlace(object),
-			objData = collisionManager.attr.ids[object.attr.id],
-			place = objData.place;
+			id = object.attr.id,
+			objData = attr.ids[object.attr.id],
+			place = objData.place,
+			xyDivider = collisionManagerKeys.XY_DIVIDER,
+			placeMinX,
+			placeMaxX,
+			placeMinY,
+			placeMaxY,
+			iX, iY, cell;
 
 		objData.isIn = true;
 
-		place.minX = maxPlace.minX;
-		place.maxX = maxPlace.maxX;
-		place.minY = maxPlace.minY;
-		place.maxY = maxPlace.maxY;
+		placeMinX = place.minX = maxPlace.minX;
+		placeMaxX = place.maxX = maxPlace.maxX;
+		placeMinY = place.minY = maxPlace.minY;
+		placeMaxY = place.maxY = maxPlace.maxY;
+
+		for (iX = placeMinX; iX <= placeMaxX; iX += 1) {
+			for (iY = placeMinY; iY <= placeMaxY; iY += 1) {
+				cell = grid[iX + xyDivider + iY];
+				cell.list[cell.length] = id;
+				cell.length += 1;
+			}
+		}
 
 	};
 
@@ -143,10 +179,18 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 		for (iX = placeMinX; iX <= placeMaxX; iX += 1) {
 			for (iY = placeMinY; iY <= placeMaxY; iY += 1) {
 				// detect need clear or not
-				if (!(iY > newPlaceMinY && iY < newPlaceMaxY && iX > newPlaceMinX && iX < newPlaceMaxX)) {
+				if (!(iY >= newPlaceMinY && iY <= newPlaceMaxY && iX >= newPlaceMinX && iX <= newPlaceMaxX)) {
 					cell = grid[iX + xyDivider + iY];
 					cell.list.splice(cell.list.indexOf(id), 1);
 					cell.length -= 1;
+
+					// TODO: NOTE: check this state to detect mistakes in collision manager
+/*
+					if (cell.length < 0) { // remove
+						debugger // remove
+					} // remove
+*/
+
 				}
 			}
 		}
@@ -154,7 +198,7 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 		for (iX = newPlaceMinX; iX <= newPlaceMaxX; iX += 1) {
 			for (iY = newPlaceMinY; iY <= newPlaceMaxY; iY += 1) {
 				// detect need add or not
-				if (!(iY > placeMinY && iY < placeMaxY && iX > placeMinX && iX < placeMaxX)) {
+				if (!(iY >= placeMinY && iY <= placeMaxY && iX >= placeMinX && iX <= placeMaxX)) {
 					cell = grid[iX + xyDivider + iY];
 					cell.list[cell.length] = id;
 					cell.length += 1;
@@ -178,6 +222,8 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 			console.log(' ----- attempt to remove twice');
 			return;
 		}
+
+		// console.log('remove place -', attr.ids[id].place);
 
 		grid = attr.grid;
 		place = attr.ids[id].place;
