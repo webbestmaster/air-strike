@@ -40,6 +40,8 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 
 		collisionManager.subscribe(factoryKeys.events.OBJECT_CREATED, collisionManager.onObjectCreate);
 		collisionManager.subscribe(collisionManagerKeys.PUSH_OBJECT, collisionManager.pushObject);
+		collisionManager.subscribe(collisionManagerKeys.REMOVE_OBJECT, collisionManager.removePlace);
+		collisionManager.subscribe(collisionManagerKeys.DESTROY_OBJECT, collisionManager.destroyById);
 
 	};
 
@@ -242,6 +244,14 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 		}
 
 		attr.ids[id].isIn = false;
+
+	};
+
+	CollisionManager.prototype.destroyById = function (id) {
+
+		var collisionManager = this;
+		collisionManager.removePlace(id);
+		collisionManager.attr.ids[id].object = null;
 
 	};
 

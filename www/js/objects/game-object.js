@@ -1,4 +1,6 @@
-define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys', 'util'], function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys, util) {
+define(
+	['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys', 'util', 'collisionManagerKeys'],
+	function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys, util, collisionManagerKeys) {
 
 	// abstract class
 	function GameObject() {
@@ -250,12 +252,17 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 
 	GameObject.prototype.destroy = function () {
 
-		var obj = this;
+		var obj = this,
+			attr = obj.attr;
 
 		obj.hide();
 		obj.stopTweens();
 		obj.setDefaultStates();
-		mediator.publish(factoryKeys.events.DESTROY, this);
+		mediator.publish(factoryKeys.events.DESTROY, obj);
+
+		if (attr.useCollision) {
+			mediator.publish(collisionManagerKeys.REMOVE_OBJECT, obj.attr.id);
+		}
 
 	};
 
@@ -264,6 +271,10 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 		var obj = this,
 			attr = obj.attr,
 			sprite = attr.sprite;
+
+		if (attr.useCollision) {
+			mediator.publish(collisionManagerKeys.DESTROY_OBJECT, attr.id);
+		}
 
 		obj.stopTweens();
 		// TweenMax.killTweensOf(attr.pos);
