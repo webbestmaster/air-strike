@@ -1,4 +1,4 @@
-define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys'], function (mediator, factoryKeys, gameConfig, util, collisionManagerKeys) {
+define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys', 'gameKeys'], function (mediator, factoryKeys, gameConfig, util, collisionManagerKeys, gameKeys) {
 
 	'use strict';
 
@@ -42,6 +42,7 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 		collisionManager.subscribe(collisionManagerKeys.PUSH_OBJECT, collisionManager.pushObject);
 		collisionManager.subscribe(collisionManagerKeys.REMOVE_OBJECT, collisionManager.removePlace);
 		collisionManager.subscribe(collisionManagerKeys.DESTROY_OBJECT, collisionManager.destroyById);
+		collisionManager.subscribe(gameKeys.DESTROY, collisionManager.destroy);
 
 	};
 
@@ -342,6 +343,27 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys']
 			w: 40 * 2,
 			h: 60 * 2
 		};
+
+	};
+
+	CollisionManager.prototype.destroy = function () {
+
+		var collisionManager = this,
+			attr = collisionManager.attr,
+			ids = attr.ids,
+			key;
+
+		for (key in ids) {
+			ids[key] = null;
+		}
+
+		attr.grid = null;
+		attr.ids = null;
+		attr.square = null;
+		collisionManager.attr = null;
+
+		collisionManager.unsubscribe();
+		mediator.uninstallFrom(collisionManager);
 
 	};
 
