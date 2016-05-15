@@ -20,7 +20,8 @@ define(['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObje
 			scale: {
 				x: 1,
 				y: 1
-			}
+			},
+			useCollision: false
 		};
 		obj.tweens = {
 			instances: {},

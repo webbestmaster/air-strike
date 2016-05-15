@@ -155,12 +155,21 @@ define([
 					object.update.apply(object, cameraBounds);
 					if (object.attr.visible) {
 						camera.adjustSprite(object.attr);
-						collisionManager.updatePlace(object);
-						// TODO: add update for collisionManager
-					} else {
-						collisionManager.removePlace(object);
+					}
+/*
+					else {
 						// TODO: remove from collisionManager
 					}
+*/
+
+					if (object.attr.useCollision) {
+						if (object.attr.visible) {
+							collisionManager.updatePlace(object);
+						} else {
+							collisionManager.removePlace(object.attr.id);
+						}
+					}
+
 					/* alive object is here - end */
 				}
 			}

@@ -43,7 +43,7 @@ define([
 		// for test only
 		setTimeout(function () {
 			aircraft.setState(gameObjectKeys.STATE.SHOOTING, false);
-		}, 10e3);
+		}, 2e3);
 
 	}
 
@@ -61,7 +61,7 @@ define([
 				break;
 			case STATE.MOVING:
 				aircraft.onChangeMovingState();
-				console.log('moving update'); // remove
+				//console.log('moving update'); // remove
 				break;
 			default:
 				console.log(' - Unknown state - ', stateName); // remove

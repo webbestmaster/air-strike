@@ -4,13 +4,16 @@ define([
 	'objectKeys',
 	'mediator',
 	'gameKeys',
-	'cameraKeys'
+	'cameraKeys',
+	'collisionManagerKeys'
 ], function (factoryKeys,
 			 constructorMap,
 			 objectKeys,
 			 mediator,
 			 gameKeys,
-			 cameraKeys) {
+			 cameraKeys,
+			 collisionManagerKeys
+			) {
 
 	function Factory() {
 
@@ -138,6 +141,7 @@ define([
 		}
 
 		neededObject.updateBounds();
+		factory.publish(collisionManagerKeys.PUSH_OBJECT, neededObject);
 		factory.publish(cameraKeys.ADJUST_SPRITE, neededObject.attr);
 
 		return neededObject;
