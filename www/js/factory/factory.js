@@ -133,7 +133,7 @@ define([
 			lifeMap[index] = objectKeys.ALIVE;
 			objects[index] = neededObject = new constructorMap[type](options);
 			objectAttr = neededObject.attr;
-			objectAttr.id = (attr.idCounter += 1);
+			objectAttr.id = '' + (attr.idCounter += 1);
 			factory.publish(gameKeys.APPEND_SPRITE, {
 				sprite: objectAttr.sprite,
 				layer: objectAttr.layer
