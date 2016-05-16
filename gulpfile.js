@@ -59,6 +59,7 @@ gulp.task('collect-js', function () {
 				Deferred: 'lib/deferred',
 				fontLoader: 'lib/font-loader',
 				PIXI: 'lib/pixi',
+				util: 'lib/util',
 				//EasePack: 'lib/EasePack',
 				TweenMax: 'lib/TweenMax',
 				FPSMeter: 'lib/fpsmeter',
@@ -80,6 +81,8 @@ gulp.task('collect-js', function () {
 				cameraKeys: 'core/camera-keys',
 				uiManager: 'core/ui-manager',
 				uiManagerKeys: 'core/ui-manager-keys',
+				CollisionManager: 'core/collision-manager',
+				collisionManagerKeys: 'core/collision-manager-keys',
 				// views
 				TitleView: 'view/title/view',
 				SettingView: 'view/setting/view',
@@ -103,6 +106,7 @@ gulp.task('collect-js', function () {
 				Bullet: 'objects/bullet',
 				JuniorMissile: 'objects/junior-missile',
 				Cross: 'objects/cross'
+
 			}
 		}))
 		.pipe(gulp.dest('./dist/www/js/'));
