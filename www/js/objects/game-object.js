@@ -2,6 +2,8 @@ define(
 	['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys', 'util', 'collisionManagerKeys'],
 	function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys, util, collisionManagerKeys) {
 
+	"use strict";
+		
 	// abstract class
 	function GameObject() {
 
@@ -12,6 +14,23 @@ define(
 		var obj = this;
 
 		obj.attr = {
+			health: {
+				bar: {
+					width: 40
+				},
+				show: true,
+				value: 100,
+				max: 100,
+				min: 0
+			},
+/*
+			armor: {
+				value: 0
+			},
+			level: {
+				value: 1
+			},
+*/
 			isPause: false,
 			frameCounter: 0,
 			ownerId: gameObjectKeys.IDS.NEUTRAL.ownerId,

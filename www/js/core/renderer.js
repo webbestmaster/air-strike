@@ -1,5 +1,8 @@
-define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKeys', 'camera'],
-	function (device, mediator, deviceKeys, _fpsMeter, gameKeys, rendererKeys, camera) {
+/*global FPSMeter, window, define */
+define(['device', 'mediator', 'deviceKeys', 'FPSMeter', 'gameKeys', 'rendererKeys'],
+	function (device, mediator, deviceKeys, _fpsMeter, gameKeys, rendererKeys) {
+
+		"use strict";
 
 		return {
 

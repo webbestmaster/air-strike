@@ -18,6 +18,8 @@ define([
 			 gameKeys,
 			 gameObjectKeys) {
 
+	"use strict";
+
 	function Aircraft(options) {
 
 		var aircraft = this,
@@ -117,7 +119,10 @@ define([
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
 		return this.set({
-/*
+			health: {
+				value: 200
+			},
+			/*
 			// will update by .updateBounds()
 			w: 0,
 			h: 0,
@@ -160,7 +165,7 @@ define([
 				x: 0,
 				y: 0
 			}
-		}).set(options || {});
+		}, true).set(options || {}, true);
 
 	};
 

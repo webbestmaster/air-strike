@@ -1,3 +1,4 @@
+/*global PIXI, define */
 define(
 	[
 		'DisplayObject',
@@ -16,8 +17,12 @@ define(
 			  deviceKeys,
 			  baseViewKeys) {
 
-		function BaseView() {
+		"use strict";
 
+		function BaseView() {
+			// you can add some initialization
+			// jsLink: empty block
+			return this;
 		}
 
 		BaseView.prototype = Object.create(DisplayObject.prototype);
@@ -164,8 +169,10 @@ define(
 				bgH = bg.height,
 				q = Math.min(bgW / sW, bgH / sH);
 
-			bg.width = bgW /= q;
-			bg.height = bgH /= q;
+			bgW /= q;
+			bgH /= q;
+			bg.width = bgW;
+			bg.height = bgH;
 
 			bg.x = (sW - bgW) / 2;
 			bg.y = (sH - bgH) / 2;

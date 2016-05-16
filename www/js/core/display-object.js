@@ -1,9 +1,14 @@
-define(['device', 'mediator', 'deviceKeys', 'camera', 'cameraKeys', 'uiManagerKeys'],
-	function (device, mediator, deviceKeys, camera, cameraKeys, uiManagerKeys) {
+/*global PIXI, TweenMax, Back, define */
+define(['device', 'mediator', 'camera', 'cameraKeys', 'uiManagerKeys'],
+	function (device, mediator, camera, cameraKeys, uiManagerKeys) {
+
+		"use strict";
 
 		// "abstracted class"
 		function DisplayObject() {
-
+			// you can add some initialization
+			// jsLink: empty block
+			return this;
 		}
 
 		DisplayObject.prototype.mainInitialize = function () {

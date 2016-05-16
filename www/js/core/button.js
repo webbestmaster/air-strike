@@ -1,5 +1,8 @@
+/*global PIXI, define */
 define(['DisplayObject', 'device', 'deviceKeys'],
 	function (DisplayObject, device, deviceKeys) {
+
+		"use strict";
 
 		function Button(data) { // parentStage: stage, texturesPrefix: prefix, events: { 'name' : fn } or { 'name' : 'string' }
 

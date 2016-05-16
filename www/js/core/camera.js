@@ -1,8 +1,11 @@
+/*global define */
 define(
 	['device', 'mediator', 'deviceKeys', 'gameConfig', 'cameraKeys', 'gameKeys', 'uiManager'],
 	function (device, mediator, deviceKeys, gameConfig, cameraKeys, gameKeys, uiManager) {
 
 	// WARNING  camera use game coordinates only
+
+	"use strict";
 
 	return {
 

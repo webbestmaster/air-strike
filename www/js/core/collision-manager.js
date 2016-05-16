@@ -1,6 +1,7 @@
+/*global define */
 define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys', 'gameKeys'], function (mediator, factoryKeys, gameConfig, util, collisionManagerKeys, gameKeys) {
 
-	'use strict';
+	"use strict";
 
 	function CollisionManager() {
 
@@ -28,7 +29,7 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys',
 			}
 		}
 
-		console.log(JSON.parse(JSON.stringify(neededCells)));
+		console.log(JSON.parse(JSON.stringify(neededCells))); // remove
 
 	};
 

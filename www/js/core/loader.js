@@ -1,5 +1,9 @@
+/*global PIXI, define */
 define(['Deferred', 'fontLoader', 'textureMaster'],
 	function (Deferred, fontLoader, textureMaster) {
+
+		"use strict";
+
 		return {
 			load: function () {
 
@@ -11,6 +15,6 @@ define(['Deferred', 'fontLoader', 'textureMaster'],
 						textureMaster.initTextures()
 					]);
 			}
-		}
+		};
 	}
 );
