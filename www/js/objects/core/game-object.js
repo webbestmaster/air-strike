@@ -331,7 +331,10 @@ define(
 		if (typeof keyOrObject === 'string') {
 			if (isDeep) {
 				// used - key, value
-				util.deepExtend(valueOrIsDeep, this.attr[keyOrObject] = this.attr[keyOrObject] || {});
+				if (!this.attr[keyOrObject]) {
+					this.attr[keyOrObject] = {};
+				}
+				util.deepExtend(valueOrIsDeep, this.attr[keyOrObject]);
 			} else {
 				// used - key, value, true
 				this.attr[keyOrObject] = valueOrIsDeep;

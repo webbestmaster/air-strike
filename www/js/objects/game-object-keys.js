@@ -1,4 +1,7 @@
+/*global define */
 define(function () {
+
+	"use strict";
 
 	var playersTeamId = 'ids:player:teamId:0';
 
@@ -34,6 +37,6 @@ define(function () {
 			}
 		}
 
-	}
+	};
 
 });

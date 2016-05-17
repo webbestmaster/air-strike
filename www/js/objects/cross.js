@@ -1,4 +1,7 @@
+/*global define, PIXI */
 define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
+
+	"use strict";
 
 	function Cross(options) {
 

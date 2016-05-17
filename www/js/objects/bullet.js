@@ -1,4 +1,7 @@
+/*global define, PIXI */
 define(['GameObject'], function (GameObject) {
+
+	"use strict";
 
 	function Bullet(options) {
 

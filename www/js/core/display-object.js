@@ -77,19 +77,28 @@ define(['device', 'mediator', 'camera', 'cameraKeys', 'uiManagerKeys'],
 
 		};
 
-		DisplayObject.prototype.set = function (keyOrObject, value) {
-
-			var key;
+		DisplayObject.prototype.set = function (keyOrObject, valueOrIsDeep, isDeep) {
 
 			if (typeof keyOrObject === 'string') {
-				this.attr[keyOrObject] = value;
+				if (isDeep) {
+					// used - key, value
+					if (!this.attr[keyOrObject]) {
+						this.attr[keyOrObject] = {};
+					}
+					util.deepExtend(valueOrIsDeep, this.attr[keyOrObject]);
+				} else {
+					// used - key, value, true
+					this.attr[keyOrObject] = valueOrIsDeep;
+				}
 				return this;
 			}
 
-			for (key in keyOrObject) {
-				if (keyOrObject.hasOwnProperty(key)) {
-					this.attr[key] = keyOrObject[key];
-				}
+			// keyOrObject = object
+			// valueOrIsDeep = isDeep
+			if (valueOrIsDeep) {
+				util.deepExtend(keyOrObject, this.attr);
+			} else {
+				util.extend(keyOrObject, this.attr);
 			}
 
 			return this;

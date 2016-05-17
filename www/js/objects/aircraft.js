@@ -1,7 +1,8 @@
+/*global define, PIXI */
 define([
 	'GameObject',
 	'gameConfig',
-	'mediator',
+	// 'mediator',
 	'camera',
 	'cameraKeys',
 	'deviceKeys',
@@ -10,7 +11,7 @@ define([
 	'gameObjectKeys'
 ], function (GameObject,
 			 gameConfig,
-			 mediator,
+			 // mediator,
 			 camera,
 			 cameraKeys,
 			 deviceKeys,

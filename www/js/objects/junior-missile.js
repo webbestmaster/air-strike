@@ -1,5 +1,8 @@
+/*global define, PIXI */
 define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 
+	"use strict";
+	
 	function JuniorMissile(options) {
 
 		var missile = this,
