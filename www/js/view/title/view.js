@@ -1,6 +1,9 @@
+/*global define */
 define(
-	['BaseView', 'Button', 'device', 'TweenMax', 'mediator', 'camera', 'cameraKeys'],
-	function (BaseView, Button, device, TweenMax, mediator, camera, cameraKeys) {
+	['BaseView', 'Button', 'mediator', 'camera', 'cameraKeys'],
+	function (BaseView, Button, mediator, camera, cameraKeys) {
+
+		"use strict";
 
 		var buttonMap = [
 

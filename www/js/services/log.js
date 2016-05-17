@@ -1,4 +1,7 @@
+/*global define, console, XMLHttpRequest, window */
 define(function () {
+
+	"use strict";
 
 	var	gOldOnError,
 		slice = Array.prototype.slice,
@@ -14,8 +17,8 @@ define(function () {
 					return;
 				}
 
-				var logger = this,
-					xhr = logger.xhr,
+				var loggerObject = this,
+					xhr = loggerObject.xhr,
 					args = slice.call(arguments).map(function (arg) {
 						return (arg && typeof arg === 'object') ? JSON.stringify(arg) : String(arg);
 					}).join(' ');

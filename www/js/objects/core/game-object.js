@@ -1,3 +1,4 @@
+/*global define, TweenMax, PIXI */
 define(
 	['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys', 'util', 'collisionManagerKeys'],
 	function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys, util, collisionManagerKeys) {
@@ -79,11 +80,11 @@ define(
 			prevState = {},
 			stateList = obj.stateList,
 			stateName,
-			i = 0,
-			len = stateList.length,
+			i,
+			len,
 			list = stateList.list;
 
-		for (; i < len; i += 1) {
+		for (i = 0, len = stateList.length; i < len; i += 1) {
 			stateName = list[i];
 			state[stateName] = {
 				data: null
@@ -175,9 +176,9 @@ define(
 			instances = tweens.instances,
 			keys = tweens.keys,
 			keysLength = tweens.keysLength,
-			i = 0;
+			i;
 
-		for (; i < keysLength; i += 1) {
+		for (i = 0; i < keysLength; i += 1) {
 			instances[keys[i]].kill();
 		}
 
@@ -189,9 +190,9 @@ define(
 			instances = tweens.instances,
 			keys = tweens.keys,
 			keysLength = tweens.keysLength,
-			i = 0;
+			i;
 
-		for (; i < keysLength; i += 1) {
+		for (i = 0; i < keysLength; i += 1) {
 			instances[keys[i]].pause();
 		}
 
@@ -203,9 +204,9 @@ define(
 			instances = tweens.instances,
 			keys = tweens.keys,
 			keysLength = tweens.keysLength,
-			i = 0;
+			i;
 
-		for (; i < keysLength; i += 1) {
+		for (i = 0; i < keysLength; i += 1) {
 			instances[keys[i]].resume();
 		}
 
@@ -244,7 +245,7 @@ define(
 				return {
 					x: (point.x + camera.attr.w05 - camera.attr.pos.x) * camera.attr.q,
 					y: (point.y + camera.attr.h05 - camera.attr.pos.y) * camera.attr.q
-				}
+				};
 			}),
 			graphics = new PIXI.Graphics();
 
@@ -496,7 +497,7 @@ define(
 			return {
 				x: x + Math.cos(defaultRotation + rotation) * lineSize,
 				y: y + Math.sin(defaultRotation + rotation) * lineSize
-			}
+			};
 
 		});
 

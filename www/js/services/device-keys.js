@@ -1,5 +1,8 @@
+/*global define */
 define(function () {
 
+	"use strict";
+	
 	return {
 		DOWN: 'device:down',
 		DOWNS: 'device:downs',
@@ -9,6 +12,6 @@ define(function () {
 		UPS: 'device:ups',
 		DBL_TAP: 'device:dblTap',
 		RESIZE: 'device:resize'
-	}
+	};
 
 });

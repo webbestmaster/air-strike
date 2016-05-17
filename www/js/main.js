@@ -1,6 +1,8 @@
-define(function (require, exports, module) {
+/*global define, requirejs */
+// define(function (require, exports, module) {
+define(function (require) {
 
-	'use strict';
+	"use strict";
 
 	requirejs.config(require('require-config'));
 
@@ -17,8 +19,8 @@ define(function (require, exports, module) {
 			'gameState'
 			//'gameObjectHelper'
 		],
-		function (libLoad,
-				  viewLoad,
+		function (libLoad, // needed
+				  viewLoad, // needed
 				  mediator,
 				  device,
 				  loader,

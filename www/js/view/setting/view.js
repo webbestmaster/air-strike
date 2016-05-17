@@ -1,6 +1,9 @@
+/*global define */
 define(
-	['BaseView', 'Button', 'device', 'TweenMax', 'mediator', 'camera'],
-	function (BaseView, Button, device, TweenMax, mediator, camera) {
+	['BaseView', 'Button', 'mediator', 'camera'],
+	function (BaseView, Button, mediator, camera) {
+
+		"use strict";
 
 		function SettingView() {
 
@@ -12,9 +15,6 @@ define(
 
 			view.mainShow();
 
-
-
-			
 			var button = new Button(view);
 
 			button.createTextNode('I am the text on the button', {

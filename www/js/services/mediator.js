@@ -1,10 +1,13 @@
+/*global define */
 define(
 	[
-		'log'  // remove
+//		'log'  // remove
 	],
 	function (
-		log // remove
+//		log // remove
 	) {
+
+		"use strict";
 
 		var mediator;
 
@@ -27,13 +30,13 @@ define(
 
 			var list = mediator.channels[channel] || [],
 				item,
-				i = 0,
-				len = list.length;
+				i,
+				len;
 
 			// log('publish -', channel, arguments); // remove
 			// log('publish -', channel); // remove
 
-			for (; i < len; i += 1) {
+			for (i = 0, len = list.length; i < len; i += 1) {
 				item = list[i];
 				item.callback.call(item.context, command, options);
 			}

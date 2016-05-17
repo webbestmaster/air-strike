@@ -1,3 +1,5 @@
+/*jslint white: true, nomen: true */
+/*global window, define */
 define(
 	[
 		'mediator',
@@ -7,6 +9,8 @@ define(
 	function (mediator,
 			  EndlessArray,
 			  deviceKeys) {
+
+		"use strict";
 
 		var win = window,
 			doc = win.document,
@@ -238,7 +242,7 @@ define(
 					return {
 						scale: (after / before) || 1,
 						deltaAngle: deltaAngle
-					}
+					};
 
 				},
 
