@@ -53,7 +53,8 @@ define({
 
 		// game objects
 		GameObject: 'objects/core/game-object',
-		gameObjectKeys: 'objects/game-object-keys',
+		gameObjectKeys: 'objects/core/game-object-keys',
+		LifeBar: 'objects/core/life-bar',
 		// gameObjectHelper: 'objects/game-object-helper',
 		Aircraft: 'objects/aircraft',
 		Bullet: 'objects/bullet',

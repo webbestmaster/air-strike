@@ -41,6 +41,8 @@ define(['util'], function (util) {
 
 		// update position if needed
 		// update value if needed
+		// after that use camera.adjustLiveBar(this.attr)
+		// camera.adjustLiveBar still not implemented
 
 	};
 

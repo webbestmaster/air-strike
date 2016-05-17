@@ -1,7 +1,7 @@
 /*global define, TweenMax, PIXI */
 define(
-	['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys', 'util', 'collisionManagerKeys'],
-	function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys, util, collisionManagerKeys) {
+	['factoryKeys', 'gameKeys', 'mediator', 'gameConfig', 'camera', 'gameObjectKeys', 'util', 'collisionManagerKeys', 'LifeBar'],
+	function (factoryKeys, gameKeys, mediator, gameConfig, camera, gameObjectKeys, util, collisionManagerKeys, LifeBar) {
 
 	"use strict";
 		
@@ -106,7 +106,7 @@ define(
 
 	GameObject.prototype.addLifeBar = function () {
 
-
+		this.attr.lifeBar = new LifeBar();
 
 	};
 
