@@ -7,13 +7,14 @@ define({
 		log: 'services/log',
 		mediator: 'services/mediator',
 		// init libs
-		Deferred: 'lib/deferred',
-		fontLoader: 'lib/font-loader',
-		PIXI: 'lib/pixi',
-		util: 'lib/util',
+		Deferred: 'lib/external/deferred',
+		fontLoader: 'lib/internal/font-loader',
+		PIXI: 'lib/external/pixi',
+		util: 'lib/internal/util',
+		EndlessArray: 'lib/internal/endless-array',
 		//EasePack: 'lib/EasePack',
-		TweenMax: 'lib/TweenMax',
-		FPSMeter: 'lib/fpsmeter',
+		TweenMax: 'lib/external/TweenMax',
+		FPSMeter: 'lib/external/fpsmeter',
 		// init service
 		device: 'services/device',
 		deviceKeys: 'services/device-keys',
@@ -50,7 +51,7 @@ define({
 		constructorMap: 'factory/constructor-map',
 
 		// game objects
-		GameObject: 'objects/game-object',
+		GameObject: 'objects/core/game-object',
 		gameObjectKeys: 'objects/game-object-keys',
 		// gameObjectHelper: 'objects/game-object-helper',
 		Aircraft: 'objects/aircraft',

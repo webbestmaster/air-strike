@@ -1,4 +1,7 @@
+/*global define */
 define(function () {
+
+	"use strict";
 
 	return {
 
@@ -20,9 +23,12 @@ define(function () {
 				fromObj = from[key];
 				if (fromObj && typeof fromObj === 'object') {
 					if (to[key]) {
-						this.deepExtend(obj, to[key]);
+						this.deepExtend(fromObj, to[key]);
 					} else {
-						this.deepExtend(obj, to[key] = {});
+						if (!to[key]) {
+							to[key] = {};
+						}
+						this.deepExtend(fromObj, to[key]);
 					}
 				} else {
 					to[key] = fromObj;
@@ -131,6 +137,6 @@ define(function () {
 		}
 
 
-	}
+	};
 
 });

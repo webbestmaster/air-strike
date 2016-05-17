@@ -1,3 +1,4 @@
+/*global define */
 define(
 	[
 		//'EasePack',
@@ -6,5 +7,9 @@ define(
 		'FPSMeter',
 		'util'
 	],
-	function () {}
+	function () {
+
+		"use strict";
+
+	}
 );

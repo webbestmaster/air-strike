@@ -1,7 +1,7 @@
 define(
 	[
 		'mediator',
-		'lib/endless-array',
+		'EndlessArray',
 		'deviceKeys'
 	],
 	function (mediator,

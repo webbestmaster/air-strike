@@ -1,4 +1,7 @@
+/*global define */
 define(function () {
+
+	"use strict";
 
 	function EndlessArray(length) {
 
@@ -24,6 +27,7 @@ define(function () {
 
 	};
 
+/*
 	EndlessArray.prototype.oEach = function (fn) {
 
 		var e = this,
@@ -42,6 +46,7 @@ define(function () {
 		return this;
 
 	};
+*/
 
 	EndlessArray.prototype.each = function (fn) {
 

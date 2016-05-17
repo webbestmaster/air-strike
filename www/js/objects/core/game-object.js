@@ -14,7 +14,8 @@ define(
 		var obj = this;
 
 		obj.attr = {
-			health: {
+			life: {
+				hasBar: false,
 				bar: {
 					width: 40
 				},
@@ -100,6 +101,12 @@ define(
 	GameObject.prototype.stateList = {
 		list: [],
 		length: 0
+	};
+
+	GameObject.prototype.addLifeBar = function () {
+
+
+
 	};
 
 	GameObject.prototype.setState = function (stateName, stateData) {

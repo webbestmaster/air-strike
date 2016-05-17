@@ -1,16 +1,19 @@
+/*global define, Image */
 define(['Deferred'], function (Deferred) {
 
-	var fontLoader = {
+	"use strict";
+
+	return {
 
 		load: function (path) {
 
 			var image = new Image(),
-				defer = new Deferred();
+				defer = new Deferred(),
+				style = image.style;
 
-			image.style.position = 'fixed';
-
-			image.style.top = 0;
-			image.style.left = 0;
+			style.position = 'fixed';
+			style.top = '0';
+			style.left = '0';
 
 			image.onerror = image.onload = function () {
 				this.onerror = this.onload = null;
@@ -24,7 +27,5 @@ define(['Deferred'], function (Deferred) {
 		}
 
 	};
-
-	return fontLoader;
 
 });

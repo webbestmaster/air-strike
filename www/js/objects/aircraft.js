@@ -36,6 +36,10 @@ define([
 
 		aircraft.setDefaultProperties(options);
 
+		if (aircraft.attr.life.hasBar) {
+			aircraft.addLifeBar();
+		}
+
 		aircraft.bindEventListeners();
 
 		// for test only
