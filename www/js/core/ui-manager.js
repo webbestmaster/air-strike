@@ -1,5 +1,8 @@
+/*global define */
 define(['mediator', 'uiManagerKeys', 'baseViewKeys'], function (mediator, uiManagerKeys, baseViewKeys) {
-	
+
+	"use strict";
+
 	return {
 
 		bounds: [],
@@ -103,9 +106,9 @@ define(['mediator', 'uiManagerKeys', 'baseViewKeys'], function (mediator, uiMana
 				len = uiManager.length,
 				bounds = uiManager.bounds,
 				boundData,
-				i = 0;
+				i;
 
-			for (; i < len; i += 1) {
+			for (i = 0; i < len; i += 1) {
 				boundData = bounds[i];
 				if (x > boundData.x0 && x < boundData.x1 && y > boundData.y0 && y < boundData.y1) {
 					return true;
@@ -116,6 +119,6 @@ define(['mediator', 'uiManagerKeys', 'baseViewKeys'], function (mediator, uiMana
 
 		}
 
-	}
+	};
 	
 });

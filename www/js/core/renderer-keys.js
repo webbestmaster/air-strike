@@ -1,9 +1,5 @@
-define(function () {
-	
-		return {
-			APPEND: 'renderer:append',
-			REMOVE: 'renderer:remove'
-		}
-	
-	}
-);
+/*global define */
+define({
+	APPEND: 'renderer:append',
+	REMOVE: 'renderer:remove'
+});

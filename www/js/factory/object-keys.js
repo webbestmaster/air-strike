@@ -1,8 +1,5 @@
-define(function () {
-
-	return {
-		ALIVE: true,
-		DEAD: false
-	}
-
+/*global define */
+define({
+	ALIVE: true,
+	DEAD: false
 });

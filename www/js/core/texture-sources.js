@@ -1,4 +1,7 @@
+/*global define */
 define(function () {
+
+	"use strict";
 
 	return [
 		'src/bg-title.json',
@@ -9,6 +12,6 @@ define(function () {
 		'src/objects/junior-missile.json',
 		'src/objects/cross.json',
 		'src/button.json'
-	]
+	];
 
 });

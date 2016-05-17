@@ -1,9 +1,13 @@
+/*global define, PIXI */
 define(['log', 'Deferred', 'textureSources'],
 	function (
 			log, // remove
 			Deferred,
 			textureSources
 	) {
+
+		"use strict";
+
 		return {
 
 			// TODO: get resolution from camera

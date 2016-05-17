@@ -1,3 +1,4 @@
+/*global define, String */
 define([
 	'factoryKeys',
 	'constructorMap',
@@ -14,6 +15,8 @@ define([
 			 cameraKeys,
 			 collisionManagerKeys
 			) {
+
+	"use strict";
 
 	function Factory() {
 
@@ -61,9 +64,9 @@ define([
 			length = lists.length,
 			objects = lists.objects,
 			items = [],
-			i = 0;
+			i;
 
-		for (; i < length; i += 1) {
+		for (i = 0; i < length; i += 1) {
 			items[i] = objects[i];
 		}
 
@@ -105,7 +108,7 @@ define([
 					objects: [],
 					lifeMap: [],
 					length: 0
-				}
+				};
 			}
 		}
 
@@ -133,7 +136,8 @@ define([
 			lifeMap[index] = objectKeys.ALIVE;
 			objects[index] = neededObject = new constructorMap[type](options);
 			objectAttr = neededObject.attr;
-			objectAttr.id = '' + (attr.idCounter += 1);
+			attr.idCounter += 1;
+			objectAttr.id = String(attr.idCounter);
 			factory.publish(gameKeys.APPEND_SPRITE, {
 				sprite: objectAttr.sprite,
 				layer: objectAttr.layer
@@ -160,14 +164,16 @@ define([
 			lists = factoryData.lists,
 			list,
 			types = factoryData.types,
-			iiTypes = 0, lenTypes = factoryData.length,
+			iiTypes,
+			lenTypes = factoryData.length,
 			iiObjects, lenObjects,
-			objects, lifeMap;
+			objects;
+			// lifeMap
 
-		for (; iiTypes < lenTypes; iiTypes += 1) {
+		for (iiTypes = 0; iiTypes < lenTypes; iiTypes += 1) {
 			list = lists[types[iiTypes]];
 			objects = list.objects;
-			lifeMap = list.lifeMap;
+			// lifeMap = list.lifeMap;
 			for (iiObjects = 0, lenObjects = list.length; iiObjects < lenObjects; iiObjects += 1) {
 				objects[iiObjects].fullDestroy();
 			}
