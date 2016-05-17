@@ -1,3 +1,4 @@
+/*global define*/
 define([
 	'Factory',
 	'factoryKeys',
@@ -22,6 +23,8 @@ define([
 		 	CollisionManager
 			// requireAsset
 			) {
+
+	"use strict";
 
 	function GameModel() {
 
@@ -139,11 +142,11 @@ define([
 			lists = factoryData.lists,
 			list,
 			types = factoryData.types,
-			iiTypes = 0, lenTypes = factoryData.length,
+			iiTypes, lenTypes = factoryData.length,
 			iiObjects, lenObjects,
 			objects, lifeMap, object;
 
-		for (; iiTypes < lenTypes; iiTypes += 1) {
+		for (iiTypes = 0; iiTypes < lenTypes; iiTypes += 1) {
 			list = lists[types[iiTypes]];
 			objects = list.objects;
 			lifeMap = list.lifeMap;

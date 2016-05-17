@@ -1,6 +1,9 @@
+/*global define, PIXI*/
 define(
-	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera', 'gameState', 'baseViewKeys'],
-	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera, gameState, baseViewKeys) {
+	['BaseView', 'mediator', 'GameModel', 'gameKeys', 'Button', 'cameraKeys', 'camera', 'gameState'],
+	function (BaseView, mediator, GameModel, gameKeys, Button, cameraKeys, camera, gameState) {
+
+		"use strict";
 
 		function GameView() {
 
@@ -28,12 +31,13 @@ define(
 			var view = this,
 				stage = view.stage,
 				orderedList = ['VIEW_LAYER_MINOR_OBJECT', 'VIEW_LAYER_MAJOR_OBJECT', 'VIEW_LAYER_UI', 'VIEW_LAYER_POPUP'],
-				i = 0,
+				i,
 				len = orderedList.length,
 				stages = {};
 
-			for (; i < len; i += 1) {
-				stage.addChild(stages[gameKeys[orderedList[i]]] = new PIXI.Container());
+			for (i = 0; i < len; i += 1) {
+				stages[gameKeys[orderedList[i]]] = new PIXI.Container();
+				stage.addChild(stages[gameKeys[orderedList[i]]]);
 			}
 
 			view.stages = stages;
@@ -45,7 +49,7 @@ define(
 			var view = this;
 
 			view.subscribe(gameKeys.APPEND_SPRITE, view.appendSprite);
-			view.subscribe(gameKeys.REMOVE_SPRITE, view.removeSprite);
+			// view.subscribe(gameKeys.REMOVE_SPRITE, view.removeSprite);
 			// view.subscribe(gameKeys.DESTROY, view.destroyStages);
 
 		};
@@ -54,9 +58,11 @@ define(
 			this.stages[data.layer].addChild(data.sprite);
 		};
 
+/*
 		GameView.prototype.removeSprite = function () {
 			this.stages[data.layer].removeChild(data.sprite);
 		};
+*/
 
 		GameView.prototype.createButtons = function () {
 

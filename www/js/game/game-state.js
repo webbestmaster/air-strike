@@ -1,4 +1,7 @@
+/*global define*/
 define(['mediator', 'gameKeys'], function (mediator, gameKeys) {
+
+	"use strict";
 
 	return {
 
@@ -59,6 +62,6 @@ define(['mediator', 'gameKeys'], function (mediator, gameKeys) {
 
 		}
 
-	}
+	};
 
 });
