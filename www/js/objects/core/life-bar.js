@@ -1,5 +1,5 @@
-/*global define*/
-define(['util'], function (util) {
+/*global define, PIXI */
+define(['util', 'gameKeys', 'mediator', 'camera'], function (util, gameKeys, mediator, camera) {
 
 	"use strict";
 
@@ -12,20 +12,70 @@ define(['util'], function (util) {
 				x: 0,
 				y: 0
 			},
-			value: 0
+			w: 0,
+			h: 0,
+			w05: 0,
+			h05: 0,
+			layer: gameKeys.VIEW_LAYER_GAME_OBJECT_INFO,
+			value: 0,
+			graphics: null,
+			parent: null
 		};
 
-		// lifeBar.bindEventListeners();
+		lifeBar.initialize();
+
+		lifeBar.bindEventListeners();
 
 	}
 
-	/*
-		LifeBar.prototype.bindEventListeners = function () {
+	LifeBar.prototype.bindEventListeners = function () {
 
-		};
-	*/
+		var lifeBar = this;
+
+		mediator.installTo(lifeBar);
+		
+	};
+
+	LifeBar.prototype.initialize = function () {
+
+		var lifeBar = this,
+			graphics = new PIXI.Graphics();
+
+		lifeBar.set('graphics', graphics);
+
+	};
+
+	LifeBar.prototype.setDefaultProperties = function () {
+
+	};
 
 	LifeBar.prototype.addTo = function (parent) {
+
+		var lifeBar = this,
+			attr = lifeBar.attr;
+
+		attr.parent = parent;
+
+		lifeBar.publish(gameKeys.APPEND_SPRITE, {
+			sprite: attr.graphics,
+			layer: attr.layer
+		});
+
+		lifeBar.updateBounds();
+
+	};
+
+	LifeBar.prototype.updateBounds = function () {
+
+		var lifeBar = this,
+			attr = lifeBar.attr,
+			bar = attr.parent.attr.life.bar;
+
+		attr.w = bar.w;
+		attr.h = bar.h;
+
+		attr.w05 = bar.w / 2;
+		attr.h05 = bar.h / 2;
 
 	};
 
@@ -39,10 +89,24 @@ define(['util'], function (util) {
 
 	LifeBar.prototype.update = function () {
 
-		// update position if needed
-		// update value if needed
-		// after that use camera.adjustLiveBar(this.attr)
-		// camera.adjustLiveBar still not implemented
+		var attr = this.attr,
+			parentAttr = attr.parent.attr,
+			graphics = attr.graphics;
+
+		if (attr.value !== parentAttr.life.value) {
+			attr.value = parentAttr.life.value;
+			graphics.clear();
+			graphics.lineStyle(0);
+			graphics.beginFill(0xFF0000, 1);
+			graphics.drawRect(0, 0, attr.w, attr.h);
+			graphics.beginFill(0x00FF00, 1);
+			graphics.drawRect(0, 0, attr.w * attr.value / parentAttr.life.max, attr.h);
+			// graphics.endFill();
+		}
+
+		attr.pos.x = parentAttr.pos.x;
+		attr.pos.y = parentAttr.pos.y - parentAttr.diagonal05;
+		camera.adjustGraphics(attr);
 
 	};
 

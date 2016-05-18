@@ -30,7 +30,7 @@ define(
 
 			var view = this,
 				stage = view.stage,
-				orderedList = ['VIEW_LAYER_MINOR_OBJECT', 'VIEW_LAYER_MAJOR_OBJECT', 'VIEW_LAYER_UI', 'VIEW_LAYER_POPUP'],
+				orderedList = ['VIEW_LAYER_MINOR_OBJECT', 'VIEW_LAYER_MAJOR_OBJECT', 'VIEW_LAYER_GAME_OBJECT_INFO', 'VIEW_LAYER_UI', 'VIEW_LAYER_POPUP'],
 				i,
 				len = orderedList.length,
 				stages = {};

@@ -18,13 +18,14 @@ define(
 			life: {
 				hasBar: false,
 				bar: {
-					width: 40
+					w: 160,
+					h: 20
 				},
-				show: true,
-				value: 100,
+				value: 70,
 				max: 100,
 				min: 0
 			},
+			lifeBar: null,
 /*
 			armor: {
 				value: 0
@@ -106,7 +107,12 @@ define(
 
 	GameObject.prototype.addLifeBar = function () {
 
-		this.attr.lifeBar = new LifeBar();
+		var obj = this,
+			lifeBar = new LifeBar();
+
+		lifeBar.addTo(obj);
+
+		obj.attr.lifeBar = lifeBar;
 
 	};
 

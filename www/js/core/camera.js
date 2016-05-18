@@ -26,6 +26,8 @@ define(
 			w05: 0,
 			h05: 0,
 			q: 1,
+			qw: 0, 	// wd / w
+			qh: 0,	// wh / h
 			pos: {
 				x: gameConfig.world.width / 2, // center camera is here // half of word size
 				y: gameConfig.world.height / 2 // center camera is here
@@ -268,6 +270,9 @@ define(
 			cameraData.dw = width;
 			cameraData.dh = height;
 
+			cameraData.qw = width / cameraData.w;
+			cameraData.qh = height / cameraData.h;
+
 			camera.detectEdgePositions();
 
 			camera.detectRemSize();
@@ -334,8 +339,8 @@ define(
 				position = sprite.position,
 				rotation = objData.rotation,
 				//scale = objData.scale,
-				newPositionX = (objData.pos.x - cameraData.pos.x + cameraData.w05) / cameraData.w * cameraData.dw | 0,
-				newPositionY = (objData.pos.y - cameraData.pos.y + cameraData.h05) / cameraData.h * cameraData.dh | 0,
+				newPositionX = (objData.pos.x - cameraData.pos.x + cameraData.w05) * cameraData.qw | 0,
+				newPositionY = (objData.pos.y - cameraData.pos.y + cameraData.h05) * cameraData.qh | 0,
 				newWidth = sprite.texture.width * cameraData.q | 0,
 				newHeight = sprite.texture.height * cameraData.q | 0;
 
@@ -368,6 +373,29 @@ define(
 				sprite.scale.y = scale.y;
 			}
 */
+
+		},
+
+		adjustGraphics: function (objData) {
+
+			var cameraData = this.attr,
+				graphics = objData.graphics,
+				position = graphics.position,
+				newPositionX = (objData.pos.x - objData.w05 - cameraData.pos.x + cameraData.w05) * cameraData.qw,
+				newPositionY = (objData.pos.y - objData.h05 - cameraData.pos.y + cameraData.h05) * cameraData.qh;
+
+			if (position.x !== newPositionX) {
+				position.x = newPositionX;
+			}
+
+			if (position.y !== newPositionY) {
+				position.y = newPositionY;
+			}
+
+			if (graphics.scale.x !== cameraData.q) {
+				graphics.scale.x = cameraData.q;
+				graphics.scale.y = cameraData.q;
+			}
 
 		},
 

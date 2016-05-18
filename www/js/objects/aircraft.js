@@ -124,8 +124,8 @@ define([
 	Aircraft.prototype.setDefaultProperties = function (options) {
 
 		return this.set({
-			health: {
-				value: 200
+			life: {
+				hasBar: true
 			},
 			/*
 			// will update by .updateBounds()
@@ -305,6 +305,8 @@ define([
 		aircraft.updateSpriteByState();
 
 		aircraft.adjustEdge();
+
+		attr.lifeBar.update();
 
 		attr.lastUpdate = now;
 

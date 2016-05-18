@@ -12,6 +12,7 @@ define({
 	VIEW_LAYER_POPUP: 'game:view-layer-popup',
 	VIEW_LAYER_UI: 'game:view-layer-iu',
 	VIEW_LAYER_MAJOR_OBJECT: 'game:view-layer-major-object',
-	VIEW_LAYER_MINOR_OBJECT: 'game:view-layer-minor-object'
+	VIEW_LAYER_MINOR_OBJECT: 'game:view-layer-minor-object',
+	VIEW_LAYER_GAME_OBJECT_INFO: 'game:view-layer-game-object-info'
 
 });
