@@ -8,33 +8,16 @@ define(['util', 'gameKeys', 'mediator', 'camera'], function (util, gameKeys, med
 		var lifeBar = this;
 
 		lifeBar.attr = {
-			pos: {
-				x: 0,
-				y: 0
-			},
-			w: 0,
-			h: 0,
-			w05: 0,
-			h05: 0,
 			layer: gameKeys.VIEW_LAYER_GAME_OBJECT_INFO,
-			value: 0,
 			graphics: null,
 			parent: null
 		};
 
+		lifeBar.setDefaultProperties();
+
 		lifeBar.initialize();
 
-		lifeBar.bindEventListeners();
-
 	}
-
-	LifeBar.prototype.bindEventListeners = function () {
-
-		var lifeBar = this;
-
-		mediator.installTo(lifeBar);
-		
-	};
 
 	LifeBar.prototype.initialize = function () {
 
@@ -47,6 +30,18 @@ define(['util', 'gameKeys', 'mediator', 'camera'], function (util, gameKeys, med
 
 	LifeBar.prototype.setDefaultProperties = function () {
 
+		return this.set({
+			pos: {
+				x: NaN,
+				y: NaN
+			},
+			w: NaN,
+			h: NaN,
+			w05: NaN,
+			h05: NaN,
+			value: NaN
+		}, true);
+
 	};
 
 	LifeBar.prototype.addTo = function (parent) {
@@ -56,7 +51,7 @@ define(['util', 'gameKeys', 'mediator', 'camera'], function (util, gameKeys, med
 
 		attr.parent = parent;
 
-		lifeBar.publish(gameKeys.APPEND_SPRITE, {
+		mediator.publish(gameKeys.APPEND_SPRITE, {
 			sprite: attr.graphics,
 			layer: attr.layer
 		});
@@ -76,14 +71,6 @@ define(['util', 'gameKeys', 'mediator', 'camera'], function (util, gameKeys, med
 
 		attr.w05 = bar.w / 2;
 		attr.h05 = bar.h / 2;
-
-	};
-
-	LifeBar.prototype.hide = function () {
-
-	};
-
-	LifeBar.prototype.show = function () {
 
 	};
 
@@ -111,6 +98,26 @@ define(['util', 'gameKeys', 'mediator', 'camera'], function (util, gameKeys, med
 	};
 
 	LifeBar.prototype.destroy = function () {
+
+		var lifeBar = this,
+			graphics = lifeBar.attr.graphics;
+
+		graphics.clear();
+		graphics.visible = false;
+
+		lifeBar.setDefaultProperties();
+
+	};
+
+	LifeBar.prototype.fullDestroy = function () {
+
+		var lifeBar = this,
+			graphics = lifeBar.attr.graphics;
+
+		lifeBar.destroy();
+		graphics.parent.removeChild(graphics);
+
+		lifeBar.attr = null;
 
 	};
 

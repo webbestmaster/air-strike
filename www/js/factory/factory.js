@@ -130,6 +130,9 @@ define([
 			lifeMap[index] = objectKeys.ALIVE;
 			neededObject = objects[index].setDefaultProperties(options);
 			neededObject.show();
+			if (neededObject.attr.life.hasBar) {
+				neededObject.attr.lifeBar.graphics.visible = true;
+			}
 			objectAttr = neededObject.attr;
 		} else {
 			index = lists.length;

@@ -297,6 +297,10 @@ define(
 			mediator.publish(collisionManagerKeys.REMOVE_OBJECT, obj.attr.id);
 		}
 
+		if (attr.life.hasBar) {
+			attr.lifeBar.destroy();
+		}
+
 	};
 
 	GameObject.prototype.fullDestroy = function () {
@@ -307,6 +311,10 @@ define(
 
 		if (attr.useCollision) {
 			mediator.publish(collisionManagerKeys.DESTROY_OBJECT, attr.id);
+		}
+
+		if (attr.life.hasBar) {
+			attr.lifeBar.fullDestroy();
 		}
 
 		obj.stopTweens();
@@ -445,6 +453,10 @@ define(
 		// create square for collisions
 		attr.diagonal = Math.sqrt(width * width + height * height);
 		attr.diagonal05 = attr.diagonal / 2;
+
+		if (attr.life.hasBar) {
+			attr.lifeBar.updateBounds();
+		}
 
 	};
 
