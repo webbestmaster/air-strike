@@ -18,8 +18,8 @@ define(
 			life: {
 				hasBar: false,
 				bar: {
-					w: 160,
-					h: 20
+					w: 80,
+					h: 8
 				},
 				value: 70,
 				max: 100,
