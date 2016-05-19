@@ -43,9 +43,12 @@ define(['GameObject', 'gameKeys'], function (GameObject, gameKeys) {
 			// h: 36,
 			// w05: 0, // w /2
 			// h05: 0,	// h / 2,
+			damage: {
+				value: 40
+			},
 			pos: {
-				x: 320.00,
-				y: 300.00
+				x: 0,
+				y: 0
 			},
 			visible: true,
 			layer: gameKeys.VIEW_LAYER_MINOR_OBJECT,
