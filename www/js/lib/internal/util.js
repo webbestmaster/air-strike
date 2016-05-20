@@ -40,6 +40,9 @@ define(function () {
 		//////
 		// collisions and intersection
 		//////
+/*
+
+		this is not work
 		hasSegmentsIntersection: function (p1, p2, p3, p4) {
 
 			var d, da, db, ta, tb;
@@ -73,6 +76,8 @@ define(function () {
 
 		},
 
+ */
+
 		hasRectanglesIntersection: function (rectangle1, rectangle2) { // rectangle - is array of points [{x:x, y:y}, {x:x, y:y}, {x:x, y:y}...]
 
 			var util = this,
@@ -92,6 +97,7 @@ define(function () {
 			}
 
 			// detect rectangle's segments intersection
+/*
 			for (i = 0; i < 4; i += 1) {
 
 				nextI = i === 3 ? 0 : i + 1;
@@ -107,6 +113,7 @@ define(function () {
 				}
 
 			}
+*/
 
 			return false;
 

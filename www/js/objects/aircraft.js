@@ -127,6 +127,7 @@ define([
 			life: {
 				hasBar: true
 			},
+			useCollision: true,
 			/*
 			// will update by .updateBounds()
 			w: 0,

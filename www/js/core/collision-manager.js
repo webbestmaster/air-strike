@@ -55,12 +55,13 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys',
 
 	CollisionManager.prototype.isCollision = function (first, second) {
 
+		var ids = this.attr.ids,
+			rectangle1 = ids[first].collision.points,
+			rectangle2 = ids[second].collision.points;
 
-		
-		
-
-
-
+		// debugger;
+		util.hasRectanglesIntersection(rectangle1, rectangle2);
+		console.log(util.hasRectanglesIntersection(rectangle1, rectangle2));
 
 	};
 
