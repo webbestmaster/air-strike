@@ -11,8 +11,58 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys',
 
 		collisionManager.bindEventListeners();
 
+/*
+		// todo: for tests only
+		window.ff = function () {
+			collisionManager.helperMethod_showFull();
+		};
+*/
+
 	}
 
+	CollisionManager.prototype.check = function () {
+
+		var collisionManager = this,
+			grid = collisionManager.attr.grid,
+			key;
+
+		for (key in grid) {
+			collisionManager.checkCell(grid[key]);
+		}
+
+	};
+
+	CollisionManager.prototype.checkCell = function (cell) {
+
+		var collisionManager = this,
+			len = cell.length,
+			list = cell.list,
+			ii,
+			cursor,
+			candidate;
+
+		for (ii = 0; ii < len; ii += 1) {
+			candidate = list[ii];
+			for (cursor = ii + 1; cursor < len; cursor += 1) {
+				collisionManager.isCollision(candidate, list[cursor]);
+				if (cell.length !== len) {
+					return collisionManager.checkCell(cell);
+				}
+			}
+		}
+
+	};
+
+	CollisionManager.prototype.isCollision = function (first, second) {
+
+
+		
+		
+
+
+
+
+	};
 
 	CollisionManager.prototype.helperMethod_showFull = function () {
 
@@ -65,7 +115,12 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys',
 				maxX: 0,
 				maxY: 0
 			},
-			isIn: false
+			isIn: false,
+			collision: {
+				// TODO: move 'rectangle' to keys
+				type: 'rectangle',
+				points: [{x:0, y:0},{x:0, y:0},{x:0, y:0},{x:0, y:0}]
+			}
 		};
 
 	};
@@ -145,8 +200,12 @@ define(['mediator', 'factoryKeys', 'gameConfig', 'util', 'collisionManagerKeys',
 
 		// get max sqaure
 		var collisionManager = this,
-			place = collisionManager.attr.ids[object.attr.id].place,
+			objectData = collisionManager.attr.ids[object.attr.id],
+			place = objectData.place,
 			newPlace = collisionManager.getMaxPlace(object);
+
+		// TODO: move 'rectangle' to keys
+		objectData.collision.points = object.getPointCoordinates();
 
 		if (
 			newPlace.minX === place.minX &&

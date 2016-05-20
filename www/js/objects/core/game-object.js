@@ -506,8 +506,19 @@ define(
 					x: x - width05,
 					y: y + height05
 				}
-			];
+			],
+			i, len, defaultRotation, xy;
 
+		for (i = 0, len = list.length; i < len; i += 1) {
+			xy = list[i];
+			defaultRotation = Math.atan2(y - xy.y, x - xy.x);
+			xy.x = x + Math.cos(defaultRotation + rotation) * lineSize;
+			xy.y = y + Math.sin(defaultRotation + rotation) * lineSize;
+		}
+
+		return list;
+
+/*
 		return list.map(function (xy) {
 
 			var defaultRotation = Math.atan2(y - xy.y, x - xy.x);
@@ -518,6 +529,7 @@ define(
 			};
 
 		});
+*/
 
 	};
 
